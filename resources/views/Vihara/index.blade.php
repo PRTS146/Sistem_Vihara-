@@ -96,7 +96,6 @@
     <a class="navbar-brand fw-bold" href="#">Amphoreus</a>
 
     <div class="ms-auto">
-        <a href="#" class="mx-2">Home</a>
         <a href="#" class="mx-2">Denah</a>
         <a href="#" class="mx-2">Kalender</a>
         <a href="#" class="mx-2">About</a>

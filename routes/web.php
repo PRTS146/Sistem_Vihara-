@@ -7,3 +7,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [viharaController::class,'index'])->name("mainPage");
+Route::get('/dashboard', [viharaController::class,'dashboard'])->name("dashboard");
