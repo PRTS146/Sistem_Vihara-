@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ViharaController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-Route::get('/', [viharaController::class,'index'])->name("mainPage");
-Route::get('/dashboard', [viharaController::class,'dashboard'])->name("dashboard");
+Route::get('/', [ViharaController::class,'index'])->name("mainPage");
+Route::get('/dashboard', [ViharaController::class,'dashboard'])->name("dashboard");
+Route::get('/abu', [ViharaController::class,'abu'])->name("abu");

@@ -4,18 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class viharaController extends Controller
+class ViharaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dataVihara = Vihara::all();
-        $data= [
-            'dataVihara' => $dataVihara
-        ];
-        return view('Vihara.index' , $data);
+        // $dataVihara = Vihara::all();
+        // $data= [
+        //     'dataVihara' => $dataVihara
+        // ];
+        return view('vihara.index');
+    }
+    public function dashboard(){
+        return view('vihara.dashboard');
+    }
+
+    public function abu(){
+        return view('vihara.abu');
     }
 
     /**
