@@ -59,7 +59,7 @@
 
   </div>
 
-  
+  <!-- this is button the <      > of the page -->
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </button>
@@ -111,6 +111,24 @@
       <div class="col-md-6">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
       </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="gallery" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Gallery</h2>
+
+    <div class="d-flex gap-3 overflow-auto pb-2" style="cursor: grab;">
+      <img src="{{ asset('image/vihara.jpg') }}"  class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
     </div>
 
   </div>
