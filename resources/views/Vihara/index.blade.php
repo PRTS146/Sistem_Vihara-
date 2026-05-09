@@ -18,7 +18,7 @@
      <!-- 1st -->
       
     <div class="carousel-item active">
-      <img src="{{ asset('image/mainpage.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;" alt="Vihara">
+      <div class="tenor-gif-embed" data-postid="13013674619887156677" data-share-method="host" data-aspect-ratio="1.76596" data-width="100%"><a href="https://tenor.com/view/jjk-culling-games-culling-games-jjk-ryu-ryu-jujutsu-kaisen-ryu-jujutsu-gif-13013674619887156677">Jjk Culling Games Jjk Ryu GIF</a>from <a href="https://tenor.com/search/jjk+culling+games-gifs">Jjk Culling Games GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
       <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
         <p class="text-warning fw-semibold text-uppercase ls-wide mb-1 fw-bold fs-1">Selamat Datang Di</p>
         <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
