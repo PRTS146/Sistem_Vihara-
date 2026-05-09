@@ -3,9 +3,7 @@
 @section('content')
 
 
-
-
-<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" style="padding-top: 56px;">
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
   
   <div class="carousel-indicators">
@@ -34,7 +32,7 @@
 
     <!-- second -->
     <div class="carousel-item">
-      <img src="{{ asset('image/slide2.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;" alt="Vihara 2">
+      <div class="tenor-gif-embed" data-postid="5087158465488164326" data-share-method="host" data-aspect-ratio="1.79137" data-width="100%"><a href="https://tenor.com/view/hakari-dance-hakari-kinji-hakari-jjk-hakari-jjk-dance-gif-5087158465488164326">Hakari Dance Kinji Hakari GIF</a>from <a href="https://tenor.com/search/hakari+dance-gifs">Hakari Dance GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
       <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;" >
         <p class="text-warning fw-semibold text-uppercase mb-1">Temukan Kedamaian</p>
         <h1 class="display-4 fw-bold text-white">Ketenangan & Spiritualitas</h1>
