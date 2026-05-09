@@ -46,7 +46,7 @@
 
     <!-- third impact -->
     <div class="carousel-item">
-      <img src="{{ asset('image/slide3.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;" alt="Vihara 3">
+     <div class="tenor-gif-embed" data-postid="16441200775481807752" data-share-method="host" data-aspect-ratio="1.76596" data-width="100%"><a href="https://tenor.com/view/jujutsu-kaisen-jujutsu-kaisen-season-3-jjk-season-3-jujutsu-kaisen-culling-games-jjk-culling-games-gif-16441200775481807752">Jujutsu Kaisen Jujutsu Kaisen Season 3 GIF</a>from <a href="https://tenor.com/search/jujutsu+kaisen-gifs">Jujutsu Kaisen GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
       <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
         <p class="text-warning fw-semibold text-uppercase mb-1 fw-bold">Bergabung Bersama Kami</p>
         <h1 class="display-4 fw-bold text-white">Komunitas yang Hangat</h1>
