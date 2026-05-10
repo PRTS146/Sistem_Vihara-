@@ -1,4 +1,4 @@
-@extends('template.main')
+@extends('template.main2')
 
 @section('content')
 <h1>ini abu</h1>
