@@ -2,6 +2,31 @@
 
 @section('content')
 
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      
+      <a href="#" class="btn btn-warning rounded-pill px-4">Login</a>
+
+    </div>
 
 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
@@ -18,7 +43,7 @@
      <!-- 1st -->
       
     <div class="carousel-item active">
-      <div class="tenor-gif-embed" data-postid="13013674619887156677" data-share-method="host" data-aspect-ratio="1.76596" data-width="100%"><a href="https://tenor.com/view/jjk-culling-games-culling-games-jjk-ryu-ryu-jujutsu-kaisen-ryu-jujutsu-gif-13013674619887156677">Jjk Culling Games Jjk Ryu GIF</a>from <a href="https://tenor.com/search/jjk+culling+games-gifs">Jjk Culling Games GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+      <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;" alt="Vihara">
       <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
         <p class="text-warning fw-semibold text-uppercase ls-wide mb-1 fw-bold fs-1">Selamat Datang Di</p>
         <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
@@ -32,7 +57,7 @@
 
     <!-- second -->
     <div class="carousel-item">
-      <div class="tenor-gif-embed" data-postid="5087158465488164326" data-share-method="host" data-aspect-ratio="1.79137" data-width="100%"><a href="https://tenor.com/view/hakari-dance-hakari-kinji-hakari-jjk-hakari-jjk-dance-gif-5087158465488164326">Hakari Dance Kinji Hakari GIF</a>from <a href="https://tenor.com/search/hakari+dance-gifs">Hakari Dance GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+     <img src="{{ asset('mainpage/slide2.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;" alt="Vihara 2">
       <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;" >
         <p class="text-warning fw-semibold text-uppercase mb-1">Temukan Kedamaian</p>
         <h1 class="display-4 fw-bold text-white">Ketenangan & Spiritualitas</h1>
@@ -46,7 +71,7 @@
 
     <!-- third impact -->
     <div class="carousel-item">
-     <div class="tenor-gif-embed" data-postid="16441200775481807752" data-share-method="host" data-aspect-ratio="1.76596" data-width="100%"><a href="https://tenor.com/view/jujutsu-kaisen-jujutsu-kaisen-season-3-jjk-season-3-jujutsu-kaisen-culling-games-jjk-culling-games-gif-16441200775481807752">Jujutsu Kaisen Jujutsu Kaisen Season 3 GIF</a>from <a href="https://tenor.com/search/jujutsu+kaisen-gifs">Jujutsu Kaisen GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+      <img src="{{ asset('mainpage/slide3.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;" alt="Vihara 3">
       <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
         <p class="text-warning fw-semibold text-uppercase mb-1 fw-bold">Bergabung Bersama Kami</p>
         <h1 class="display-4 fw-bold text-white">Komunitas yang Hangat</h1>
@@ -79,7 +104,7 @@
     
     <div class="row align-items-center mb-5">
       <div class="col-md-6">
-        <img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" >
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" >
       </div>
       <div class="col-md-6">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt ut mi ac dignissim</p>
@@ -93,10 +118,10 @@
       </div>
       <div class="col-md-6">
         <div class="row g-2">
-          <div class="col-6"><img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" ></div>
-          <div class="col-6"><img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" ></div>
-          <div class="col-6"><img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" ></div>
-          <div class="col-6"><img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" ></div>
+          <div class="col-6"><img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" ></div>
+          <div class="col-6"><img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" ></div>
+          <div class="col-6"><img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" ></div>
+          <div class="col-6"><img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" ></div>
         </div>
       </div>
     </div>
@@ -105,8 +130,8 @@
     <div class="row align-items-center">
       <div class="col-md-6">
         <div class="row g-2">
-          <div class="col-6"><img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" ></div>
-          <div class="col-6"><img src="{{ asset('image/vihara.jpg') }}" class="img-fluid rounded" ></div>
+          <div class="col-6"><img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" ></div>
+          <div class="col-6"><img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" ></div>
         </div>
       </div>
       <div class="col-md-6">
@@ -122,14 +147,14 @@
     <h2 class="text-center mb-4">Gallery</h2>
 
     <div class="d-flex gap-3 overflow-auto pb-2" style="cursor: grab;">
-      <img src="{{ asset('image/vihara.jpg') }}"  class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('image/vihara.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}"  class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
+      <img src="{{ asset('mainpages/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
     </div>
 
   </div>

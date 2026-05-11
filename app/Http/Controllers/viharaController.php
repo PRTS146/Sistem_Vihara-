@@ -9,13 +9,13 @@ class ViharaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function home()
     {
         // $dataVihara = Vihara::all();
         // $data= [
         //     'dataVihara' => $dataVihara
         // ];
-        return view('vihara.index');
+        return view('vihara.home');
     }
     public function dashboard(){
         return view('vihara.dashboard');

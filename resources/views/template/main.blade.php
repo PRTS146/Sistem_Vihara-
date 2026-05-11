@@ -2,7 +2,7 @@
 @extends('layout.body')
 
 @section('body')
-    @extends('components.navbar')
+    {{-- @extends('components.navbar') --}}
     @yield('content')
     
 @endsection
