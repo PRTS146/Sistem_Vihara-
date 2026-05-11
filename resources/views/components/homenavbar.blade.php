@@ -27,6 +27,10 @@
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
       </ul>
+
+     
+      <a href="{{ route('login') }}" class="btn btn-warning rounded-pill px-4">Login</a>
+
     </div>
   </div>
 </nav>

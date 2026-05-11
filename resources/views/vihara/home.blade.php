@@ -2,31 +2,11 @@
 
 @section('content')
 
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-      </ul>
+   @extends('components.homenavbar')
 
       
-      <a href="#" class="btn btn-warning rounded-pill px-4">Login</a>
 
-    </div>
+    
 
 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
@@ -96,12 +76,14 @@
 </div>
 
 
-<section id="about" class="py-5">
+<section id="Titleabout" class="py-5 bg-warning">
   <div class="container">
 
     <h2 class="text-center mb-5">About Vihara</h2>
 
-    
+  </section>
+   <section id="about" class="py-5">
+    <div class="container">
     <div class="row align-items-center mb-5">
       <div class="col-md-6">
         <img src="{{ asset('mainpage/placeholder.jpg') }}" class="img-fluid rounded" >
@@ -146,18 +128,46 @@
   <div class="container">
     <h2 class="text-center mb-4">Gallery</h2>
 
-    <div class="d-flex gap-3 overflow-auto pb-2" style="cursor: grab;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}"  class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-      <img src="{{ asset('mainpages/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 200px; width: 280px; object-fit: cover;">
-    </div>
+    <div id="galleryCarousel" class="carousel slide position-relative" data-bs-ride="carousel" style="padding: 0 40px;">
+      <div class="carousel-inner">
 
+        <!-- Slide 1: shows 4 images -->
+        <div class="carousel-item active">
+          <div class="d-flex gap-3">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+          </div>
+        </div>
+
+        <!-- Slide 2: next 4 images -->
+        <div class="carousel-item">
+          <div class="d-flex gap-3">
+            <img src="{{ asset('mainpage/slide1.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+            <img src="{{ asset('mainpage/slide2.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev" style="width: 40px; left: 0;">
+    <span class="carousel-control-prev-icon" style="filter: invert(1);"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next" style="width: 40px; right: 0;">
+    <span class="carousel-control-next-icon" style="filter: invert(1);"></span>
+  </button>
+
+
+    </div>
   </div>
 </section>
+  
+
+
+ 
 @endsection
 

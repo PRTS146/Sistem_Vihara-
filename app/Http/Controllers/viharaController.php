@@ -25,6 +25,15 @@ class ViharaController extends Controller
         return view('vihara.abu');
     }
 
+     public function login(){
+        return view('auth.login');
+    }
+
+       public function register(){
+        return view('auth.register');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
