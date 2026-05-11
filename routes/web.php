@@ -9,5 +9,5 @@ use App\Http\Controllers\ViharaController;
 Route::get('/', [ViharaController::class,'home'])->name("mainpage");
 Route::get('/dashboard', [ViharaController::class,'dashboard'])->name("dashboard");
 Route::get('/abu', [ViharaController::class,'abu'])->name("abu");
-Route::get('/login', [ViharaController::class,'login'])->name("login");
-Route::get('/register', [ViharaController::class,'register'])->name("register");
+// Route::get('/login', [ViharaController::class,'login'])->name("login");
+// Route::get('/register', [ViharaController::class,'register'])->name("register");
