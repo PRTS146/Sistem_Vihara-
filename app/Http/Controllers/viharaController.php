@@ -22,7 +22,7 @@ class ViharaController extends Controller
     }
 
     public function abu(){
-        return view('vihara.abu');
+        return view('vihara.rmhabu');
     }
 
      public function login(){

@@ -1,17 +1,78 @@
-@extends('template.main')
+@extends('template.dash')
 
-@section('content')
-<h1>ini dashboard</h1>
-<div class="card" style="width: 18rem;">
-  <img src="{{ asset('image/vihara.jpg') }}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-      @csrf
-      <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
-  </div>
+@section('dashcontent')
+
+
+
+<div class="col-md-2 bg-light border-end py-4 px-3" style="height: 100vh; overflow-y: auto;">
+  <h5 class="fw-bold mb-4">📅 Upcoming Events</h5>
+
+
+       <a href="{{ route('dashboard') }}" class="text-decoration-none text-dark">
+        <div class="card mb-3 shadow-sm border-0 event-card">
+           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top" style="height: 120px; object-fit: cover;">
+          <div class="card-body p-2">
+            <p class="fw-bold mb-0 small">Perayaan Waisak 2025</p>
+            <p class="text-muted mb-0" style="font-size: 0.75rem;">12 Mei 2025</p>
+          </div>
+        </div>
+</a>
+        <a href="#" class="text-decoration-none text-dark">
+          <div class="card mb-3 shadow-sm border-0 event-card">
+           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top" style="height: 120px; object-fit: cover;">
+            <div class="card-body p-2">
+            <p class="fw-bold mb-0 small">Perayaan Waisak 2026</p>
+            <p class="text-muted mb-0" style="font-size: 0.75rem;">115 Mei 2025</p>
+          </div>
+        </div>
+</a>
+
+
+        <a href="#" class="text-decoration-none text-dark">
+          <div class="card mb-3 shadow-sm border-0 event-card">
+           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top" style="height: 120px; object-fit: cover;">
+            <div class="card-body p-2">
+            <p class="fw-bold mb-0 small">Perayaan Waisak 2026</p>
+            <p class="text-muted mb-0" style="font-size: 0.75rem;">115 Mei 2025</p>
+          </div>
+        </div>
+</a>
+
+
+
+      <a href="#" class="text-decoration-none text-dark">
+          <div class="card mb-3 shadow-sm border-0 event-card">
+           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top" style="height: 120px; object-fit: cover;">
+            <div class="card-body p-2">
+            <p class="fw-bold mb-0 small">Perayaan Waisak 2026</p>
+            <p class="text-muted mb-0" style="font-size: 0.75rem;">115 Mei 2025</p>
+          </div>
+        </div>
+</a>
+
+      <a href="#" class="text-decoration-none text-dark">
+          <div class="card mb-3 shadow-sm border-0 event-card">
+           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top" style="height: 120px; object-fit: cover;">
+            <div class="card-body p-2">
+            <p class="fw-bold mb-0 small">Perayaan Waisak 2026</p>
+            <p class="text-muted mb-0" style="font-size: 0.75rem;">115 Mei 2025</p>
+          </div>
+        </div>
+</a>
+
+    <a href="#" class="text-decoration-none text-dark">
+          <div class="card mb-3 shadow-sm border-0 event-card">
+           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top" style="height: 120px; object-fit: cover;">
+            <div class="card-body p-2">
+            <p class="fw-bold mb-0 small">Perayaan Waisak 2026</p>
+            <p class="text-muted mb-0" style="font-size: 0.75rem;">115 Mei 2025</p>
+          </div>
+        </div>
+</a>
+
 </div>
+
+
+
+
 @endsection

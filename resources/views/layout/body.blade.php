@@ -54,6 +54,32 @@
         }
     </script>
 
+        <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#passwordInput');
+
+    togglePassword.addEventListener('click', function () {
+    // Mengecek apakah tipe input saat ini adalah password
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    
+    // Mengubah tipe input sesuai hasil cek di atas
+    passwordInput.setAttribute('type', type);
+    
+    // Opsional: Membuat tombol terlihat sedikit ditekan/fokus saat diklik
+    this.classList.toggle('active');
+  });
+
+        <script>
+        function openSlotModal(slotNumber) {
+        document.getElementById('modalSlotNumber').textContent = slotNumber;
+            const modal = new bootstrap.Modal(document.getElementById('slotModal'));
+        modal.show();
+  }
+</script>
+  
+    </script>
+
+
     @yield('scripts')
 
 </body>
