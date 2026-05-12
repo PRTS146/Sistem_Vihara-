@@ -80,42 +80,29 @@
 </div>
 
   <div class="col-md-10 py-4 px-4">
-  <div class="card shadow-sm border-0 mb-4">
-    <div class="card-header bg-warning fw-bold">
-      📆 Kalender Acara — Mei 2025
-    </div>
-    <div class="card-body">
-      <table class="table table-bordered text-center mb-0">
-        <thead class="table-light">
-          <tr>
-            <th>Min</th><th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td>
-          </tr>
-          <tr>
-            <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
-          </tr>
-          <tr>
-            <td class="bg-warning fw-bold">12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td>
-          </tr>
-          <tr>
-            <td>19</td><td>20</td><td class="bg-warning fw-bold">21</td><td>22</td><td>23</td><td>24</td><td>25</td>
-          </tr>
-          <tr>
-            <td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td>
-          </tr>
-        </tbody>
-      </table>
-      <small class="text-muted mt-2 d-block">🟡 = Ada acara</small>
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-warning d-flex align-items-center justify-content-between">
+    <button class="btn btn-sm btn-light rounded-pill px-3" onclick="changeMonth(-1)">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <span class="fw-bold" id="calendarTitle"></span>
+    <button class="btn btn-sm btn-light rounded-pill px-3" onclick="changeMonth(1)">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-bordered text-center mb-0">
+      <thead class="table-warning">
+        <tr>
+          <th>Min</th><th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th>
+        </tr>
+      </thead>
+      <tbody id="calendarBody"></tbody>
+    </table>
+    <div class="px-3 py-2">
+      <small class="text-muted">🟡 = Ada acara &nbsp; 🔵 = Hari ini</small>
     </div>
   </div>
-
-</div> 
 </div>
 </div>
-
-
 @endsection

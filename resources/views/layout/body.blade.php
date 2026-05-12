@@ -83,6 +83,93 @@
         }
     </script>
 
+
+
+<script>
+  
+  const events = {
+    '2025-5-12': 'Perayaan Waisak 2025',
+    '2025-5-21': 'Doa Bersama',
+    '2025-6-1':  'Meditasi Pagi',
+    '2025-6-15': 'Bakti Sosial',
+  };
+
+  const monthNames = [
+    'Januari','Februari','Maret','April','Mei','Juni',
+    'Juli','Agustus','September','Oktober','November','Desember'
+  ];
+
+  let currentDate = new Date();
+  let currentMonth = currentDate.getMonth();
+  let currentYear = currentDate.getFullYear();
+
+  function changeMonth(direction) {
+    currentMonth += direction;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    document.getElementById('calendarTitle').textContent =
+      `📆 ${monthNames[currentMonth]} ${currentYear}`;
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date();
+
+    let html = '<tr>';
+    let day = 1;
+
+        for (let i = 0; i < firstDay; i++) {
+      html += '<td class="text-muted bg-light"></td>';
+    }
+
+    let cellCount = firstDay;
+
+    while (day <= daysInMonth) {
+      if (cellCount % 7 === 0 && day !== 1) {
+        html += '</tr><tr>';
+      }
+
+      const dateKey = `${currentYear}-${currentMonth + 1}-${day}`;
+      const isToday = day === today.getDate() &&
+                      currentMonth === today.getMonth() &&
+                      currentYear === today.getFullYear();
+      const hasEvent = events[dateKey];
+
+      let cellClass = '';
+      let tooltip = '';
+
+      if (isToday) {
+        cellClass = 'bg-primary text-white fw-bold';
+      } else if (hasEvent) {
+        cellClass = 'bg-warning fw-bold';
+        tooltip = `title="${hasEvent}"`;
+      }
+
+      html += `<td class="${cellClass} p-2" ${tooltip} style="cursor: ${hasEvent ? 'pointer' : 'default'}; min-width: 40px;">
+                 ${day}
+                 ${hasEvent ? '<br><small style="font-size:0.6rem;">📅</small>' : ''}
+               </td>`;
+
+      day++;
+      cellCount++;
+    }
+
+    
+    while (cellCount % 7 !== 0) {
+      html += '<td class="text-muted bg-light"></td>';
+      cellCount++;
+    }
+
+    html += '</tr>';
+    document.getElementById('calendarBody').innerHTML = html;
+  }
+
+  renderCalendar();
+</script>
+
     @yield('scripts')
 
 </body>
