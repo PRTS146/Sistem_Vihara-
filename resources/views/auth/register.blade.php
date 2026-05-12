@@ -1,1 +1,1 @@
-<!-- kalo ada halaman register, buat nya disini  -->
+<h1> Register </h1>
