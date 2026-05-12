@@ -33,6 +33,7 @@ class ViharaController extends Controller
         return view('auth.register');
     }
 
+      
 
     /**
      * Show the form for creating a new resource.

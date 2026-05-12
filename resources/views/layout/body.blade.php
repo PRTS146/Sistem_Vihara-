@@ -4,13 +4,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
     </script>
+
     <script>
+        // Carousel
         const carousel = document.getElementById('heroCarousel');
         if (carousel) {
             carousel.addEventListener('slide.bs.carousel', e => {
                 const incoming = e.relatedTarget;
-                const els = incoming.querySelectorAll(
-                    '.caption-sub, .caption-title, .caption-desc, .caption-buttons');
+                const els = incoming.querySelectorAll('.caption-sub, .caption-title, .caption-desc, .caption-buttons');
                 els.forEach((el, i) => {
                     el.style.animation = 'none';
                     el.offsetHeight;
@@ -20,7 +21,7 @@
             });
         }
 
-
+        // Gallery drag scroll
         const gallery = document.querySelector('.overflow-auto');
         if (gallery) {
             let isDown = false;
@@ -33,17 +34,14 @@
                 startX = e.pageX - gallery.offsetLeft;
                 scrollLeft = gallery.scrollLeft;
             });
-
             gallery.addEventListener('mouseleave', () => {
                 isDown = false;
                 gallery.style.cursor = 'grab';
             });
-
             gallery.addEventListener('mouseup', () => {
                 isDown = false;
                 gallery.style.cursor = 'grab';
             });
-
             gallery.addEventListener('mousemove', e => {
                 if (!isDown) return;
                 e.preventDefault();
@@ -52,36 +50,40 @@
                 gallery.scrollLeft = scrollLeft - walk;
             });
         }
-    </script>
 
-        <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const passwordInput = document.querySelector('#passwordInput');
+        // Toggle password
+        const togglePassword = document.querySelector('#togglePassword');
+        if (togglePassword) {
+            const passwordInput = document.querySelector('#passwordInput');
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('active');
+            });
+        }
 
-    togglePassword.addEventListener('click', function () {
-    // Mengecek apakah tipe input saat ini adalah password
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    
-    // Mengubah tipe input sesuai hasil cek di atas
-    passwordInput.setAttribute('type', type);
-    
-    // Opsional: Membuat tombol terlihat sedikit ditekan/fokus saat diklik
-    this.classList.toggle('active');
-  });
-
-        <script>
+        // Slot modal
         function openSlotModal(slotNumber) {
-        document.getElementById('modalSlotNumber').textContent = slotNumber;
-            const modal = new bootstrap.Modal(document.getElementById('slotModal'));
-        modal.show();
-  }
-</script>
-  
-    </script>
+            const slotEl = document.getElementById('modalSlotNumber');
+            if (slotEl) {
+                slotEl.textContent = slotNumber;
+                const modal = new bootstrap.Modal(document.getElementById('slotModal'));
+                modal.show();
+            }
+        }
 
+        // Join modal
+        const joinModal = document.getElementById('joinModal');
+        if (joinModal) {
+            joinModal.addEventListener('show.bs.modal', e => {
+                const trigger = e.relatedTarget;
+                const route = trigger.getAttribute('data-route');
+                document.getElementById('joinYesBtn').setAttribute('href', route);
+            });
+        }
+    </script>
 
     @yield('scripts')
 
 </body>
-
 </html>

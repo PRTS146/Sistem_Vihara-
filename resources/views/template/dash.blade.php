@@ -3,6 +3,7 @@
 
 @section('body')
      @extends('components.dashnavbar')
+     @extends('components.popupdash')
     @yield('dashcontent')
     
 @endsection
