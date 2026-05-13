@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="#">VIHARA MAHA GIRI BUDDHA</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,9 +28,36 @@
         </li>
       </ul>
 
-     
-      <a href="{{ route('login') }}" class="btn btn-danger rounded-pill px-4">Log out</a>
+      <div class="d-flex align-items-center gap-3">
+        <div class="dropdown">
+            <a class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="text-end me-2 d-none d-sm-block">
+                    <div class="fw-bold small">{{ Auth::user()->name }}</div>
+                    <div class="text-muted" style="font-size: 10px;">Umat</div>
+                </div>
+                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=random" 
+                     alt="Profile" class="rounded-circle" width="40" height="40">
+            </a>
 
-    </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                <li class="px-3 py-2 border-bottom">
+                    <div class="fw-bold">{{ Auth::user()->name }}</div>
+                    <div class="small text-muted">{{ Auth::user()->email }}</div>
+                </li>
+                <li><a class="dropdown-item mt-2" href="#">My Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}" onsubmit="sessionStorage.removeItem('welcomeShown')">
+                        @csrf
+                        <button type="submit" class="dropdown-item text-danger fw-bold">
+                             Sign Out
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+      </div>
+      </div>
   </div>
 </nav>

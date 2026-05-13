@@ -23,9 +23,6 @@
   <label class="form-label">Email</label>
   <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
     placeholder="Enter Email" value="{{ old('email') }}" required>
-  @error('email')
-    <div class="invalid-feedback">{{ $message }}</div>
-  @enderror
 </div>
 
 <div class="mb-3">
@@ -37,9 +34,6 @@
     <button class="btn btn-outline-secondary" type="button" id="togglePassword">
       <i class="bi bi-eye"></i>
     </button>
-    @error('password')
-      <div class="invalid-feedback d-block">{{ $message }}</div>
-    @enderror
   </div>
 </div>
             <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
