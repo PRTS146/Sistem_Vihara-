@@ -82,33 +82,62 @@
           </table>
           <div class="px-3 py-2">
             <small class="text-muted">🟡 = Ada acara &nbsp; 🔵 = Hari ini</small>
-          </div>
-        </div>
-      </div>
-    </div>
 
+
+            <div class="card shadow-sm border-0 mt-4">
+  <div class="card-header bg-warning fw-bold">
+    📋 Daftar Acara
   </div>
-</div>
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Nama Acara</th>
+          <th>Tanggal</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Perayaan Waisak 2025</td>
+          <td>12 Mei 2025</td>
+          <td><span class="badge bg-success">Aktif</span></td>
+          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Doa Bersama</td>
+          <td>21 Mei 2025</td>
+          <td><span class="badge bg-success">Aktif</span></td>
+          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Meditasi Pagi</td>
+          <td>1 Juni 2025</td>
+          <td><span class="badge bg-warning text-dark">Segera</span></td>
+          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Bakti Sosial</td>
+          <td>15 Juni 2025</td>
+          <td><span class="badge bg-secondary">Akan Datang</span></td>
+          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Cek apakah pesan sambutan sudah pernah muncul di sesi ini
-        if (!sessionStorage.getItem('welcomeShown')) {
-            Swal.fire({
-                title: '🙏 Namo Buddhaya!',
-                text: 'Selamat Datang, {{ Auth::user()->name }}!',
-                icon: 'success',
-                timer: 3000, // Hilang otomatis dalam 3 detik
-                showConfirmButton: false,
-                padding: '2rem',
-                color: '#716add',
-                backdrop: `rgba(0,0,123,0.4)`
-            });
-            // Tandai bahwa popup sudah muncul
-            sessionStorage.setItem('welcomeShown', 'true');
-        }
-    });
-</script>
+ 
+</div>
+</div>
+  
+ 
+
 
 @endsection

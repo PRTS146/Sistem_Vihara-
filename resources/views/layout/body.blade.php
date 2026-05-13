@@ -170,6 +170,29 @@
   renderCalendar();
 </script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cek apakah pesan sambutan sudah pernah muncul di sesi ini
+        if (!sessionStorage.getItem('welcomeShown')) {
+            Swal.fire({
+                title: '🙏 Namo Buddhaya!',
+                text: 'Selamat Datang, {{ Auth::user()->name }}!',
+                icon: 'success',
+                timer: 3000, // Hilang otomatis dalam 3 detik
+                showConfirmButton: false,
+                padding: '2rem',
+                color: '#716add',
+                backdrop: `rgba(0,0,123,0.4)`
+            });
+            // Tandai bahwa popup sudah muncul
+            sessionStorage.setItem('welcomeShown', 'true');
+        }
+    });
+
+    </script>
+
     @yield('scripts')
 
 </body>
