@@ -33,6 +33,13 @@ class ViharaController extends Controller
         return view('auth.register');
     }
 
+    // Untuk admin page
+
+    public function monitoring() {
+    return view('vihara.monitoring'); 
+    }
+
+    // 
       
 
     /**

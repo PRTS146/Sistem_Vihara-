@@ -13,6 +13,9 @@ Route::get('/abu', [ViharaController::class,'abu'])->name("abu");
 // Route::get('/login', [ViharaController::class,'login'])->name("login");
 // Route::get('/register', [ViharaController::class,'register'])->name("register");
 
+// Rute admin page
+Route::get('/monitoring', [ViharaController::class, 'monitoring'])->name("monitoring");
+
 // Rute "Login with Google"
 Route::get('auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('google.login');
 
