@@ -1,8 +1,12 @@
 <nav class="navbar">
   <span class="nav-brand">Maha Giri Buddha</span>
   <div class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Monitoring</a>
+    <a href="{{ route('mainpage') }}">Home</a>
+    <a href="{{ route('monitoring') }}">Monitoring</a>
   </div>
-  <button class="nav-logout">Logout</button>
+  
+  <form method="POST" action="{{ route('logout') }}" style="margin: 0; display: flex; align-items: center;" onsubmit="sessionStorage.removeItem('welcomeShown')">
+    @csrf
+    <button type="submit" class="nav-logout">Logout</button>
+  </form>
 </nav>

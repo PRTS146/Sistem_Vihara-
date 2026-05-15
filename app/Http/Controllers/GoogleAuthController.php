@@ -45,6 +45,7 @@ class GoogleAuthController extends Controller
                         'name' => $googleUser->name,
                         'email' => $googleUser->email,
                         'google_id' => $googleUser->id,
+                        'role' => 'user',
                         // Password dibiarkan kosong sesuai pengaturan nullable di database
                     ]);
                     Auth::login($newUser);

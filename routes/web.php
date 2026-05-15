@@ -3,21 +3,28 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViharaController;
 use App\Http\Controllers\GoogleAuthController;
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+use Illuminate\Support\Facades\Auth;
 
+// --- RUTE PUBLIK ---
 Route::get('/', [ViharaController::class,'home'])->name("mainpage");
-Route::get('/dashboard', [ViharaController::class,'dashboard'])->name("dashboard");
-Route::get('/abu', [ViharaController::class,'abu'])->name("abu");
-// Route::get('/login', [ViharaController::class,'login'])->name("login");
-// Route::get('/register', [ViharaController::class,'register'])->name("register");
-
-// Rute admin page
-Route::get('/monitoring', [ViharaController::class, 'monitoring'])->name("monitoring");
-
-// Rute "Login with Google"
 Route::get('auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('google.login');
-
-// Rute Callback (Google Cloud Console)
 Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+
+// --- SIMPANG JALAN (Setelah Login) ---
+Route::get('/home', function () {
+    if (Auth::user()->role === 'admin') {
+        return redirect()->route('monitoring');
+    }
+    return redirect()->route('dashboard');
+})->middleware('auth');
+
+// --- AREA USER (Tugas Vincent) ---
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/dashboard', [ViharaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/abu', [ViharaController::class, 'abu'])->name('abu');
+});
+
+// --- AREA ADMIN (Tugas Kelvin) ---
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/monitoring', [ViharaController::class, 'monitoring'])->name("monitoring");
+});
