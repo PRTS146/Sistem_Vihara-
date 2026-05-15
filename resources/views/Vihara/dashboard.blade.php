@@ -60,33 +60,53 @@
 
     </div>
 
-    <div class="col-md-10 py-4 px-4">
-      <div class="card shadow-sm border-0 mb-4">
-        <div class="card-header bg-warning d-flex align-items-center justify-content-between">
-          <button class="btn btn-sm btn-light rounded-pill px-3" onclick="changeMonth(-1)">
-            <i class="bi bi-chevron-left"></i>
-          </button>
-          <span class="fw-bold" id="calendarTitle"></span>
-          <button class="btn btn-sm btn-light rounded-pill px-3" onclick="changeMonth(1)">
-            <i class="bi bi-chevron-right"></i>
-          </button>
+ <div class="col-md-6">
+   <div class="card shadow-sm border-0 mb-4">
+     <div class="card-header bg-warning fw-bold">
+       📆 Kalender Acara
+     </div>
+     <div class="card-body">
+       <div id="calendar"></div>
+     </div>
+  </div>
+ </div>
+
+<div class="col-md-4">
+  <div class="card shadow-sm border-0 h-100">
+    <div class="card-header bg-warning fw-bold">
+      🙏 Donasi
+    </div>
+
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" 
+         class="w-100" 
+         style="height: 180px; object-fit: cover;">
+
+    <div class="card-body">
+      <h6 class="fw-bold">Donasi untuk Vihara</h6>
+      <p class="text-muted small">Bantu kami menjaga dan mengembangkan Vihara Maha Giri Buddha untuk generasi mendatang.</p>
+
+      <div class="mb-2">
+        <div class="d-flex justify-content-between small mb-1">
+          <span>Terkumpul</span>
+          <span class="fw-bold">Rp 5.000.000</span>
         </div>
-        <div class="card-body p-0">
-          <table class="table table-bordered text-center mb-0">
-            <thead class="table-warning">
-              <tr>
-                <th>Min</th><th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th>
-              </tr>
-            </thead>
-            <tbody id="calendarBody"></tbody>
-          </table>
-          <div class="px-3 py-2">
-            <small class="text-muted">🟡 = Ada acara &nbsp; 🔵 = Hari ini</small>
+        <div class="progress" style="height: 8px;">
+          <div class="progress-bar bg-warning" style="width: 50%;"></div>
+        </div>
+        <small class="text-muted">Target: Rp 10.000.000</small>
+      </div>
 
-
-            <div class="card shadow-sm border-0 mt-4">
+      <a href="#" class="btn btn-warning w-100 rounded-pill mt-2 fw-bold"  data-bs-toggle="modal" data-bs-target="#donasi">
+        💛 Donasi Sekarang
+      </a>
+    </div>
+  </div>
+</div>
+  
+  
+ <div class="card shadow-sm border-0 mt-4">
   <div class="card-header bg-warning fw-bold">
-    📋 Daftar Acara
+    📋 Acara Yang Anda Ikuti
   </div>
   <div class="card-body p-0">
     <table class="table table-hover mb-0">
@@ -96,48 +116,18 @@
           <th>Nama Acara</th>
           <th>Tanggal</th>
           <th>Status</th>
-          <th>Aksi</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Perayaan Waisak 2025</td>
-          <td>12 Mei 2025</td>
-          <td><span class="badge bg-success">Aktif</span></td>
-          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Doa Bersama</td>
-          <td>21 Mei 2025</td>
-          <td><span class="badge bg-success">Aktif</span></td>
-          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Meditasi Pagi</td>
-          <td>1 Juni 2025</td>
-          <td><span class="badge bg-warning text-dark">Segera</span></td>
-          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Bakti Sosial</td>
-          <td>15 Juni 2025</td>
-          <td><span class="badge bg-secondary">Akan Datang</span></td>
-          <td><a href="#" class="btn btn-warning btn-sm rounded-pill px-3">Lihat</a></td>
+      <tbody id="joinedEventsTable">
+        <tr id="emptyRow">
+          <td colspan="4" class="text-center text-muted py-4">
+            Belum ada acara yang diikuti.
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  </div>
-
- 
 </div>
-</div>
-  
- 
 
 
 @endsection
