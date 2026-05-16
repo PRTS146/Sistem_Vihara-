@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/dashboard', 
+    'home' => '/home', 
 //    'home' => '/home', aku sementara pakai dashboard, ntar ganti ke home aja kalo sudah oke
     /*
     |--------------------------------------------------------------------------
