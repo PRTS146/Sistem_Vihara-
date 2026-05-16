@@ -2,7 +2,7 @@
 @extends('layout.body')
 
 @section('body')
-     @extends('components.dashnavbar')
+     @extends('navbar.dashnav')
      @extends('components.popupdash')
      @extends('components.popupdonasi')
     @yield('dashcontent')

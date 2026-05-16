@@ -2,6 +2,8 @@
   <span class="nav-brand">Maha Giri Buddha</span>
   <div class="nav-links">
     <a href="{{ route('mainpage') }}">Home</a>
+    <a href="{{ route('dashboard') }}">dashboard</a>
+    <a href="{{ route('abu') }}">Rumah Abu</a>
     <a href="{{ route('monitoring') }}">Monitoring</a>
   </div>
   

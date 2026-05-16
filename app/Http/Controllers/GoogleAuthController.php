@@ -11,14 +11,14 @@ use Exception;
 class GoogleAuthController extends Controller
 {
     // Fungsi untuk mengarahkan pengguna ke halaman login Google
-    public function redirectToGoogle()
+    public function(){
+        redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
     // Fungsi untuk memproses data balasan dari Google
-    public function handleGoogleCallback()
-    {
+    public function handleGoogleCallback
         try {
             // Mengambil data pengguna dari Google
             $googleUser = Socialite::driver('google')->user();

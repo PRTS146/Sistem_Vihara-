@@ -2,7 +2,7 @@
 @extends('layout.body')
 
 @section('body')
-     @extends('components.abunavbar')
+     @extends('navbar.abunav')
     @yield('abucontent')
     
 @endsection

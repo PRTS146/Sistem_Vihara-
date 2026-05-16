@@ -1,6 +1,7 @@
-@extends('template.main')
+@extends('layout.head')
+@extends('layout.body')
 
-@section('content')
+@section('body')
 
 <div class="container-fluid vh-100">
   <div class="row h-100">

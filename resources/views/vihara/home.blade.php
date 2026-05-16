@@ -1,8 +1,7 @@
-@extends('template.main')
+@extends('template.home')
 
 @section('content')
 
-   @extends('components.homenavbar')
 
       
 

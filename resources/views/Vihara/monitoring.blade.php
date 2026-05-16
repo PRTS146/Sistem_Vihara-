@@ -608,7 +608,7 @@
   }
   </style>
 
-  @include('components.monitoringnavbar')
+  @include('navbar.monitornav')
 
   <div class="page">
     <div class="main-grid">

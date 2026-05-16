@@ -1,6 +1,7 @@
-@extends('template.main')
+@extends('layout.head')
+@extends('layout.body')
 
-@section('content')
+@section('body')
 
 <div class="container-fluid vh-100">
   <div class="row h-100">
@@ -42,9 +43,9 @@
     @enderror
   </div>
 </div>
-            <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+            <button type="submit" class="btn btn-primary w-100 mb-2">Register</button>
 
-            <a href="{{ route('register') }}">Sign Up</a>
+            <a href="{{ route('login') }}">Already have an account?</a>
 
 
         </form>
