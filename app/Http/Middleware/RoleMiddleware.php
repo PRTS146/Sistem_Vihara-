@@ -21,7 +21,8 @@ class RoleMiddleware
         // --- ATURAN BARU ---
         // Jika route ini butuh role 'admin', tapi yang login bukan admin (misal 'user')
         if ($role === 'admin' && $userRole !== 'admin') {
-            return redirect()->route('dashboard'); // Lempar user kembali ke dashboardnya
+            // Berikan pesan 403 yang sopan tapi tegas
+            abort(403, 'Namo Buddhaya. Maaf, halaman ini khusus untuk Pengurus/Admin Vihara.'); 
         }
 
         // Jika route ini butuh role 'user', tapi yang login bukan 'user' DAN BUKAN 'admin'
