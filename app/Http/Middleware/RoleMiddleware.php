@@ -16,23 +16,22 @@ class RoleMiddleware
             return redirect()->route('mainpage');
         }
 
-        // 2. Jika SUDAH login, tapi mencoba masuk ke area yang rolenya tidak sesuai
-        if (Auth::user()->role !== $role) {
-            
-            // Jika Admin nyasar ke halaman user, lempar ke halaman Monitoring Kelvin
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('monitoring');
-            }
-            
-            // Jika User mencoba menjebol halaman admin, lempar ke Dashboard Vincent
-            if (Auth::user()->role === 'user') {
-                return redirect()->route('dashboard');
-            }
+        $userRole = Auth::user()->role;
 
-            // Jaga-jaga jika ada role aneh/tidak dikenal di database
-            abort(403, 'Akses ditolak.');
+        // --- ATURAN BARU ---
+        // Jika route ini butuh role 'admin', tapi yang login bukan admin (misal 'user')
+        if ($role === 'admin' && $userRole !== 'admin') {
+            return redirect()->route('dashboard'); // Lempar user kembali ke dashboardnya
         }
 
+        // Jika route ini butuh role 'user', tapi yang login bukan 'user' DAN BUKAN 'admin'
+        // (Ini memastikan admin tetap lolos pengecekan ini)
+        if ($role === 'user' && $userRole !== 'user' && $userRole !== 'admin') {
+            // Skrip ini jalan jika misal ada role ke-3 yang tak terdaftar nyasar
+            abort(403, 'Akses ditolak.'); 
+        }
+
+        // Jika lolos pengecekan di atas, izinkan masuk ke halaman
         return $next($request);
     }
 }
