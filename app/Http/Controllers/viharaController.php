@@ -51,6 +51,10 @@ class ViharaController extends Controller
     }
 
     // Untuk admin page
+    
+    public function adminhome() {
+    return view('vihara.adminhome');
+    }
 
     public function monitoring() {
     return view('vihara.monitoring'); 

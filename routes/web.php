@@ -22,10 +22,11 @@ Route::get('/home', function () {
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', [ViharaController::class, 'dashboard'])->name('dashboard');
     Route::get('/abu', [ViharaController::class, 'abu'])->name('abu');
+    Route::get('/adminhome', [ViharaController::class,'adminhome'])->name('adminhome');
 });
 
 // --- AREA ADMIN (Tugas Kelvin) ---
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/monitoring', [ViharaController::class, 'monitoring'])->name("monitoring");
 });
 
