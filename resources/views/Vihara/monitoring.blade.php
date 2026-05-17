@@ -696,7 +696,7 @@
           <div class="stat-card">
             <div>
               <div class="stat-label">Total Kapasitas</div>
-              <div class="stat-val blue" id="statKap">50</div>
+              <div class="stat-val blue" id="statKap">67</div>
             </div>
             <div class="stat-ico">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
@@ -705,7 +705,7 @@
           <div class="stat-card">
             <div>
               <div class="stat-label">Unit Terjual</div>
-              <div class="stat-val green">10</div>
+              <div class="stat-val green">67</div>
             </div>
             <div class="stat-ico">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -714,7 +714,7 @@
           <div class="stat-card">
             <div>
               <div class="stat-label">Menunggu<br>Pembayaran</div>
-              <div class="stat-val orange">10</div>
+              <div class="stat-val orange">67</div>
             </div>
             <div class="stat-ico">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>

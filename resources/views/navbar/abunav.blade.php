@@ -12,7 +12,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('dashboard') }}">Vihara maha giri</a>
         </li>
-     s
+     
       </ul>
 
        <div class="d-flex align-items-center gap-3">
@@ -31,8 +31,7 @@
                     <div class="fw-bold">{{ Auth::user()->name }}</div>
                     <div class="small text-muted">{{ Auth::user()->email }}</div>
                 </li>
-                <li><a class="dropdown-item mt-2" href="#">My Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item mt-2" href="{{ route('profile') }}">My Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}" onsubmit="sessionStorage.removeItem('welcomeShown')">

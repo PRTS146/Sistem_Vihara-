@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ViharaController extends Controller
 {
@@ -31,6 +32,22 @@ class ViharaController extends Controller
 
        public function register(){
         return view('auth.register');
+    }
+
+        public function profile(){
+         return view('user.profile');
+    }
+
+    public function profileUpdate(Request $request){
+        $request->validate([
+        'name' => 'required|string|max:255',
+        ]);
+
+        Auth::user()->update([
+        'name' => $request->name,
+    ]);
+
+        return redirect()->route('profile')->with('success', 'Nama berhasil diubah!');
     }
 
     // Untuk admin page

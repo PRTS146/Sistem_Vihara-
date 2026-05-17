@@ -3,8 +3,8 @@
 
 @section('body')
      @extends('navbar.dashnav')
-     @extends('components.popupdash')
-     @extends('components.popupdonasi')
+     @extends('popup.popupdash')
+     @extends('popup.popupdonasi')
     @yield('dashcontent')
     
 @endsection

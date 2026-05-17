@@ -46,16 +46,23 @@
     @enderror
   </div>
 </div>
+
+
+    <div class="mb-3">
+  <label class="form-label">Confirm Password</label>
+  <div class="input-group">
+    <input type="password" name="password" id="passwordInput" 
+      class="form-control @error('password') is-invalid @enderror" 
+      placeholder="Enter password" required>
+    @error('password')
+      <div class="invalid-feedback d-block">{{ $message }}</div>
+    @enderror
+  </div>
+</div>
             <button type="submit" class="btn btn-primary w-100 mb-2">Register</button>
 
             <a href="{{ route('login') }}">Already have an account?</a>
 
-          <button type="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
-
-          <div class="text-center">
-            <span class="text-muted">Sudah punya akun?</span>
-            <a href="{{ route('login') }}" class="text-decoration-none">Login di sini</a>
-          </div>
 
         </form>
       </div>
