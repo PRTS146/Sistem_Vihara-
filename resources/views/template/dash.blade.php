@@ -2,9 +2,10 @@
 @extends('layout.body')
 
 @section('body')
-     @extends('navbar.dashnav')
-     @extends('popup.popupdash')
-     @extends('popup.popupdonasi')
-    @yield('dashcontent')
+    @include('components.navbar') 
     
+    @include('popup.popupdash')
+    @include('popup.popupdonasi')
+    
+    @yield('dashcontent')
 @endsection

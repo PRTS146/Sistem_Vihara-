@@ -11,28 +11,25 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        // 1. Jika tidak login sama sekali (sesi habis/Guest), langsung tendang ke Home
+        // 1. Pastikan pengguna sudah login terlebih dahulu
         if (!Auth::check()) {
-            return redirect()->route('mainpage');
+            return redirect()->route('login');
         }
 
         $userRole = Auth::user()->role;
 
-        // --- ATURAN BARU ---
-        // Jika route ini butuh role 'admin', tapi yang login bukan admin (misal 'user')
+        // 2. Proteksi Halaman Admin
+        // Jika rute butuh role 'admin' tapi role yang login BUKAN admin, kunci pintu!
         if ($role === 'admin' && $userRole !== 'admin') {
-            // Berikan pesan 403 yang sopan tapi tegas
-            abort(403, 'Namo Buddhaya. Maaf, halaman ini khusus untuk Pengurus/Admin Vihara.'); 
+            abort(403, 'Akses Ditolak. Halaman ini hanya dapat diakses oleh Pengurus/Admin.');
         }
 
-        // Jika route ini butuh role 'user', tapi yang login bukan 'user' DAN BUKAN 'admin'
-        // (Ini memastikan admin tetap lolos pengecekan ini)
+        // 3. Proteksi Halaman User (Umat)
+        // Jika rute butuh role 'user' tapi role yang login bukan 'user' DAN bukan 'admin'
         if ($role === 'user' && $userRole !== 'user' && $userRole !== 'admin') {
-            // Skrip ini jalan jika misal ada role ke-3 yang tak terdaftar nyasar
-            abort(403, 'Akses ditolak.'); 
+            abort(403, 'Akses Ditolak.');
         }
 
-        // Jika lolos pengecekan di atas, izinkan masuk ke halaman
         return $next($request);
     }
 }

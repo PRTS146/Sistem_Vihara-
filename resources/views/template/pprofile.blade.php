@@ -2,6 +2,6 @@
 @extends('layout.body')
 
 @section('body')
-    @include('navbar.profilenav')
+    @include('components.navbar')
     @yield('profilecontent')
 @endsection

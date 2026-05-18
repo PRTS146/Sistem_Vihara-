@@ -2,7 +2,7 @@
 @extends('layout.body')
 
 @section('body')
-    @extends('navbar.homenav')
+    @include('components.navbar')
     @yield('content')
     
 @endsection
