@@ -1,10 +1,7 @@
-<body>
+@extends ('layout.head')
+@extends ('layout.body')
 
+@section('body')
     @include('components.navbar')
-
-    <main>
-        @yield('content')
-    </main>
-
-    @stack('scripts')
-</body>
+    @yield('content')
+@endsection

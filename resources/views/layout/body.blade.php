@@ -5,6 +5,8 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
     </script>
 
+    <script src="{{ asset('js/monitoring.js') }}"></script>
+
     <script>
         // 1. Carousel
         const carousel = document.getElementById('heroCarousel');
