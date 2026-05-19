@@ -51,9 +51,9 @@
     <div class="mb-3">
   <label class="form-label">Confirm Password</label>
   <div class="input-group">
-    <input type="password" name="password" id="passwordInput" 
+    <input type="password" name="password_confirmation" id="passwordConfirmationInput" 
       class="form-control @error('password') is-invalid @enderror" 
-      placeholder="Enter password" required>
+      placeholder="Confirm password" required>
     @error('password')
       <div class="invalid-feedback d-block">{{ $message }}</div>
     @enderror
