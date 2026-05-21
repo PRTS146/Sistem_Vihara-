@@ -22,7 +22,7 @@
         @if(Auth::user()->role === 'admin')
         <li class="nav-item ms-lg-2 ps-lg-2 border-start">
           <a class="nav-link text-primary fw-bold {{ request()->routeIs('monitoring') ? 'active' : '' }}" href="{{ route('monitoring') }}">
-            👑 Monitoring
+              Monitoring
           </a>
         </li>
         @endif
