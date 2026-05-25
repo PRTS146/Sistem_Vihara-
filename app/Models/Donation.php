@@ -6,9 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Donation extends Model
 {
-    protected $guarded = ['id'];
+    protected $table = 'donation';
+    protected $primaryKey = 'donation_id';
 
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
+    const CREATED_AT = 'donation_created_at';
+    const UPDATED_AT = 'donation_update_at';
+
+    protected $fillable = [
+        'admin_id',
+        'donation_name',
+        'donation_description',
+        'donation_target',
+        'donation_progress',
+    ];
 }
