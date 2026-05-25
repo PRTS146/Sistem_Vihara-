@@ -73,8 +73,8 @@ return [
     |
     */
 
-    'home' => '/home', 
-//    'home' => '/home', aku sementara pakai dashboard, ntar ganti ke home aja kalo sudah oke
+    'home' => '/monitoring', 
+//    'home' => pake monitoring buat testing apakah aman
     /*
     |--------------------------------------------------------------------------
     | Fortify Routes Prefix / Subdomain

@@ -28,7 +28,7 @@
         <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
         <p class=".text-secondary">Kami Dari Vihara Maha Giri Buddha Mengajak Anda Untuk Bergabung, Silakan Ketahui Lebih Banyak Tentang Kami</p>
         <div class="d-flex gap-2 mt-2">
-          <a href="{{ route('dashboard') }}" class="btn btn-warning rounded-pill px-4">About Us</a>
+          <a href="/" class="btn btn-warning rounded-pill px-4">About Us</a>
           <a href="#" class="btn btn-outline-light rounded-pill px-4">Contact Us</a>
         </div>
       </div>
