@@ -2,7 +2,11 @@
 @extends('layout.body')
 
 @section('body')
+<script src="{{ asset('js/register.js') }}"></script>
+<script src="{{ asset('js/donation.js') }}"></script>
     @include('components.navbar')
+    @include('popup.register')
+    @include('popup.popupdonasi')
     @yield('content')
     
 @endsection

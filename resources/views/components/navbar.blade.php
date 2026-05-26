@@ -60,9 +60,7 @@
                 </li>
             </ul>
         </div>
-        @else
-        <a href="{{ route('login') }}" class="btn btn-outline-primary fw-bold px-3">Login</a>
-        <a href="{{ route('register') }}" class="btn btn-primary fw-bold px-3">Sign Up</a>
+       
         @endauth
       </div>
 

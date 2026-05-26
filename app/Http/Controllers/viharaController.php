@@ -12,11 +12,14 @@ class ViharaController extends Controller
      */
     public function home()
     {
-        // $dataVihara = Vihara::all();
-        // $data= [
-        //     'dataVihara' => $dataVihara
-        // ];
-        return view('vihara.home');
+         try {
+        $events = \App\Models\Event::all();
+    } catch (\Exception $e) {
+        $events = collect(); // empty collection if table doesn't exist
+    }
+        $events = \App\Models\Event::all();
+        return view('vihara.home', compact('events'));
+        
     }
     public function dashboard(){
         return view('vihara.dashboard');
