@@ -94,6 +94,13 @@
     <div class="text-center mb-5">
       <span class="bg-warning px-4 py-2 fw-bold rounded-pill">EVENTS</span>
     </div>
+  </div>
+
+  <div class="col-md-6">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt ut mi ac dignissim</p>
+  </div>
+  
+</div>
 
 
   <div class="position-relative px-5">
@@ -270,53 +277,146 @@
 </div>
 </section>
 
-<section id="gallery" class="py-5">
+<section id="donation" class="py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Gallery</h2>
+    
+    <div class="text-center mb-5">
+      <span class="bg-warning px-4 py-2 fw-bold rounded-pill shadow-sm shadow p-3 mb-5">Donation</span>
+      <h2 class="mt-4 fw-bold">Dana Public</h2>
+      <p class="text-muted">Terima kasih atas kebaikan hati Anda. Bantuan Anda sangat berarti bagi kami.</p>
+    </div>
 
-    <div id="galleryCarousel" class="carousel slide position-relative" data-bs-ride="carousel" style="padding: 0 40px;">
-      <div class="carousel-inner">
-
-        <!-- Slide 1: shows 4 images -->
-        <div class="carousel-item active">
-          <div class="d-flex gap-3">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
+          <h4 class="fw-bold mb-3">Dana public</h4>
+          <p class="text-muted mb-4">Dana public.</p>
+          
+          <p class="small text-muted mb-4">Setiap donasi, sekecil apapun, sangat berharga. Semoga kebaikan Anda membawa berkah. 🙏</p>
+          
+          <div class="text-center mt-2">
+            <button type="button" class="btn btn-warning rounded-pill px-5 py-2 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#donateModal">
+              Mulai Berdonasi
+            </button>
           </div>
         </div>
+      </div>
+    </div>
+   
+<br></br>
+<section id="campaigns" class="py-5 bg-light">
+  <div class="container">
+    
+    <div class="mb-5 text-start">
+      <h2 class="fw-bold">Bantu Mewujudkan Harapan</h2>
+      <p class="text-muted">Pilih kampanye donasi di bawah ini untuk mulai berkontribusi.</p>
+    </div>
 
-        <!-- Slide 2: next 4 images -->
-        <div class="carousel-item">
-          <div class="d-flex gap-3">
-            <img src="{{ asset('mainpage/slide1.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
-            <img src="{{ asset('mainpage/slide2.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="rounded flex-shrink-0" style="height: 220px; width: calc(25% - 12px); object-fit: cover;">
+    <div class="row g-4">
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden" 
+             role="button" data-bs-toggle="modal" data-bs-target="#donateModal" 
+             style="cursor: pointer; transition: transform 0.2s;" 
+             onmouseover="this.style.transform='translateY(-5px)'" 
+             onmouseout="this.style.transform='translateY(0)'">
+          
+          <div class="position-relative">
+            <img src="{{ asset('mainpage/slide1.jpg') }}" class="card-img-top w-100" alt="Pembangunan" style="height: 220px; object-fit: cover;">
+          
+          </div>
+
+          <div class="card-body p-4 d-flex flex-column">
+            <h5 class="card-title fw-bold mb-4">Pembangunan Gedung Serbaguna Vihara</h5>
+            
+            <div class="mt-auto">
+              <div class="progress mb-2 bg-secondary bg-opacity-25" style="height: 6px; border-radius: 10px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              
+              <div class="fw-bold fs-6 text-dark">
+                Rp 75.000.000 <span class="text-muted fw-normal small">raised</span>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <!-- Controls -->
-<button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev" style="width: -50px; left: 0;">
-  <span class="carousel-control-prev-icon" style="filter: invert(1);"></span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next" style="width: -50px; right: 0;">
-  <span class="carousel-control-next-icon" style="filter: invert(1);"></span>
-</button>
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden" 
+             role="button" data-bs-toggle="modal" data-bs-target="#donateModal" 
+             style="cursor: pointer; transition: transform 0.2s;" 
+             onmouseover="this.style.transform='translateY(-5px)'" 
+             onmouseout="this.style.transform='translateY(0)'">
+          
+          <div class="position-relative">
+            <img src="{{ asset('mainpage/slide2.jpg') }}" class="card-img-top w-100" alt="Operasional" style="height: 220px; object-fit: cover;">
+          </div>
 
+          <div class="card-body p-4 d-flex flex-column">
+            <h5 class="card-title fw-bold mb-4">Dana Operasional & Kegiatan Sosial Tahunan</h5>
+            
+            <div class="mt-auto">
+              <div class="progress mb-2 bg-secondary bg-opacity-25" style="height: 6px; border-radius: 10px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="fw-bold fs-6 text-dark">
+                Rp 45.000.000 <span class="text-muted fw-normal small">raised</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden" 
+             role="button" data-bs-toggle="modal" data-bs-target="#donateModal" 
+             style="cursor: pointer; transition: transform 0.2s;" 
+             onmouseover="this.style.transform='translateY(-5px)'" 
+             onmouseout="this.style.transform='translateY(0)'">
+          
+          <div class="position-relative">
+            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top w-100" alt="Bantuan" style="height: 220px; object-fit: cover;">
+            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark bg-opacity-75 rounded-pill px-3 py-2 fw-normal">
+              
+            </span>
+          </div>
+
+          <div class="card-body p-4 d-flex flex-column">
+            <h5 class="card-title fw-bold mb-4">Bantuan Kasih Sembako untuk Warga Sekitar</h5>
+            
+            <div class="mt-auto">
+              <div class="progress mb-2 bg-secondary bg-opacity-25" style="height: 6px; border-radius: 10px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="fw-bold fs-6 text-dark">
+                Rp 18.000.000 <span class="text-muted fw-normal small">raised</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  </div>
+</section>
+        
+          
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
     </div>
   </div>
 </section>
 
 
-<section>
-  <div>
-</div>
-</section>
   
 
 
