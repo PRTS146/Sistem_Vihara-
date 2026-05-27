@@ -16,14 +16,14 @@
           @csrf
           @if ($errors->any())
     <div class="alert alert-danger">
-      Email atau password salah.
+      Nama atau password salah.
     </div>
   @endif
 
  <div class="mb-3">
-  <label class="form-label">Email</label>
-  <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
-    placeholder="Enter Email" value="{{ old('email') }}" required>
+  <label class="form-label">Nama</label>
+  <input type="text" name="admin_name" class="form-control @error('admin_name') is-invalid @enderror" 
+    placeholder="Enter Name" value="{{ old('admin_name') }}" required>
 </div>
 
 <div class="mb-3">
@@ -39,7 +39,6 @@
 </div>
             <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
 
-            <a href="{{ route('register') }}">Sign Up</a>
 
 
         </form>
