@@ -30,6 +30,17 @@ Route::middleware(['auth'])->group(function () {
     // Jika masih ada halaman adminhome bawaan lama
     Route::get('/adminhome', [ViharaController::class, 'adminhome'])->name('adminhome');
 
+    // Event Registration (AJAX - dari tombol Daftar Sekarang)
+    Route::post('/events/{event}/register', [EventController::class, 'register'])->name('events.register');
+    Route::get('/events/{event}/check', [EventController::class, 'checkRegistration'])->name('events.check');
+
+    // Monitoring Events (CRUD)
+    Route::get('/monitoring/events', [EventController::class, 'index'])->name('monitoring.events');
+    Route::post('/monitoring/events', [EventController::class, 'store'])->name('monitoring.events.store');
+    Route::put('/monitoring/events/{event}', [EventController::class, 'update'])->name('monitoring.events.update');
+    Route::delete('/monitoring/events/{event}', [EventController::class, 'destroy'])->name('monitoring.events.destroy');
+    Route::get('/monitoring/events/{event}/registrants', [EventController::class, 'registrants'])->name('monitoring.events.registrants');
+
     // Nanti, rute untuk menyimpan data (CRUD) akan kita kumpulkan di sini
     // Contoh persiapan:
     // Route::post('/donasi/simpan', [DonationController::class, 'store'])->name('donasi.store');

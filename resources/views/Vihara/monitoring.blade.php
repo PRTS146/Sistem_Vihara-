@@ -1,154 +1,226 @@
-@extends('template.monitoring')
+@extends('template.dash')
 
-@section('contentmon')
+@section('content')
+<div class="container py-4">
 
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  @endif
 
-  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">🗂 Monitoring Events</h4>
+    <button class="btn btn-warning rounded-pill px-4 fw-bold"
+            data-bs-toggle="modal" data-bs-target="#addEventModal">
+      + Tambah Event
+    </button>
+  </div>
 
-  <div class="page">
-    <div class="main-grid">
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-warning">
+          <tr>
+            <th class="ps-4">Gambar</th>
+            <th>Nama Event</th>
+            <th>Tanggal</th>
+            <th>Carousel</th>
+            <th class="text-center">Pendaftar</th>
+            <th class="text-center pe-4">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          @forelse($events as $event)
+          <tr>
+            <td class="ps-4">
+              @if($event->event_image)
+                <img src="{{ Storage::url($event->event_image) }}"
+                     style="width:60px;height:50px;object-fit:cover;" class="rounded">
+              @else
+                <span class="text-muted">—</span>
+              @endif
+            </td>
+            <td class="fw-bold">{{ $event->event_name }}</td>
+            <td>{{ $event->event_date }}</td>
+            <td>
+              <span class="badge {{ $event->show_in_carousel ? 'bg-success' : 'bg-secondary' }}">
+                {{ $event->show_in_carousel ? 'Ya' : 'Tidak' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-info rounded-pill"
+                      onclick="showRegistrants({{ $event->id }}, '{{ $event->event_name }}')">
+                {{ $event->registrations_count }} orang
+              </button>
+            </td>
+            <td class="text-center pe-4">
+              <button class="btn btn-sm btn-outline-primary rounded-pill me-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editModal{{ $event->id }}">Edit</button>
+              <form action="{{ route('monitoring.events.destroy', $event) }}"
+                    method="POST" class="d-inline"
+                    onsubmit="return confirm('Hapus event ini?')">
+                @csrf @method('DELETE')
+                <button class="btn btn-sm btn-outline-danger rounded-pill">Hapus</button>
+              </form>
+            </td>
+          </tr>
 
-      <div class="left-col">
-        
-        <div class="kalender-union-wrapper">
-          
-          <div class="kal-form-part">
-            <div class="kal-title">Kalender Setting</div>
-            <div class="form-row">
-              <label>Title</label>
-              <input type="text" id="inpTitle">
+          {{-- Edit Modal --}}
+          <div class="modal fade" id="editModal{{ $event->id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content rounded-4">
+                <div class="modal-header border-0">
+                  <h5 class="modal-title fw-bold">Edit Event</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body px-4">
+                  <form action="{{ route('monitoring.events.update', $event) }}"
+                        method="POST" enctype="multipart/form-data">
+                    @csrf @method('PUT')
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Nama Event</label>
+                      <input type="text" name="event_name" class="form-control rounded-3"
+                             value="{{ $event->event_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Tanggal</label>
+                      <input type="text" name="event_date" class="form-control rounded-3"
+                             value="{{ $event->event_date }}" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Deskripsi</label>
+                      <textarea name="event_description" class="form-control rounded-3"
+                                rows="3">{{ $event->event_description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Gambar</label>
+                      <input type="file" name="event_image" class="form-control rounded-3">
+                      @if($event->event_image)
+                        <small class="text-muted">Gambar saat ini:
+                          <a href="{{ Storage::url($event->event_image) }}" target="_blank">lihat</a>
+                        </small>
+                      @endif
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" name="show_in_carousel"
+                             class="form-check-input" id="car{{ $event->id }}"
+                             {{ $event->show_in_carousel ? 'checked' : '' }}>
+                      <label class="form-check-label" for="car{{ $event->id }}">
+                        Tampilkan di Hero Carousel
+                      </label>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                      <button type="button" class="btn btn-secondary rounded-pill"
+                              data-bs-dismiss="modal">Batal</button>
+                      <button type="submit" class="btn btn-warning rounded-pill fw-bold px-4">
+                        Simpan
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div class="form-row">
-              <label>Descriptive</label>
-              <input type="text" id="inpDesc">
-            </div>
-            <div class="form-row">
-              <label>Starting Date</label>
-              <input type="text" id="inpStart" class="active-input" placeholder="Pilih di kalender ->" readonly
-                style="cursor:pointer" onclick="setActiveInput('start')">
-            </div>
-            <div class="form-row">
-              <label>Finishing Date</label>
-              <input type="text" id="inpEnd" placeholder="Pilih di kalender ->" readonly
-                style="cursor:pointer" onclick="setActiveInput('end')">
-            </div>
-            <div class="form-row">
-              <label>Opening Time</label>
-              <input type="time" id="inpOpen">
-            </div>
-            <div class="form-row">
-              <label>Closing Time</label>
-              <input type="time" id="inpClose">
-            </div>
-            <button class="btn-tambahkan" onclick="submitEvent()">Tambahkan</button>
           </div>
 
-          <div class="kal-cal-part">
-            <div class="cal-inner-box">
-              <div class="cal-row">
-                <button class="cal-nav" onclick="changeYear(-1)">&#9664;</button>
-                <span class="cal-label" id="calYear"></span>
-                <button class="cal-nav" onclick="changeYear(1)">&#9654;</button>
-              </div>
-              <div class="cal-row" style="margin-bottom:12px;">
-                <button class="cal-nav" onclick="changeMonth(-1)">&#9664;</button>
-                <span class="cal-label" id="calMonthLbl"></span>
-                <button class="cal-nav" onclick="changeMonth(1)">&#9654;</button>
-              </div>
-              <div class="cal-grid" id="calGrid"></div>
-            </div>
-          </div>
+          @empty
+          <tr>
+            <td colspan="6" class="text-center text-muted py-4">Belum ada event.</td>
+          </tr>
+          @endforelse
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-        </div>
-        
-        <div class="donasi-row">
-          <div class="donasi-card">
-            <div class="donasi-header">
-              <div class="donasi-label">TOTAL<br>DONASI</div>
-              <div class="donasi-ico">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
-              </div>
-            </div>
-            <div class="donasi-val">Rp 10.000</div>
-          </div>
-          <div class="donasi-card">
-            <div class="donasi-header">
-              <div class="donasi-label">PEMASUKAN<br>DONASI BULANAN</div>
-              <div class="donasi-ico">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-              </div>
-            </div>
-            <div class="donasi-val">Rp 1.0000</div>
-          </div>
-        </div>
-
+{{-- Add Modal --}}
+<div class="modal fade" id="addEventModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">Tambah Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      
-      <div class="right-col">
-        <h1 class="page-title">Panel Manajemen Vihara</h1>
-
-        <div class="stats-row">
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Total Kapasitas</div>
-              <div class="stat-val blue" id="statKap">67</div>
-            </div>
-            <div class="stat-ico">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-            </div>
+      <div class="modal-body px-4">
+        <form action="{{ route('monitoring.events.store') }}" method="POST"
+              enctype="multipart/form-data">
+          @csrf
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nama Event</label>
+            <input type="text" name="event_name" class="form-control rounded-3" required>
           </div>
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Unit Terjual</div>
-              <div class="stat-val green">67</div>
-            </div>
-            <div class="stat-ico">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Tanggal</label>
+            <input type="text" name="event_date" class="form-control rounded-3"
+                   placeholder="e.g. 12 Mei 2025" required>
           </div>
-          <div class="stat-card">
-            <div>
-              <div class="stat-label">Menunggu<br>Pembayaran</div>
-              <div class="stat-val orange">67</div>
-            </div>
-            <div class="stat-ico">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Deskripsi</label>
+            <textarea name="event_description" class="form-control rounded-3" rows="3"></textarea>
           </div>
-        </div>
-
-        <div class="cap-card">
-          <div class="cap-title">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> 
-            Manajemen Denah Kapasitas
+          <div class="mb-3">
+            <label class="form-label fw-bold">Gambar</label>
+            <input type="file" name="event_image" class="form-control rounded-3">
           </div>
-
-          <div class="slot-box">
-            <div class="slot-box-hdr">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              Tambah Slot Unit
-            </div>
-            <div class="add-row">
-              <input class="add-inp" id="slotCount" type="number" min="1" max="999" placeholder="Jml">
-              <button class="btn-add" onclick="addSlots()">Tambahkan</button>
-            </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" name="show_in_carousel" class="form-check-input" id="carNew">
+            <label class="form-check-label" for="carNew">Tampilkan di Hero Carousel</label>
           </div>
-
-          <div class="slot-box">
-            <div class="slot-box-hdr">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-              Hapus Slot Unit
-            </div>
-            <div class="slots-grid-wrapper">
-              <div class="slots-grid" id="slotsGrid"></div>
-            </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary rounded-pill"
+                    data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-warning rounded-pill fw-bold px-4">Tambah</button>
           </div>
-
-        </div>
-
+        </form>
       </div>
     </div>
   </div>
+</div>
+
+{{-- Registrants Modal --}}
+<div class="modal fade" id="registrantsModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="registrantsModalTitle">Daftar Pendaftar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-4" id="registrantsModalBody">
+        <p class="text-muted text-center">Memuat...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showRegistrants(eventId, eventName) {
+  document.getElementById('registrantsModalTitle').textContent = `Pendaftar: ${eventName}`;
+  document.getElementById('registrantsModalBody').innerHTML = '<p class="text-center text-muted">Memuat...</p>';
+
+  new bootstrap.Modal(document.getElementById('registrantsModal')).show();
+
+  fetch(`/monitoring/events/${eventId}/registrants`)
+    .then(r => r.json())
+    .then(users => {
+      if (users.length === 0) {
+        document.getElementById('registrantsModalBody').innerHTML =
+          '<p class="text-center text-muted">Belum ada pendaftar.</p>';
+        return;
+      }
+      let html = '<ul class="list-group list-group-flush">';
+      users.forEach(u => {
+        html += `<li class="list-group-item d-flex justify-content-between">
+          <span class="fw-bold">${u.name}</span>
+          <span class="text-muted small">${u.email}</span>
+        </li>`;
+      });
+      html += '</ul>';
+      document.getElementById('registrantsModalBody').innerHTML = html;
+    });
+}
+</script>
+
 @endsection
-
-
