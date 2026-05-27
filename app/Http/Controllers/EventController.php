@@ -1,47 +1,91 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Event;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class Event extends Model
+class EventController extends Controller
 {
-    use HasFactory;
 
-    protected $primaryKey = 'event_id';
+    // guest
 
-    protected $fillable = [
-        'event_name',
-        'event_description',
-        'event_date',
-        'event_time',
-        'event_status', 
-        'event_counter'
-    ];
-
-    protected $casts = [
-        'event_date' => 'date',
-        'event_counter' => 'integer',
-    ];
-
-    public function getDynamicStatusAttribute()
+    public function index()
     {
-        $eventDateTime = Carbon::parse($this->event_date->format('Y-m-d') . ' ' . $this->event_time);
-        
-        if ($eventDateTime->isPast()) {
-            return 'Selesai'; 
-        } elseif ($eventDateTime->isToday()) {
-            return 'Sedang Berlangsung'; 
-        } else {
-            return 'Akan Datang'; 
-        }
+        $events = Event::whereDate('event_date', '>=', Carbon::today())
+                       ->orderBy('event_date', 'asc')
+                       ->get();
+
+        return view('vihara.home', compact('events'));
     }
 
-    public function scopeActive($query)
+    public function registerEvent(Request $request, $id)
     {
-        return $query->whereDate('event_date', '>=', now()->toDateString())
-                     ->orderBy('event_date', 'asc'); 
+        // honeypot, honeypot field hidden lewat css harus kosong dan kalau keisi berarti bot
+        if ($request->filled('honeypot_trap')) {
+            return back()->with('success', 'Berhasil mendaftar acara!'); 
+        }
+
+        $event = Event::findOrFail($id);
+
+        $event->increment('event_counter');
+
+        return back()->with('success', 'Berhasil mendaftar acara!');
+    }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $events = Event::orderBy('event_date', 'desc')->get();
+        return view('Vihara.adminhome', compact('events'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'event_name' => 'required|string',
+            'event_description' => 'required|string',
+            'event_date' => 'required|date',
+            'event_time' => 'required',
+            'event_status' => 'required|string',
+        ]);
+
+        Event::create([
+            'event_name' => $request->event_name,
+            'event_description' => $request->event_description,
+            'event_date' => $request->event_date,
+            'event_time' => $request->event_time,
+            'event_status' => $request->event_status,
+            'event_counter' => 0
+        ]);
+
+        return back()->with('success', 'Acara baru berhasil ditambahkan');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $event = Event::findOrFail($id);
+
+        $request->validate([
+            'event_name' => 'required|string',
+            'event_description' => 'required|string',
+            'event_date' => 'required|date',
+            'event_time' => 'required',
+            'event_status' => 'required|string',
+        ]);
+
+        $event->update($request->all());
+
+        return back()->with('success', 'Acara berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        $event = Event::findOrFail($id);
+        $event->delete();
+
+        return back()->with('success', 'Acara berhasil dihapus');
     }
 }
