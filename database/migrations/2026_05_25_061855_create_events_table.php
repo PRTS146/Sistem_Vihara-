@@ -8,28 +8,25 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('event', function (Blueprint $table) {
-            $table->increments('event_id');
-            $table->integer('admin_id')->unsigned(); // FK ke admin
-            $table->string('event_name', 200);
-            $table->date('event_date');
-            $table->text('event_description')->nullable();
+        Schema::create('events', function (Blueprint $table) {
+            $table->id('event_id'); 
             
-            // Kolom waktu bawaan rancanganmu
-            $table->timestamp('event_created_at')->useCurrent();
-            $table->timestamp('event_update_at')->useCurrent()->useCurrentOnUpdate();
+            $table->string('event_name');
+            $table->text('event_description');
+            
+            $table->date('event_date'); 
+            $table->time('event_time');
 
-            // Relasi Foreign Key ke tabel Admin
-            $table->foreign('admin_id')
-                  ->references('admin_id')
-                  ->on('admin')
-                  ->onDelete('restrict')
-                  ->onUpdate('cascade');
+            $table->string('event_status')->default('Active'); 
+
+            $table->integer('event_counter')->default(0); 
+            
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('event');
+        Schema::dropIfExists('events'); 
     }
 };
