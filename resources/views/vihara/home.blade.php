@@ -93,10 +93,7 @@
     </div>
   </div>
 
-  <div class="col-md-6">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt ut mi ac dignissim</p>
-  </div>
-  
+
 </div>
 
 

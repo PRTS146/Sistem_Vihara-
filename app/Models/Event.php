@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    protected $table = 'event';
+    protected $table = 'events';
     protected $primaryKey = 'event_id';
 
     const CREATED_AT = 'event_created_at';
@@ -17,18 +17,5 @@ class Event extends Model
         'event_name',
         'event_date',
         'event_description',
-        'event_image',
-        'show_in_carousel',
     ];
-
-    public function registrations()
-    {
-        return $this->hasMany(EventRegistration::class, 'event_id', 'event_id');
-    }
-
-    public function registeredUsers()
-    {
-        return $this->belongsToMany(User::class, 'event_registrations', 'event_id', 'user_id');
-    }
 }
-

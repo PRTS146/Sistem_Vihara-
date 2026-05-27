@@ -39,11 +39,10 @@
 </div>
             <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
 
-            <a href="{{ route('register') }}">Sign Up</a>
+        
 
 
         </form>
-    
       </div>
     </div>
 
