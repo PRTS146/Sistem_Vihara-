@@ -12,9 +12,10 @@
   <div class="carousel-indicators">
     @if($events->count() > 0)
       @foreach($events as $i => $event)
-        <button type="button" data-bs-target="#heroCarousel"
+        <button type="button" 
+                data-bs-target="#heroCarousel"
                 data-bs-slide-to="{{ $i }}"
-                {{ $i === 0 ? 'class=active' : '' }}></button>
+                class="{{ $i === 0 ? 'active' : '' }}"></button>
       @endforeach
     @else
       <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -23,16 +24,12 @@
   </div>
 
   <div class="carousel-inner">
-
-<div class="carousel-inner">
-
     @if($events->count() > 0)
+      
       @foreach($events as $i => $event)
         <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
-          <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100"
-               style="height: 100vh; object-fit: cover;">
-          <div class="carousel-caption d-flex flex-column align-items-start text-start"
-               style="top: 50%; transform: translateY(-50%); bottom: auto;">
+          <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;">
+          <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">{{ $event->event_date }}</p>
             <h1 class="display-4 fw-bold text-white">{{ $event->event_name }}</h1>
             <p class="text-white">{{ $event->event_description }}</p>
@@ -51,11 +48,10 @@
       @endforeach
 
     @else
+      
       <div class="carousel-item active">
-        <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100"
-             style="height: 100vh; object-fit: cover;">
-        <div class="carousel-caption d-flex flex-column align-items-start text-start"
-             style="top: 50%; transform: translateY(-50%); bottom: auto;">
+        <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;">
+        <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
           <p class="text-warning fw-bold text-uppercase">Selamat Datang Di</p>
           <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
           <p class="text-white">Kami mengajak Anda untuk bergabung bersama kami.</p>
@@ -63,51 +59,19 @@
       </div>
 
       <div class="carousel-item">
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100"
-             style="height: 100vh; object-fit: cover;">
-        <div class="carousel-caption d-flex flex-column align-items-start text-start"
-             style="top: 50%; transform: translateY(-50%); bottom: auto;">
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 100vh; object-fit: cover;">
+        <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
           <p class="text-warning fw-bold text-uppercase">Apakah anda ingin</p>
           <h1 class="display-4 fw-bold text-white">Dana?</h1>
           <div class="d-flex gap-2 mt-2">
-            <a href="#" class="btn btn-warning rounded-pill px-4"
-               data-bs-toggle="modal" data-bs-target="#donateModal">Donate</a>
+            <a href="#" class="btn btn-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#donateModal">
+              Donate
+            </a>
           </div>
         </div>
       </div>
+      
     @endif
-
-  </div>
-        </div>
-      @endforeach
-
-    @else
-      <div class="carousel-item active">
-        <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100"
-             style="height: 100vh; object-fit: cover;">
-        <div class="carousel-caption d-flex flex-column align-items-start text-start"
-             style="top: 50%; transform: translateY(-50%); bottom: auto;">
-          <p class="text-warning fw-bold text-uppercase">Selamat Datang Di</p>
-          <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
-          <p class="text-white">Kami mengajak Anda untuk bergabung bersama kami.</p>
-        </div>
-      </div>
-
-      <div class="carousel-item">
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100"
-             style="height: 100vh; object-fit: cover;">
-        <div class="carousel-caption d-flex flex-column align-items-start text-start"
-             style="top: 50%; transform: translateY(-50%); bottom: auto;">
-          <p class="text-warning fw-bold text-uppercase">Apakah anda ingin</p>
-          <h1 class="display-4 fw-bold text-white">Dana?</h1>
-          <div class="d-flex gap-2 mt-2">
-            <a href="#" class="btn btn-warning rounded-pill px-4"
-               data-bs-toggle="modal" data-bs-target="#donateModal">Donate</a>
-          </div>
-        </div>
-      </div>
-    @endif
-
   </div>
 
   <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
