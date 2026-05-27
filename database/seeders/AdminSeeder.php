@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
 
         // 4. Buat akun baru
         Admin::create([
-            'admin_name' => 'admin@test.com',
+            'admin_name' => 'Admin Ganteng',
             'admin_password' => Hash::make('Admin123'), 
         ]);
     }
