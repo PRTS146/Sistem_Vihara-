@@ -406,59 +406,66 @@
   </div>
 </section>
 
-
 <section id="gallery" class="py-5">
   <div class="container-fluid px-4">
     <h2 class="text-center mb-4 fw-bold">Gallery</h2>
-
-    <div class="d-flex gap-2" style="height: 400px;">
-
-      <input type="radio" name="gallery" id="g1" hidden checked>
-      <label for="g1" class="gallery-item rounded-3"
-             style="background-image: url('{{ asset('mainpage/placeholder.jpg') }}');">
+   
+    <div class="d-flex gap-2" style="height: 420px;">
+      
+      <!-- Item 1 -->
+      <label class="gallery-item position-relative overflow-hidden">
+        <input type="radio" name="gallery" id="g1" hidden checked>
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Vihara Utama" class="gallery-img">
         <span class="gallery-label">Vihara Utama</span>
-        <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        <div class="gallery-button-wrapper">
+          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        </div>
       </label>
 
-      <input type="radio" name="gallery" id="g2" hidden>
-      <label for="g2" class="gallery-item rounded-3"
-             style="background-image: url('{{ asset('mainpage/placeholder.jpg') }}');">
+      <!-- Item 2 -->
+      <label class="gallery-item position-relative overflow-hidden">
+        <input type="radio" name="gallery" id="g2" hidden>
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Gerbang Masuk" class="gallery-img">
         <span class="gallery-label">Gerbang Masuk</span>
-        <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        <div class="gallery-button-wrapper">
+          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        </div>
       </label>
 
-      <input type="radio" name="gallery" id="g3" hidden>
-      <label for="g3" class="gallery-item rounded-3"
-             style="background-image: url('{{ asset('mainpage/placeholder.jpg') }}');">
+      <!-- Item 3 -->
+      <label class="gallery-item position-relative overflow-hidden">
+        <input type="radio" name="gallery" id="g3" hidden>
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Taman Vihara" class="gallery-img">
         <span class="gallery-label">Taman Vihara</span>
-        <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        <div class="gallery-button-wrapper">
+          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        </div>
       </label>
 
-      <input type="radio" name="gallery" id="g4" hidden>
-      <label for="g4" class="gallery-item rounded-3"
-             style="background-image: url('{{ asset('mainpage/placeholder.jpg') }}');">
+      <!-- Item 4 -->
+      <label class="gallery-item position-relative overflow-hidden">
+        <input type="radio" name="gallery" id="g4" hidden>
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Aula Utama" class="gallery-img">
         <span class="gallery-label">Aula Utama</span>
-        <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        <div class="gallery-button-wrapper">
+          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        </div>
       </label>
 
-      <input type="radio" name="gallery" id="g5" hidden>
-      <label for="g5" class="gallery-item rounded-3"
-             style="background-image: url('{{ asset('mainpage/placeholder.jpg') }}');">
+      <!-- Item 5 -->
+      <label class="gallery-item position-relative overflow-hidden">
+        <input type="radio" name="gallery" id="g5" hidden>
+        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Patung Buddha" class="gallery-img">
         <span class="gallery-label">Patung Buddha</span>
-        <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
-
+        <div class="gallery-button-wrapper">
+          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+        </div>
       </label>
 
     </div>
   </div>
 </section>
 
-    </div>
-  </div>
-</section>
-
-
-  
 
 
  
