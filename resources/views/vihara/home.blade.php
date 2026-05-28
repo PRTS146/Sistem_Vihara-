@@ -296,7 +296,139 @@
         </div>
       </div>
     </div>
-   
+
+<div class="container mt-5 pt-5 border-top">
+      
+      <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark">Rumah Abu</h2>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        
+        <h3 class="fw-bold mb-0 text-dark">
+          Available Slots <span id="currentBlockLabel" class="text-success">- Blok A</span>
+        </h3>
+        
+        <div class="d-flex align-items-center gap-4">
+          <div class="d-flex align-items-center gap-2">
+            <span class="rounded-circle bg-danger" style="width: 14px; height: 14px;"></span>
+            <span class="small fw-bold text-dark">Tidak Tersedia</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="rounded-circle bg-warning" style="width: 14px; height: 14px;"></span>
+            <span class="small fw-bold text-dark">Booking</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="rounded-circle bg-success" style="width: 14px; height: 14px;"></span>
+            <span class="small fw-bold text-dark">Masih Tersedia</span>
+          </div>
+        </div>
+
+        <div class="btn-group shadow-sm">
+          <button id="prevBlockBtn" class="btn btn-light border bg-white px-4">
+            <i class="bi bi-caret-left-fill text-secondary"></i>
+          </button>
+          <button id="nextBlockBtn" class="btn btn-light border bg-white px-4">
+            <i class="bi bi-caret-right-fill text-secondary"></i>
+          </button>
+        </div>
+        
+      </div>
+
+      <style>
+        .slots-grid {
+          display: grid;
+          grid-template-columns: repeat(9, 1fr);
+          gap: 12px;
+        }
+        
+        /* Default state (White) */
+        .slot-btn {
+          background-color: #ffffff;
+          border: 1.5px solid #e5e5e5;
+          transition: all 0.2s ease;
+        }
+        
+        /* ALL buttons turn green on hover */
+        .slot-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+          background-color: #198754 !important; /* Success Green */
+          border-color: #198754 !important;
+          color: white !important;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) { .slots-grid { grid-template-columns: repeat(6, 1fr); } }
+        @media (max-width: 768px) { .slots-grid { grid-template-columns: repeat(5, 1fr); } }
+        @media (max-width: 576px) { .slots-grid { grid-template-columns: repeat(4, 1fr); } }
+      </style>
+
+      <div id="slotsContainer" class="slots-grid"></div>
+
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Define your blocks here (You can add more letters if needed)
+        const blocks = ['A', 'B', 'C', 'D', 'E']; 
+        let currentBlockIndex = 0; // Starts at 'A' (Index 0)
+
+        // Get elements from the HTML
+        const grid = document.getElementById('slotsContainer');
+        const prevBtn = document.getElementById('prevBlockBtn');
+        const nextBtn = document.getElementById('nextBlockBtn');
+        const label = document.getElementById('currentBlockLabel');
+
+        // Function to build the grid
+        function renderSlots() {
+          // Clear the current grid
+          grid.innerHTML = '';
+          
+          // Get the current letter (A, B, C...)
+          let currentPrefix = blocks[currentBlockIndex];
+          
+          // Update the Title Label
+          label.innerText = `- Blok ${currentPrefix}`;
+
+          // Generate 64 buttons for the current block
+          for (let i = 1; i <= 64; i++) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            // Notice the fs-5 instead of fs-4 to fit the extra letter cleanly
+            btn.className = 'btn slot-btn rounded-3 fw-bold fs-5 py-3 text-dark shadow-sm'; 
+            btn.innerText = `${currentPrefix}${i}`; // Example: A1, A2...
+            grid.appendChild(btn);
+          }
+
+          // Disable Previous button if we are on the first block ('A')
+          prevBtn.disabled = (currentBlockIndex === 0);
+          
+          // Disable Next button if we are on the last block ('E')
+          nextBtn.disabled = (currentBlockIndex === blocks.length - 1);
+        }
+
+        // Action when Previous Button is clicked
+        prevBtn.addEventListener('click', () => {
+          if (currentBlockIndex > 0) {
+            currentBlockIndex--;
+            renderSlots();
+          }
+        });
+
+        // Action when Next Button is clicked
+        nextBtn.addEventListener('click', () => {
+          if (currentBlockIndex < blocks.length - 1) {
+            currentBlockIndex++;
+            renderSlots();
+          }
+        });
+
+        // Load the initial grid (Blok A) when the page first opens
+        renderSlots();
+      });
+    </script>
+
 <br></br>
 <section id="campaigns" class="py-5 bg-light">
   <div class="container">
