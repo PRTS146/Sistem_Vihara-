@@ -1,0 +1,40 @@
+.gallery-item {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: flex 0.6s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* When radio is checked, expand that label */
+  #g1:checked ~ div .gallery-item:nth-child(2),
+  #g2:checked ~ div .gallery-item:nth-child(4),
+  #g3:checked ~ div .gallery-item:nth-child(6),
+  #g4:checked ~ div .gallery-item:nth-child(8),
+  #g5:checked ~ div .gallery-item:nth-child(10) {
+    flex: 5;
+  }
+
+  /* Simpler approach - use adjacent sibling */
+  input[type="radio"]:checked + label {
+    flex: 5;
+  }
+
+  .gallery-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    color: white;
+    padding: 1rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  input[type="radio"]:checked + label .gallery-label {
+    opacity: 1;
+  }
