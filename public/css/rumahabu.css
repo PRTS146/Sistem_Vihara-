@@ -1,0 +1,26 @@
+.slots-grid {
+    display: grid;
+    /* Changed to 8 columns so 64 slots make a perfect 8x8 square */
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+}
+
+.slot-btn {
+    background-color: #ffffff;
+    border: 1.5px solid #e5e5e5;
+    transition: all 0.2s ease;
+    font-size: 0.9rem; /* Smaller font to fit A12.1 */
+    padding: 12px 4px;
+}
+
+.slot-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: white !important;
+}
+
+@media (max-width: 992px) { .slots-grid { grid-template-columns: repeat(6, 1fr); } }
+@media (max-width: 768px) { .slots-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 576px) { .slots-grid { grid-template-columns: repeat(4, 1fr); } }
