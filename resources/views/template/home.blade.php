@@ -8,6 +8,8 @@
     @include('components.navbar')
     @include('popup.register')
     @include('popup.popupdonasi')
+
     @yield('content')
+    
     
 @endsection
