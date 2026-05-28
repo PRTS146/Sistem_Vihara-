@@ -12,12 +12,6 @@
         </li>
         
         @auth
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('abu') ? 'active fw-bold' : '' }}" href="{{ route('abu') }}">Rumah Abu</a>
-        </li>
 
         @if(Auth::user()->role === 'admin')
         <li class="nav-item ms-lg-2 ps-lg-2 border-start">

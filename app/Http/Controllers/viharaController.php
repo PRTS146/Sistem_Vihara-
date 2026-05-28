@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
+use App\Models\Donation;
 
 class ViharaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function home()
-    {
-         try {
-        $events = \App\Models\Event::all();
-    } catch (\Exception $e) {
-        $events = collect(); // empty collection if table doesn't exist
-    }
-        $events = \App\Models\Event::all();
-        return view('vihara.home', compact('events'));
-        
-    }
+    
+
+
+
+
+public function home()
+{
+    $events = Event::all();
+    
+
+    return view('vihara.home', compact('events'));
+}
     public function dashboard(){
         return view('vihara.dashboard');
     }
@@ -59,9 +59,13 @@ class ViharaController extends Controller
     return view('vihara.adminhome');
     }
 
-    public function monitoring() {
-    return view('vihara.monitoring'); 
-    }
+   public function monitoring()
+{
+    $events = collect();
+    $donations = collect();
+
+    return view('vihara.monitoring', compact('events', 'donations'));
+}
 
     // 
       

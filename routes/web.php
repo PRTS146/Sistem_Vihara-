@@ -19,6 +19,11 @@ Route::middleware(['auth'])->group(function () {
     // Kita arahkan ke AdminController yang baru kita buat tadi
     Route::get('/monitoring', [AdminController::class, 'index'])->name("monitoring");
     Route::get('/adminhome', [ViharaController::class, 'adminhome'])->name('adminhome');
+    // routes/web.php
+
+    Route::get('/monitoring', [ViharaController::class, 'monitoring']);
+    // Jika masih ada halaman adminhome bawaan lama
+    Route::get('/profile', [ViharaController::class, 'profile'])->name('profile');
 
     Route::post('/slot/simpan', [SlotAbuController::class, 'store'])->name('slot.store');
     Route::put('/slot/update/{id}', [SlotAbuController::class, 'update'])->name('slot.update');
