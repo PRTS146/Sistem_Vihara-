@@ -475,60 +475,50 @@
 
 <section id="gallery" class="py-5">
   <div class="container-fluid px-4">
-    <h2 class="text-center mb-4 fw-bold">Gallery</h2>
-   
-    <div class="d-flex gap-2" style="height: 420px;">
+    <h3 class="mb-4 text-uppercase text-secondary" style="font-weight: 300; letter-spacing: 1px;">&mdash; GALLERY</h3>
+    
+    <div class="row g-2">
+      <div class="col-12 col-md-3">
+        <div class="gallery-card">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Vihara Utama">
+          <p class="gallery-text">Vihara Utama</p>
+        </div>
+      </div>
       
-      <!-- Item 1 -->
-      <label class="gallery-item position-relative overflow-hidden">
-        <input type="radio" name="gallery" id="g1" hidden checked>
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Vihara Utama" class="gallery-img">
-        <span class="gallery-label">Vihara Utama</span>
-        <div class="gallery-button-wrapper">
-          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+      <div class="col-12 col-md-6">
+        <div class="gallery-card">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Gerbang Masuk">
+          <p class="gallery-text">Gerbang Masuk</p>
         </div>
-      </label>
-
-      <!-- Item 2 -->
-      <label class="gallery-item position-relative overflow-hidden">
-        <input type="radio" name="gallery" id="g2" hidden>
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Gerbang Masuk" class="gallery-img">
-        <span class="gallery-label">Gerbang Masuk</span>
-        <div class="gallery-button-wrapper">
-          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+      </div>
+      
+      <div class="col-12 col-md-3">
+        <div class="gallery-card">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Taman Vihara">
+          <p class="gallery-text">Taman Vihara</p>
         </div>
-      </label>
+      </div>
 
-      <!-- Item 3 -->
-      <label class="gallery-item position-relative overflow-hidden">
-        <input type="radio" name="gallery" id="g3" hidden>
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Taman Vihara" class="gallery-img">
-        <span class="gallery-label">Taman Vihara</span>
-        <div class="gallery-button-wrapper">
-          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+      <div class="col-12 col-md-4">
+        <div class="gallery-card">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Aula Utama">
+          <p class="gallery-text">Aula Utama</p>
         </div>
-      </label>
-
-      <!-- Item 4 -->
-      <label class="gallery-item position-relative overflow-hidden">
-        <input type="radio" name="gallery" id="g4" hidden>
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Aula Utama" class="gallery-img">
-        <span class="gallery-label">Aula Utama</span>
-        <div class="gallery-button-wrapper">
-          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+      </div>
+      
+      <div class="col-12 col-md-5">
+        <div class="gallery-card">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Patung Buddha">
+          <p class="gallery-text">Patung Buddha</p>
         </div>
-      </label>
-
-      <!-- Item 5 -->
-      <label class="gallery-item position-relative overflow-hidden">
-        <input type="radio" name="gallery" id="g5" hidden>
-        <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Patung Buddha" class="gallery-img">
-        <span class="gallery-label">Patung Buddha</span>
-        <div class="gallery-button-wrapper">
-          <a href="#" class="btn btn-warning w-100 rounded-pill fw-bold">Open?</a>
+      </div>
+      
+      <div class="col-12 col-md-3">
+        <div class="gallery-card">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Area Meditasi">
+          <p class="gallery-text">Area Meditasi</p>
         </div>
-      </label>
-
+      </div>
     </div>
   </div>
 </section>

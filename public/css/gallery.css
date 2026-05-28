@@ -1,96 +1,36 @@
-/* Main Container */
-.d-flex {
-  gap: 8px !important;
-}
-
-/* Each Gallery Item */
-.gallery-item {
-  flex: 1;
-  height: 100%;
-  cursor: pointer;
+.gallery-card {
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
-  transition: flex 0.6s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  height: 220px; /* Adjust this height as needed */
+  width: 100%;
 }
 
-.gallery-item:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
-
-/* Background Image */
-.gallery-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: all 0.6s ease;
-}
-
-/* Dark Overlay - Only on Active */
-.gallery-item:has(input:checked) .gallery-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.75) 85%);
-}
-
-/* Label */
-.gallery-label {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.75);
-  color: white;
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-weight: 600;
-  z-index: 2;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.gallery-item:has(input:checked) .gallery-label {
-  opacity: 1;
-}
-
-/* Button */
-.gallery-button-wrapper {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.4s ease;
-  z-index: 3;
-}
-
-.gallery-item:has(input:checked) .gallery-button-wrapper {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Expand Effect */
-input[type="radio"]:checked + .gallery-bg {
-  /* This won't work directly, we use :has on parent */
-}
-
-.gallery-item:has(input:checked) {
-  flex: 4.5 !important;   /* Adjust this number to control how wide it expands */
-}
-
-.gallery-img {
+.gallery-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: all 0.6s ease;
+  display: block;
 }
 
-.gallery-item:has(input:checked) .gallery-img {
-  filter: brightness(0.65);
+/* Adds a subtle dark gradient at the bottom so white text is always readable */
+.gallery-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.gallery-text {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: #ffffff;
+  font-weight: 500;
+  z-index: 2;
+  font-size: 0.95rem;
+  margin: 0;
 }
