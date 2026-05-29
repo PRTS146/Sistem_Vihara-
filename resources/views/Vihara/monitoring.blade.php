@@ -265,15 +265,15 @@
       </div>
     </div>
 
-    {{-- ═══ DONATIONS ═══ --}}
+    {{-- ═══ KAMPANYE DONASI ═══ --}}
     <div class="tab-panel d-none" id="panel-donations">
       <div class="d-flex justify-content-between align-items-start mb-4">
         <div>
-          <h4 class="fw-bold text-white mb-1">Monitoring <span class="text-warning">Donasi</span></h4>
-          <small class="text-secondary">Kelola semua donasi masuk</small>
+          <h4 class="fw-bold text-white mb-1">Monitoring <span class="text-warning">Kampanye Donasi</span></h4>
+          <small class="text-secondary">Kelola target dan progress donasi vihara</small>
         </div>
         <button class="btn btn-warning fw-bold rounded-pill px-4" onclick="openModal('modalAddDonation')">
-          + Tambah Donasi
+          + Buat Kampanye
         </button>
       </div>
 
@@ -281,94 +281,64 @@
         <table class="table table-dark table-hover align-middle mb-0">
           <thead style="border-bottom:2px solid #ffc107;">
             <tr>
-              <th class="ps-4 text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Donatur</th>
-              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Jumlah</th>
-              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Tanggal</th>
-              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Pesan</th>
-              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Status</th>
+              <th class="ps-4 text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Nama Kampanye</th>
+              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Target (Rp)</th>
+              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Terkumpul (Rp)</th>
+              <th class="text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Progress</th>
               <th class="text-center pe-4 text-warning fw-semibold" style="font-size:.75rem;letter-spacing:.8px;text-transform:uppercase;">Aksi</th>
             </tr>
           </thead>
           <tbody>
             @forelse($donations as $donation)
             <tr>
-              <td class="ps-4">
-                <div class="d-flex align-items-center gap-2">
-                  <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white"
-                       style="width:34px;height:34px;background:linear-gradient(135deg,#b8861e,#6ea8fe);font-size:.78rem;flex-shrink:0;">
-                    {{ strtoupper(substr($donation->donor_name ?? 'A', 0, 1)) }}
-                  </div>
-                  <div>
-                    <div class="fw-bold small">{{ $donation->donor_name ?? 'Anonim' }}</div>
-                    <div class="text-secondary" style="font-size:.72rem;">{{ $donation->donor_email ?? '—' }}</div>
-                  </div>
+              <td class="ps-4 fw-bold">{{ $donation->donation_name }}</td>
+              <td class="text-secondary">Rp {{ number_format($donation->donation_target, 0, ',', '.') }}</td>
+              <td class="fw-bold text-success">Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}</td>
+              <td>
+                @php 
+                  $persentase = ($donation->donation_target > 0) ? ($donation->donation_progress / $donation->donation_target) * 100 : 0; 
+                @endphp
+                <div class="progress" style="height: 8px; width: 100px;">
+                  <div class="progress-bar bg-success" style="width: {{ $persentase }}%"></div>
                 </div>
-              </td>
-              <td class="fw-bold text-success">Rp {{ number_format($donation->amount, 0, ',', '.') }}</td>
-              <td class="text-secondary small">{{ $donation->created_at ? $donation->created_at->format('d M Y') : '—' }}</td>
-              <td>
-                <span class="text-secondary small" style="max-width:150px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                  {{ $donation->message ?? '—' }}
-                </span>
-              </td>
-              <td>
-                @php $st = $donation->status ?? 'pending'; @endphp
-                @if($st === 'verified')
-                  <span class="badge rounded-pill bg-success bg-opacity-25 text-success border border-success border-opacity-25">✓ Verified</span>
-                @elseif($st === 'pending')
-                  <span class="badge rounded-pill bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25">⏳ Pending</span>
-                @else
-                  <span class="badge rounded-pill bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25">✕ Ditolak</span>
-                @endif
+                <small class="text-secondary">{{ round($persentase, 1) }}%</small>
               </td>
               <td class="text-center pe-4">
+                {{-- Tombol Buka Modal Update Progress --}}
                 <button class="btn btn-sm btn-outline-warning rounded-pill px-3 me-1"
-                        onclick="openModal('modalEditDonation{{ $donation->id }}')">Edit</button>
-                <form action="#" method="POST" class="d-inline" onsubmit="return confirm('Hapus donasi ini?')">
+                        onclick="openModal('modalEditDonation{{ $donation->donation_id }}')">Update</button>
+                
+                {{-- Form Hapus (Menuju ke fungsi destroy) --}}
+                <form action="{{ route('donations.destroy', $donation->donation_id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus kampanye donasi ini?')">
                   @csrf @method('DELETE')
                   <button class="btn btn-sm btn-outline-danger rounded-pill px-3">Hapus</button>
                 </form>
               </td>
             </tr>
 
-            {{-- Edit Donation Modal --}}
-            <div class="modal-overlay d-none" id="modalEditDonation{{ $donation->id }}">
+            {{-- Edit/Update Progress Donation Modal --}}
+            <div class="modal-overlay d-none" id="modalEditDonation{{ $donation->donation_id }}">
               <div class="modal-box card bg-dark border-secondary rounded-4 shadow-lg" style="width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
                 <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center py-3 px-4">
-                  <h6 class="fw-bold text-white mb-0">✏️ Edit Donasi</h6>
-                  <button class="btn-close btn-close-white btn-sm" onclick="closeModal('modalEditDonation{{ $donation->id }}')"></button>
+                  <h6 class="fw-bold text-white mb-0">✏️ Update Progress Uang Masuk</h6>
+                  <button class="btn-close btn-close-white btn-sm" onclick="closeModal('modalEditDonation{{ $donation->donation_id }}')"></button>
                 </div>
                 <div class="card-body px-4 pb-4">
-                  <form action="#" method="POST">
+                  {{-- FORM UPDATE MENUJU CONTROLLER --}}
+                  <form action="{{ route('donations.update', $donation->donation_id) }}" method="POST">
                     @csrf @method('PUT')
-                    <div class="mb-3">
-                      <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Nama Donatur</label>
-                      <input type="text" name="donor_name" class="form-control bg-black border-secondary text-white" value="{{ $donation->donor_name }}" required>
+                    
+                    <div class="mb-3 text-start">
+                      <p class="text-secondary mb-1">Total uang saat ini: <strong>Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}</strong></p>
+                      <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Ubah Total Terkumpul Jadi (Rp)</label>
+                      <input type="number" name="donation_progress" class="form-control bg-black border-secondary text-white" value="{{ (int)$donation->donation_progress }}" required>
+                      <small class="text-muted text-start d-block mt-1">Masukkan angka total akumulasi (tanpa titik).</small>
                     </div>
-                    <div class="mb-3">
-                      <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Email</label>
-                      <input type="email" name="donor_email" class="form-control bg-black border-secondary text-white" value="{{ $donation->donor_email }}">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Jumlah (Rp)</label>
-                      <input type="number" name="amount" class="form-control bg-black border-secondary text-white" value="{{ $donation->amount }}" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Pesan</label>
-                      <textarea name="message" class="form-control bg-black border-secondary text-white" rows="3">{{ $donation->message }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Status</label>
-                      <select name="status" class="form-select bg-black border-secondary text-white">
-                        <option value="pending"  {{ ($donation->status??'')==='pending'  ? 'selected':'' }}>Pending</option>
-                        <option value="verified" {{ ($donation->status??'')==='verified' ? 'selected':'' }}>Verified</option>
-                        <option value="rejected" {{ ($donation->status??'')==='rejected' ? 'selected':'' }}>Ditolak</option>
-                      </select>
-                    </div>
+
                     <div class="d-flex justify-content-end gap-2 pt-2 border-top border-secondary">
                       <button type="button" class="btn btn-secondary rounded-pill px-3"
-                              onclick="closeModal('modalEditDonation{{ $donation->id }}')">Batal</button>
-                      <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Simpan</button>
+                              onclick="closeModal('modalEditDonation{{ $donation->donation_id }}')">Batal</button>
+                      <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Update Progress</button>
                     </div>
                   </form>
                 </div>
@@ -377,9 +347,9 @@
 
             @empty
             <tr>
-              <td colspan="6" class="text-center text-secondary py-5">
+              <td colspan="5" class="text-center text-secondary py-5">
                 <div style="font-size:2rem;opacity:.3;">💸</div>
-                <div class="mt-2">Belum ada donasi masuk.</div>
+                <div class="mt-2">Belum ada Kampanye Donasi.</div>
               </td>
             </tr>
             @endforelse
@@ -449,45 +419,41 @@
   </div>
 </div>
 
-{{-- Add Donation --}}
+{{-- Add Donation / Buat Kampanye --}}
 <div class="modal-overlay d-none" id="modalAddDonation">
   <div class="modal-box card bg-dark border-secondary rounded-4 shadow-lg" style="width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
     <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center py-3 px-4">
-      <h6 class="fw-bold text-white mb-0">💝 Tambah Donasi</h6>
+      <h6 class="fw-bold text-white mb-0">💝 Buat Kampanye Donasi</h6>
       <button class="btn-close btn-close-white btn-sm" onclick="closeModal('modalAddDonation')"></button>
     </div>
     <div class="card-body px-4 pb-4">
-      <form action="#" method="POST">
+      
+      {{-- FORM MENUJU CONTROLLER DONATIONS.STORE --}}
+      <form action="{{ route('donations.store') }}" method="POST">
         @csrf
+        
         <div class="mb-3">
-          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Nama Donatur</label>
-          <input type="text" name="donor_name" class="form-control bg-black border-secondary text-white" placeholder="Nama donatur..." required>
+          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Nama Kampanye / Tujuan</label>
+          <input type="text" name="donation_name" class="form-control bg-black border-secondary text-white" placeholder="Contoh: Pembangunan Gedung Baru" required>
         </div>
+        
         <div class="mb-3">
-          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Email</label>
-          <input type="email" name="donor_email" class="form-control bg-black border-secondary text-white" placeholder="email@contoh.com">
+          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Target Dana (Rp)</label>
+          <input type="number" name="donation_target" class="form-control bg-black border-secondary text-white" placeholder="50000000" required>
+          <small class="text-muted">Tanpa titik atau koma.</small>
         </div>
+        
         <div class="mb-3">
-          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Jumlah (Rp)</label>
-          <input type="number" name="amount" class="form-control bg-black border-secondary text-white" placeholder="50000" required>
+          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Deskripsi Kampanye</label>
+          <textarea name="donation_description" class="form-control bg-black border-secondary text-white" rows="3" placeholder="Deskripsi singkat untuk donatur..." required></textarea>
         </div>
-        <div class="mb-3">
-          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Pesan</label>
-          <textarea name="message" class="form-control bg-black border-secondary text-white" rows="3" placeholder="Pesan dari donatur..."></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label text-secondary small fw-semibold text-uppercase" style="letter-spacing:.4px;font-size:.72rem;">Status</label>
-          <select name="status" class="form-select bg-black border-secondary text-white">
-            <option value="pending">Pending</option>
-            <option value="verified">Verified</option>
-            <option value="rejected">Ditolak</option>
-          </select>
-        </div>
+
         <div class="d-flex justify-content-end gap-2 pt-2 border-top border-secondary">
           <button type="button" class="btn btn-secondary rounded-pill px-3" onclick="closeModal('modalAddDonation')">Batal</button>
-          <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Tambah Donasi</button>
+          <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Buat Kampanye</button>
         </div>
       </form>
+
     </div>
   </div>
 </div>

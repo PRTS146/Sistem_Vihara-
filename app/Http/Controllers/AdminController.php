@@ -11,7 +11,10 @@ class AdminController extends Controller
 {
 public function index()
     {
-        // bagian donasi belum di tambahkan
+
+
+        $donations = Donation::latest()->get();
+        
 
         $totalAcara = Event::count();
         $totalPeserta = Event::sum('event_counter');
@@ -25,8 +28,8 @@ public function index()
             'totalPeserta',
             'slotTersedia',
             'slotDiambil',
-            'totalSlot'
-            // bagian donasi belum
+            'totalSlot',
+            'donations'
         ));
     }
 }
