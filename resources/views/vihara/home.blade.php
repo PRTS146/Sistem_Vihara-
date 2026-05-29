@@ -8,85 +8,178 @@
     
 <div style="background-color: #e0f7f7;" class="py-4 px-4">
   <div class="container">
-    <div id="heroCarousel" class="carousel slide rounded-4 overflow-hidden shadow-lg" 
-       data-bs-ride="carousel" data-bs-interval="5000">
+    <div id="heroCarousel" class="carousel slide rounded-4 overflow-hidden shadow-lg"
+         data-bs-ride="carousel" data-bs-interval="5000">
 
-    <div class="carousel-indicators">
-      @if($events->count() > 0)
-        @foreach($events as $i => $event)
-          <button type="button" 
-                  data-bs-target="#heroCarousel"
-                  data-bs-slide-to="{{ $i }}"
-                  class="{{ $i === 0 ? 'active' : '' }}"></button>
-        @endforeach
-      @else
+      <div class="carousel-indicators">
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-      @endif
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
+      </div>
+
+      <div class="carousel-inner">
+
+        {{-- SLIDE 1: Welcome --}}
+      {{-- SLIDE 1: Welcome --}}
+<div class="carousel-item active">
+  <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+  <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
+    <p class="text-warning fw-bold text-uppercase">Selamat Datang Di</p>
+    <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
+    <p class="text-white">Kami mengajak Anda untuk bergabung bersama kami.</p>
+    <div class="d-flex gap-2 mt-2">
+      <button class="btn btn-warning rounded-pill px-4" onclick="smoothTo('about')">Tentang Kami</button>
     </div>
+  </div>
+</div>
 
-    <div class="carousel-inner">
-      @if($events->count() > 0)
-        @foreach($events as $i => $event)
-          <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
-            <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
-            <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
-              <p class="text-warning fw-bold text-uppercase">{{ $event->event_date }}</p>
-              <h1 class="display-4 fw-bold text-white">{{ $event->event_name }}</h1>
-              <p class="text-white">{{ $event->event_description }}</p>
-              <div class="d-flex gap-2 mt-2">
-                <a href="#" class="btn btn-warning rounded-pill px-4"
-                   data-bs-toggle="modal"
-                   data-bs-target="#joinModal"
-                   data-name="{{ $event->event_name }}"
-                   data-date="{{ $event->event_date }}"
-                   data-id="{{ $event->event_id }}">
-                  Daftar Sekarang
-                </a>
-              </div>
-            </div>
-          </div>
-        @endforeach
-
-      @else
-        <div class="carousel-item active">
-          <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+        {{-- SLIDE 2: Events --}}
+        <div class="carousel-item">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
-            <p class="text-warning fw-bold text-uppercase">Selamat Datang Di</p>
-            <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
-            <p class="text-white">Kami mengajak Anda untuk bergabung bersama kami.</p>
+            <p class="text-warning fw-bold text-uppercase">Kegiatan Terbaru</p>
+            <h1 class="display-4 fw-bold text-white">Events</h1>
+            <p class="text-white">Ikuti berbagai kegiatan dan acara bersama komunitas Vihara.</p>
+            <div class="d-flex gap-2 mt-2">
+              <button class="btn btn-warning rounded-pill px-4" onclick="smoothTo('events')">Lihat Events</button>
+            </div>
           </div>
         </div>
 
+        {{-- SLIDE 3: Rumah Abu --}}
+        <div class="carousel-item">
+          <img src="{{ asset('mainpage/slide2.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
+            <p class="text-warning fw-bold text-uppercase">Tempat Peristirahatan</p>
+            <h1 class="display-4 fw-bold text-white">Rumah Abu</h1>
+            <p class="text-white">Layanan rumah abu yang tenang dan terhormat untuk orang-orang terkasih.</p>
+            <div class="d-flex gap-2 mt-2">
+              <button class="btn btn-warning rounded-pill px-4" onclick="smoothTo('rumah-abu')">Selengkapnya</button>
+            </div>
+          </div>
+        </div>
+
+        {{-- SLIDE 4: Donation --}}
         <div class="carousel-item">
           <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">Apakah anda ingin</p>
             <h1 class="display-4 fw-bold text-white">Dana?</h1>
+            <p class="text-white">Setiap donasi Anda membawa berkah bagi sesama.</p>
             <div class="d-flex gap-2 mt-2">
-              <a href="#" class="btn btn-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#donateModal">
-                Donate
-              </a>
+                 <button class="btn btn-warning rounded-pill px-4" onclick="smoothTo('donations')">donate</button>
+              <button class="btn btn-outline-light rounded-pill px-4" onclick="smoothTo('campaigns')">Lihat Kampanye</button>
             </div>
           </div>
         </div>
-      @endif
-    </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
+        {{-- SLIDE 5: Gallery --}}
+        <div class="carousel-item">
+          <img src="{{ asset('mainpage/slide3.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
+            <p class="text-warning fw-bold text-uppercase">Momen Bersama</p>
+            <h1 class="display-4 fw-bold text-white">Gallery</h1>
+            <p class="text-white">Kenangan indah bersama komunitas Vihara Maha Giri Buddha.</p>
+            <div class="d-flex gap-2 mt-2">
+              <button class="btn btn-warning rounded-pill px-4" onclick="smoothTo('gallery')">Lihat Gallery</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+
+    </div>
   </div>
 </div>
 
 
-
-
 <section id="about" style="background-color: #e0f7f7;" class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-4">
+      <span class="bg-warning px-4 py-2 fw-bold rounded-pill fs-5">About</span>
+    </div>
+
+    <div class="bg-white rounded-4 p-4 p-md-5 shadow" style="box-shadow: 0 20px 60px rgba(0,0,0,0.12);">
+
+      <div class="row g-5 align-items-center">
+
+        <div class="col-md-7">
+          <h2 class="fw-bold mb-3">Vihara Maha Giri Buddha</h2>
+          <p class="text-muted mb-4" style="line-height: 1.8;">
+            Vihara Maha Giri Buddha adalah tempat ibadah umat Buddha yang berlokasi di Batam. 
+            Kami mengajak seluruh umat untuk bersama-sama menemukan kedamaian, ketenangan jiwa, 
+            dan pertumbuhan spiritual dalam lingkungan yang penuh kasih sayang dan keharmonisan.
+          </p>
+
+          <!-- Fixed Map Image -->
+          <a href="https://maps.app.goo.gl/rdGEGDG9LKhkrn35A" target="_blank" rel="noopener">
+            <img src="{{ asset('mainpage/map.jpg') }}" 
+                 alt="Lokasi Vihara Maha Giri Buddha" 
+                 class="img-fluid rounded-3 shadow-sm"
+                 style="max-height: 380px; width: 100%; object-fit: cover;">
+          </a>
+
+          <!-- Location Info -->
+          <div class="d-flex flex-column gap-3 mt-4">
+            
+            <div class="d-flex align-items-start gap-3">
+              <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                   style="width: 42px; height: 42px;">
+                <i class="bi bi-geo-alt-fill text-dark"></i>
+              </div>
+              <div>
+                <div class="fw-bold">Lokasi</div>
+                <div class="text-muted small">Jl. Maha Giri Buddha, Batam, Kepulauan Riau, Indonesia</div>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3">
+              <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                   style="width: 42px; height: 42px;">
+                <i class="bi bi-whatsapp text-dark"></i>
+              </div>
+              <div>
+                <div class="fw-bold">WhatsApp</div>
+                <a href="https://wa.me/6281234567890" target="_blank" class="text-muted small text-decoration-none">
+                  +62 812-3456-7890
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Question + Button -->
+          <p class="mt-4 mb-3 fw-medium">Ada pertanyaan?</p>
+          
+          <a href="https://wa.me/6281234567890" target="_blank" 
+             class="btn btn-warning rounded-pill px-5 py-3 fw-bold">
+            <i class="bi bi-whatsapp me-2"></i>Hubungi Kami
+          </a>
+
+        </div>
+
+        <!-- You can add another column here if needed (e.g. photo of vihara) -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section id="events" style="background-color: #e0f7f7;" class="py-5">
   <div class="container">
 
     <div class="text-center mb-4">
@@ -203,7 +296,7 @@
   </div>
 </section>
 
-<section id="donation" style="background-color: #e0f7f7;" class="py-5">
+<section id="rumah-abu" style="background-color: #e0f7f7;" class="py-5">
   <div class="container">
     
     
@@ -279,12 +372,14 @@
 
 <br></br>
 
-<div class="text-center mb-5">
+<div class="text-center mb-5 container">
+  <div class="container">
       <span class="bg-warning px-4 py-2 fw-bold rounded-pill shadow-sm shadow p-3 mb-5">Donation</span>
-      <h2 class="mt-4 fw-bold">Dana Public</h2>
-      <p class="text-muted">Terima kasih atas kebaikan hati Anda. Bantuan Anda sangat berarti bagi kami.</p>
-    </div>
+</div>
+<br></br>
 
+
+<section id="donation">
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6">
         <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
@@ -301,6 +396,8 @@
         </div>
       </div>
     </div>
+
+</section>
 
     <br></br>
 
@@ -413,53 +510,70 @@
   </div>
 </section>
 
-<section id="gallery" class="py-5">
-  <div class="container-fluid px-4">
-    <h3 class="mb-4 text-uppercase text-secondary" style="font-weight: 300; letter-spacing: 1px;">&mdash; GALLERY</h3>
-    
-    <div class="row g-2">
-      <div class="col-12 col-md-3">
-        <div class="gallery-card">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Vihara Utama">
-          <p class="gallery-text">Vihara Utama</p>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-6">
-        <div class="gallery-card">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Gerbang Masuk">
-          <p class="gallery-text">Gerbang Masuk</p>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-3">
-        <div class="gallery-card">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Taman Vihara">
-          <p class="gallery-text">Taman Vihara</p>
-        </div>
-      </div>
+<section id="gallery" style="background-color: #e0f7f7;" class="py-5">
+  <div class="container">
 
-      <div class="col-12 col-md-4">
-        <div class="gallery-card">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Aula Utama">
-          <p class="gallery-text">Aula Utama</p>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-5">
-        <div class="gallery-card">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Patung Buddha">
-          <p class="gallery-text">Patung Buddha</p>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-3">
-        <div class="gallery-card">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Area Meditasi">
-          <p class="gallery-text">Area Meditasi</p>
-        </div>
+    <div class="text-center mb-4">
+      <span class="bg-warning px-4 py-2 fw-bold rounded-pill fs-5">Gallery</span>
+    </div>
+
+    <div class="bg-white rounded-4 p-4 shadow-lg" style="box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;">
+      <div class="row g-2">
+
+       <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img src="" alt="" id="lightbox-img">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+</div>
+
+{{-- Your gallery cards (add onclick to each) --}}
+<div class="col-12 col-md-3">
+  <div class="gallery-card" onclick="openLightbox('{{ asset('mainpage/placeholder.jpg') }}', 'Vihara Utama')">
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Vihara Utama">
+    <p class="gallery-text">Vihara Utama</p>
+  </div>
+</div>
+
+<div class="col-12 col-md-6">
+  <div class="gallery-card" onclick="openLightbox('{{ asset('mainpage/placeholder.jpg') }}', 'Gerbang Masuk')">
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Gerbang Masuk">
+    <p class="gallery-text">Gerbang Masuk</p>
+  </div>
+</div>
+
+<div class="col-12 col-md-3">
+  <div class="gallery-card" onclick="openLightbox('{{ asset('mainpage/placeholder.jpg') }}', 'Taman Vihara')">
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Taman Vihara">
+    <p class="gallery-text">Taman Vihara</p>
+  </div>
+</div>
+
+<div class="col-12 col-md-4">
+  <div class="gallery-card" onclick="openLightbox('{{ asset('mainpage/placeholder.jpg') }}', 'Aula Utama')">
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Aula Utama">
+    <p class="gallery-text">Aula Utama</p>
+  </div>
+</div>
+
+<div class="col-12 col-md-5">
+  <div class="gallery-card" onclick="openLightbox('{{ asset('mainpage/placeholder.jpg') }}', 'Patung Buddha')">
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Patung Buddha">
+    <p class="gallery-text">Patung Buddha</p>
+  </div>
+</div>
+
+<div class="col-12 col-md-3">
+  <div class="gallery-card" onclick="openLightbox('{{ asset('mainpage/placeholder.jpg') }}', 'Area Meditasi')">
+    <img src="{{ asset('mainpage/placeholder.jpg') }}" alt="Area Meditasi">
+    <p class="gallery-text">Area Meditasi</p>
+  </div>
+</div>
+
       </div>
     </div>
+
   </div>
 </section>
 
