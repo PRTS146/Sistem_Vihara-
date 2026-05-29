@@ -1,0 +1,64 @@
+.a11y-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #dee2e6;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: transform 0.2s;
+}
+
+.a11y-btn:hover { transform: scale(1.1); }
+
+.a11y-btn.active {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+  background: #f8f9fa;
+}
+
+/* Pill navbar */
+nav.navbar.rounded-pill {
+  border-radius: 50px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10) !important;
+}
+
+/* Accessibility active state */
+#btn-dyslexia.active,
+#btn-colorblind.active,
+#btn-largetext.active {
+  background-color: #fff3cd !important;
+  font-weight: bold;
+}
+
+/* Dyslexia mode */
+body.dyslexia-mode * {
+  font-family: 'Arial', sans-serif !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
+  line-height: 1.8 !important;
+}
+
+/* Colorblind mode */
+body.colorblind-mode .btn-warning,
+body.colorblind-mode .bg-warning,
+body.colorblind-mode .card-header.bg-warning {
+  background-color: #0057B8 !important;
+  color: #ffffff !important;
+}
+
+body.colorblind-mode .text-warning {
+  color: #0057B8 !important;
+}
+
+body.colorblind-mode a {
+  text-decoration: underline !important;
+}
+
+/* Large text mode */
+body.large-text-mode * {
+  font-size: 1.15em !important;
+}

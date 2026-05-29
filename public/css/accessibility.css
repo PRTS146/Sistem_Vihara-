@@ -1,0 +1,73 @@
+/* ── DYSLEXIA MODE ── */
+body.dyslexia-mode * {
+  font-family: 'Arial', sans-serif !important;
+  letter-spacing: 0.1em !important;
+  word-spacing: 0.2em !important;
+  line-height: 1.8 !important;
+}
+
+body.dyslexia-mode p,
+body.dyslexia-mode li,
+body.dyslexia-mode td {
+  font-size: 1.05rem !important;
+}
+
+/* ── COLORBLIND MODE ── */
+body.colorblind-mode .btn-warning,
+body.colorblind-mode .bg-warning,
+body.colorblind-mode .card-header.bg-warning {
+  background-color: #0057B8 !important;
+  color: #ffffff !important;
+  border-color: #0057B8 !important;
+}
+
+body.colorblind-mode .text-warning {
+  color: #0057B8 !important;
+}
+
+body.colorblind-mode .badge.bg-warning {
+  background-color: #0057B8 !important;
+  color: #ffffff !important;
+}
+
+body.colorblind-mode a {
+  text-decoration: underline !important;
+}
+
+/* ── LARGE TEXT MODE ── */
+body.large-text-mode * {
+  font-size: 1.15em !important;
+}
+
+/* ── TOOLBAR ── */
+#a11y-toolbar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.a11y-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  background: white;
+  transition: transform 0.2s;
+}
+
+.a11y-btn:hover { transform: scale(1.1); }
+
+.a11y-btn.active {
+  outline: 3px solid #333;
+  outline-offset: 2px;
+}
