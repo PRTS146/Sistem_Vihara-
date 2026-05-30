@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
 // Define Data
 const blocks = ['A', 'B', 'C', 'D', 'E']; 
 let currentBlockIndex = 0; // Starts at 'A'
-let currentDinding = 1;    // Starts at 'Dinding 1'
+let currentDinding = '1';  // Starts at 'Dinding 1'
+let slotsData = [];        // Will be populated from API
 
 // Get DOM Elements
 const grid = document.getElementById('slotsContainer');
@@ -12,6 +13,29 @@ const nextBtn = document.getElementById('nextBlockBtn');
 const headerLabel = document.getElementById('currentBlockLabel');
 const sidebarLabel = document.getElementById('sidebarBlockLabel');
 const dindingBtns = document.querySelectorAll('.dinding-btn');
+
+// Status-to-color mapping
+const statusColors = {
+    'Tersedia':       { bg: '#28a745', text: '#fff' },       // green
+    'Booking':        { bg: '#ffc107', text: '#333' },       // yellow
+    'Telah Diambil':  { bg: '#dc3545', text: '#fff' },       // red
+};
+
+// Fetch slots from internal API
+function fetchSlots() {
+    const blok = blocks[currentBlockIndex];
+    fetch(`/api/slots?blok=${blok}&dinding=${currentDinding}`)
+        .then(res => res.json())
+        .then(data => {
+            slotsData = data;
+            renderSlots();
+        })
+        .catch(err => {
+            console.error('Failed to fetch slots:', err);
+            slotsData = [];
+            renderSlots();
+        });
+}
 
 // Function to build the grid
 function renderSlots() {
@@ -22,16 +46,24 @@ function renderSlots() {
     headerLabel.innerText = `- Blok ${currentPrefix}`;
     sidebarLabel.innerText = `Blok ${currentPrefix}`;
 
-    // Generate 64 buttons (8x8 Grid)
-    for (let i = 1; i <= 64; i++) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'btn slot-btn rounded-3 fw-bold text-dark shadow-sm'; 
-    
-    // Format: {Block}{Number}.{Dinding} -> e.g., A1.1, B23.2
-    btn.innerText = `${currentPrefix}${i}.${currentDinding}`; 
-    
-    grid.appendChild(btn);
+    if (slotsData.length === 0) {
+        grid.innerHTML = '<p class="text-muted text-center w-100 py-4">Belum ada slot di blok ini.</p>';
+    } else {
+        slotsData.forEach(slot => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            
+            const colors = statusColors[slot.slot_status] || { bg: '#6c757d', text: '#fff' };
+            btn.className = 'btn slot-btn rounded-3 fw-bold shadow-sm';
+            btn.style.backgroundColor = colors.bg;
+            btn.style.color = colors.text;
+            btn.style.border = 'none';
+            
+            btn.innerText = slot.slot_name;
+            btn.title = `${slot.slot_name} - ${slot.slot_status} (${slot.slot_level})`;
+            
+            grid.appendChild(btn);
+        });
     }
 
     // Toggle Previous/Next Button States
@@ -43,14 +75,14 @@ function renderSlots() {
 prevBtn.addEventListener('click', () => {
     if (currentBlockIndex > 0) {
     currentBlockIndex--;
-    renderSlots();
+    fetchSlots();
     }
 });
 
 nextBtn.addEventListener('click', () => {
     if (currentBlockIndex < blocks.length - 1) {
     currentBlockIndex++;
-    renderSlots();
+    fetchSlots();
     }
 });
 
@@ -66,19 +98,18 @@ dindingBtns.forEach(btn => {
     
     // Add 'active' class to clicked button
     e.target.classList.add('active');
-    e.target.classList.add('bg-success'); // Custom green active state
+    e.target.classList.add('bg-success');
     e.target.classList.add('border-success');
 
-    // Update state and re-render grid
+    // Update state and fetch new data
     currentDinding = e.target.getAttribute('data-dinding');
-    renderSlots();
+    fetchSlots();
     });
 });
 
-// Load initial state
-renderSlots();
+// Load initial state from API
+fetchSlots();
 
 // Ensure the first button starts with the custom green active state
 dindingBtns[0].classList.add('bg-success', 'border-success');
 });
-

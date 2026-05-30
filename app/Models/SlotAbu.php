@@ -14,6 +14,8 @@ class SlotAbu extends Model
 
     protected $fillable = [
         'admin_id',
+        'slot_blok',
+        'slot_dinding',
         'slot_name',
         'slot_level',
         'slot_status',

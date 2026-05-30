@@ -24,62 +24,46 @@
         <h2 class="fw-bold">Bantu Mewujudkan Harapan</h2>
         <p class="text-muted">Pilih kampanye donasi di bawah ini untuk mulai berkontribusi.</p>
       </div>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-          <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
-               role="button" data-bs-toggle="modal" data-bs-target="#donateModal"
-               style="cursor:pointer; transition:transform 0.2s;"
-               onmouseover="this.style.transform='translateY(-5px)'"
-               onmouseout="this.style.transform='translateY(0)'">
-            <img src="{{ asset('mainpage/slide1.jpg') }}" class="card-img-top w-100" style="height:220px;object-fit:cover;">
-            <div class="card-body p-4 d-flex flex-column">
-              <h5 class="card-title fw-bold mb-4">Pembangunan Gedung Serbaguna Vihara</h5>
-              <div class="mt-auto">
-                <div class="progress mb-2 bg-secondary bg-opacity-25" style="height:6px;border-radius:10px;">
-                  <div class="progress-bar bg-success" style="width:75%;"></div>
+
+      @if($donations->isEmpty())
+        <div class="text-center py-4">
+          <p class="text-muted">Belum ada kampanye donasi saat ini.</p>
+        </div>
+      @else
+        <div class="row g-4">
+          @foreach($donations as $donation)
+            @php
+              $percentage = $donation->donation_target > 0
+                  ? min(100, round(($donation->donation_progress / $donation->donation_target) * 100))
+                  : 0;
+            @endphp
+            <div class="col-md-6 col-lg-4">
+              <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
+                   role="button" data-bs-toggle="modal" data-bs-target="#donateModal"
+                   style="cursor:pointer; transition:transform 0.2s;"
+                   onmouseover="this.style.transform='translateY(-5px)'"
+                   onmouseout="this.style.transform='translateY(0)'">
+                <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top w-100" style="height:220px;object-fit:cover;">
+                <div class="card-body p-4 d-flex flex-column">
+                  <h5 class="card-title fw-bold mb-2">{{ $donation->donation_name }}</h5>
+                  <p class="text-muted small mb-4">{{ Str::limit($donation->donation_description, 80) }}</p>
+                  <div class="mt-auto">
+                    <div class="progress mb-2 bg-secondary bg-opacity-25" style="height:6px;border-radius:10px;">
+                      <div class="progress-bar bg-success" style="width:{{ $percentage }}%;"></div>
+                    </div>
+                    <div class="fw-bold fs-6 text-dark">
+                      Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
+                      <span class="text-muted fw-normal small">
+                        / Rp {{ number_format($donation->donation_target, 0, ',', '.') }}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div class="fw-bold fs-6 text-dark">Rp 75.000.000 <span class="text-muted fw-normal small">raised</span></div>
               </div>
             </div>
-          </div>
+          @endforeach
         </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
-               role="button" data-bs-toggle="modal" data-bs-target="#donateModal"
-               style="cursor:pointer; transition:transform 0.2s;"
-               onmouseover="this.style.transform='translateY(-5px)'"
-               onmouseout="this.style.transform='translateY(0)'">
-            <img src="{{ asset('mainpage/slide2.jpg') }}" class="card-img-top w-100" style="height:220px;object-fit:cover;">
-            <div class="card-body p-4 d-flex flex-column">
-              <h5 class="card-title fw-bold mb-4">Dana Operasional & Kegiatan Sosial Tahunan</h5>
-              <div class="mt-auto">
-                <div class="progress mb-2 bg-secondary bg-opacity-25" style="height:6px;border-radius:10px;">
-                  <div class="progress-bar bg-success" style="width:45%;"></div>
-                </div>
-                <div class="fw-bold fs-6 text-dark">Rp 45.000.000 <span class="text-muted fw-normal small">raised</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
-               role="button" data-bs-toggle="modal" data-bs-target="#donateModal"
-               style="cursor:pointer; transition:transform 0.2s;"
-               onmouseover="this.style.transform='translateY(-5px)'"
-               onmouseout="this.style.transform='translateY(0)'">
-            <img src="{{ asset('mainpage/placeholder.jpg') }}" class="card-img-top w-100" style="height:220px;object-fit:cover;">
-            <div class="card-body p-4 d-flex flex-column">
-              <h5 class="card-title fw-bold mb-4">Bantuan Kasih Sembako untuk Warga Sekitar</h5>
-              <div class="mt-auto">
-                <div class="progress mb-2 bg-secondary bg-opacity-25" style="height:6px;border-radius:10px;">
-                  <div class="progress-bar bg-success" style="width:90%;"></div>
-                </div>
-                <div class="fw-bold fs-6 text-dark">Rp 18.000.000 <span class="text-muted fw-normal small">raised</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      @endif
     </section>
 
   </div>

@@ -50,8 +50,21 @@ class AdminController extends Controller
     
     public function monitoring()
     {
-        $events = collect();
-        $donations = collect();
-        return view('vihara.monitoring', compact('events', 'donations'));
+        $events = Event::orderBy('event_date', 'desc')->get();
+        $donations = Donation::latest()->get();
+        $slots = SlotAbu::all();
+
+        $totalDonationCampaigns = $donations->count();
+        $totalEvents = $events->count();
+        $totalParticipants = Event::sum('event_counter');
+        $slotsAvailable = SlotAbu::where('slot_status', 'Tersedia')->count();
+        $slotsTaken = SlotAbu::where('slot_status', 'Telah Diambil')->count();
+        $totalSlots = $slots->count();
+
+        return view('vihara.monitoring', compact(
+            'events', 'donations', 'slots',
+            'totalDonationCampaigns', 'totalEvents', 'totalParticipants',
+            'slotsAvailable', 'slotsTaken', 'totalSlots'
+        ));
     }
 }

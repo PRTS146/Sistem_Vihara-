@@ -22,33 +22,44 @@
   {{-- MAIN CONTENT --}}
   <div class="flex-grow-1 p-4">
 
+    {{-- ═══════════════════════════════════════════════ --}}
     {{-- OVERVIEW --}}
+    {{-- ═══════════════════════════════════════════════ --}}
     <div id="section-overview">
       <h4 class="fw-bold mb-4">Overview</h4>
       <div class="row g-3 mb-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <div class="text-muted small mb-1">Donation campaigns</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #4a90d9;">3</div>
+            <div class="fw-bold mb-1" style="font-size: 2rem; color: #4a90d9;">{{ $totalDonationCampaigns }}</div>
             <div class="text-muted small">active campaigns</div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <div class="text-muted small mb-1">Events held</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #4a90d9;">5</div>
+            <div class="fw-bold mb-1" style="font-size: 2rem; color: #4a90d9;">{{ $totalEvents }}</div>
             <div class="text-muted small">total events</div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+            <div class="text-muted small mb-1">Total peserta</div>
+            <div class="fw-bold mb-1" style="font-size: 2rem; color: #28a745;">{{ $totalParticipants }}</div>
+            <div class="text-muted small">registered participants</div>
+          </div>
+        </div>
+        <div class="col-md-3">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <div class="text-muted small mb-1">Slots available</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #D4A017;">62</div>
-            <div class="text-muted small">of 100 total slots</div>
+            <div class="fw-bold mb-1" style="font-size: 2rem; color: #D4A017;">{{ $slotsAvailable }}</div>
+            <div class="text-muted small">of {{ $totalSlots }} total slots</div>
           </div>
         </div>
       </div>
+
       <div class="row g-3">
+        {{-- Recent Events --}}
         <div class="col-md-6">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -56,224 +67,437 @@
               <a href="#" onclick="showSection('events')" class="text-warning text-decoration-none small fw-bold">Add event</a>
             </div>
             <hr>
-            <p class="text-muted small text-center py-3">No recent events</p>
+            @forelse($events->take(5) as $event)
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="fw-semibold">{{ $event->event_name }}</div>
+                  <small class="text-muted">{{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}</small>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge {{ $event->event_status === 'Active' ? 'bg-success' : 'bg-secondary' }} rounded-pill">
+                    {{ $event->event_status }}
+                  </span>
+                  <span class="badge bg-light text-dark border">{{ $event->event_counter }} peserta</span>
+                </div>
+              </div>
+            @empty
+              <p class="text-muted small text-center py-3">No recent events</p>
+            @endforelse
           </div>
         </div>
+
+        {{-- Active Donation Campaigns --}}
         <div class="col-md-6">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <h6 class="fw-bold mb-3">Active donation campaigns</h6>
             <hr>
-            <p class="text-muted small text-center py-3">No active campaigns</p>
+            @forelse($donations->take(5) as $donation)
+              @php
+                $pct = $donation->donation_target > 0
+                    ? min(100, round(($donation->donation_progress / $donation->donation_target) * 100))
+                    : 0;
+              @endphp
+              <div class="py-2 border-bottom">
+                <div class="fw-semibold">{{ $donation->donation_name }}</div>
+                <div class="progress my-1" style="height:5px;">
+                  <div class="progress-bar bg-success" style="width:{{ $pct }}%;"></div>
+                </div>
+                <small class="text-muted">
+                  Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
+                  / Rp {{ number_format($donation->donation_target, 0, ',', '.') }}
+                  ({{ $pct }}%)
+                </small>
+              </div>
+            @empty
+              <p class="text-muted small text-center py-3">No active campaigns</p>
+            @endforelse
           </div>
         </div>
       </div>
     </div>
 
+    {{-- ═══════════════════════════════════════════════ --}}
     {{-- EVENTS --}}
+    {{-- ═══════════════════════════════════════════════ --}}
     <div id="section-events" style="display:none;">
       <h4 class="fw-bold mb-4">Events</h4>
       <div class="row g-3">
+        {{-- Create New Event Form --}}
         <div class="col-md-6">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <h6 class="fw-bold mb-3">Create new event</h6>
             <hr>
-            <form action="#" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('events.store') }}" method="POST">
               @csrf
               <div class="mb-3">
-                <label class="form-label small text-muted">Event image</label>
-                <div class="border rounded-3 p-4 text-center text-muted"
-                     style="border-style: dashed !important; cursor: pointer; background: #f8fbff;"
-                     onclick="document.getElementById('eventImage').click()">
-                  Click to upload image
-                  <input type="file" id="eventImage" name="image" hidden accept="image/*">
-                </div>
-              </div>
-              <div class="mb-3">
                 <label class="form-label small text-muted">Event name</label>
-                <input type="text" name="event_name" class="form-control rounded-3" placeholder="e.g. Commemoration Day 2025">
-              </div>
-              <div class="mb-3">
-                <label class="form-label small text-muted">Date of event</label>
-                <input type="date" name="event_date" class="form-control rounded-3">
+                <input type="text" name="event_name" class="form-control rounded-3" placeholder="e.g. Perayaan Waisak 2025" required>
               </div>
               <div class="mb-3">
                 <label class="form-label small text-muted">Description</label>
-                <textarea name="event_description" class="form-control rounded-3" rows="3" placeholder="Event description..."></textarea>
+                <textarea name="event_description" class="form-control rounded-3" rows="3" placeholder="Event description..." required></textarea>
+              </div>
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Date of event</label>
+                  <input type="date" name="event_date" class="form-control rounded-3" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Time</label>
+                  <input type="time" name="event_time" class="form-control rounded-3" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-muted">Status</label>
+                <select name="event_status" class="form-select rounded-3">
+                  <option value="Active">Active</option>
+                  <option value="Selesai">Selesai</option>
+                  <option value="Dibatalkan">Dibatalkan</option>
+                </select>
               </div>
               <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Create event</button>
             </form>
           </div>
         </div>
+
+        {{-- All Events Table --}}
         <div class="col-md-6">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <h6 class="fw-bold mb-3">All events</h6>
             <hr>
-            <table class="table table-hover">
-              <thead class="table-light">
-                <tr>
-                  <th>Event</th>
-                  <th>Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colspan="3" class="text-center text-muted py-3">No events yet</td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="max-height: 500px; overflow-y: auto;">
+              <table class="table table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Peserta</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @forelse($events as $event)
+                    <tr>
+                      <td>
+                        <div class="fw-semibold">{{ $event->event_name }}</div>
+                        <small class="text-muted">{{ Str::limit($event->event_description, 40) }}</small>
+                      </td>
+                      <td class="small">{{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}</td>
+                      <td><span class="badge bg-light text-dark border">{{ $event->event_counter }}</span></td>
+                      <td>
+                        <span class="badge {{ $event->event_status === 'Active' ? 'bg-success' : 'bg-secondary' }} rounded-pill">
+                          {{ $event->event_status }}
+                        </span>
+                      </td>
+                      <td>
+                        <div class="d-flex gap-1">
+                          <button class="btn btn-sm btn-outline-primary rounded-pill" 
+                                  data-bs-toggle="modal" data-bs-target="#editEventModal{{ $event->event_id }}">
+                            <i class="bi bi-pencil"></i>
+                          </button>
+                          <form action="{{ route('events.destroy', $event->event_id) }}" method="POST" 
+                                onsubmit="return confirm('Hapus event ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+
+                    {{-- Edit Event Modal --}}
+                    <div class="modal fade" id="editEventModal{{ $event->event_id }}" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header border-0">
+                            <h5 class="modal-title fw-bold">Edit Event</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body px-4 pb-4">
+                            <form action="{{ route('events.update', $event->event_id) }}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <div class="mb-3">
+                                <label class="form-label small text-muted">Event name</label>
+                                <input type="text" name="event_name" class="form-control rounded-3" value="{{ $event->event_name }}" required>
+                              </div>
+                              <div class="mb-3">
+                                <label class="form-label small text-muted">Description</label>
+                                <textarea name="event_description" class="form-control rounded-3" rows="3" required>{{ $event->event_description }}</textarea>
+                              </div>
+                              <div class="row g-2 mb-3">
+                                <div class="col-md-6">
+                                  <label class="form-label small text-muted">Date</label>
+                                  <input type="date" name="event_date" class="form-control rounded-3" value="{{ $event->event_date }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                  <label class="form-label small text-muted">Time</label>
+                                  <input type="time" name="event_time" class="form-control rounded-3" value="{{ $event->event_time }}" required>
+                                </div>
+                              </div>
+                              <div class="mb-3">
+                                <label class="form-label small text-muted">Status</label>
+                                <select name="event_status" class="form-select rounded-3">
+                                  <option value="Active" {{ $event->event_status === 'Active' ? 'selected' : '' }}>Active</option>
+                                  <option value="Selesai" {{ $event->event_status === 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                  <option value="Dibatalkan" {{ $event->event_status === 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                                </select>
+                              </div>
+                              <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Update event</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  @empty
+                    <tr>
+                      <td colspan="5" class="text-center text-muted py-3">No events yet</td>
+                    </tr>
+                  @endforelse
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
 
-{{-- SLOTS --}}
-<div id="section-slots" style="display:none;">
-  <h4 class="fw-bold mb-4">Rumah Abu Slots</h4>
-  <div class="row g-3">
+    {{-- ═══════════════════════════════════════════════ --}}
+    {{-- SLOTS --}}
+    {{-- ═══════════════════════════════════════════════ --}}
+    <div id="section-slots" style="display:none;">
+      <h4 class="fw-bold mb-4">Rumah Abu Slots</h4>
+      <div class="row g-3">
 
-    {{-- LEFT: Add + Update --}}
-    <div class="col-md-6">
-      <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
-        <h6 class="fw-bold mb-3">Add / update slot</h6>
-        <hr>
+        {{-- LEFT: Add + Update --}}
+        <div class="col-md-6">
+          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+            <h6 class="fw-bold mb-3">Add new slot</h6>
+            <hr>
 
-        {{-- ADD SLOT --}}
-        <div class="mb-3">
-          <label class="form-label small text-muted">Blok</label>
-          <select class="form-select rounded-3" id="addBlok">
-            <option>Blok A</option>
-            <option>Blok B</option>
-            <option>Blok C</option>
-            <option>Blok D</option>
-            <option>Blok E</option>
-          </select>
+            {{-- ADD SLOT --}}
+            <div class="mb-3">
+              <label class="form-label small text-muted">Blok</label>
+              <select class="form-select rounded-3" id="addBlok">
+                <option value="A">Blok A</option>
+                <option value="B">Blok B</option>
+                <option value="C">Blok C</option>
+                <option value="D">Blok D</option>
+                <option value="E">Blok E</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted">Dinding</label>
+              <select class="form-select rounded-3" id="addDinding">
+                <option value="1">Dinding 1</option>
+                <option value="2">Dinding 2</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted">Slot name (e.g. A1.1, B3.2)</label>
+              <input type="text" class="form-control rounded-3" id="addSlotName" placeholder="e.g. A1.1">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted">Level</label>
+              <select class="form-select rounded-3" id="addLevel">
+                <option value="Biasa">Biasa</option>
+                <option value="VIP">VIP</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted">Status</label>
+              <select class="form-select rounded-3" id="addStatus">
+                <option value="Tersedia">Tersedia</option>
+                <option value="Booking">Booking</option>
+                <option value="Telah Diambil">Telah Diambil</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted">Price (Rp)</label>
+              <input type="number" class="form-control rounded-3" id="addPrice" placeholder="500000" min="0">
+            </div>
+            <button type="button" class="btn btn-warning rounded-pill px-4 fw-bold" onclick="addSlot()">Add slot</button>
+
+            <hr class="my-4">
+
+            {{-- UPDATE SLOT STATUS --}}
+            <p class="small text-muted fw-semibold mb-3">Update existing slot status</p>
+
+            <div class="mb-3">
+              <label class="form-label small text-muted">Pick blok to filter</label>
+              <select class="form-select rounded-3" id="filterBlok" onchange="filterSlots()">
+                <option value="">All</option>
+                <option value="A">Blok A</option>
+                <option value="B">Blok B</option>
+                <option value="C">Blok C</option>
+                <option value="D">Blok D</option>
+                <option value="E">Blok E</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small text-muted">Pick slot</label>
+              <select class="form-select rounded-3" id="slotPicker"></select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small text-muted">New status</label>
+              <select class="form-select rounded-3" id="newStatus">
+                <option value="Tersedia">Tersedia</option>
+                <option value="Booking">Booking</option>
+                <option value="Telah Diambil">Telah Diambil</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" onclick="updateSlot()">Update status</button>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label small text-muted">Dinding</label>
-          <select class="form-select rounded-3" id="addDinding">
-            <option>Dinding 1</option>
-            <option>Dinding 2</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label small text-muted">Slot number (e.g. 1.1, 1.2)</label>
-          <input type="text" class="form-control rounded-3" id="addSlotNumber" placeholder="put 1.1 or 1.2 depend on dinding">
-        </div>
-        <div class="mb-3">
-          <label class="form-label small text-muted">Status</label>
-          <select class="form-select rounded-3" id="addStatus">
-            <option value="available">Available</option>
-            <option value="booked">Booked</option>
-            <option value="taken">Taken</option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-warning rounded-pill px-4 fw-bold" onclick="addSlot()">Add slot</button>
 
-        <hr class="my-4">
-
-        {{-- UPDATE SLOT STATUS --}}
-        <p class="small text-muted fw-semibold mb-3">Update existing slot status</p>
-
-        <div class="mb-3">
-          <label class="form-label small text-muted">Pick dinding to filter</label>
-          <select class="form-select rounded-3" id="filterDinding" onchange="filterSlots()">
-            <option value="">All</option>
-            <option>Dinding 1</option>
-            <option>Dinding 2</option>
-          </select>
+        {{-- RIGHT: Slot list --}}
+        <div class="col-md-6">
+          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+            <h6 class="fw-bold mb-3">Slot list</h6>
+            <hr>
+            <div style="max-height: 600px; overflow-y: auto;">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Blok</th>
+                    <th>Dinding</th>
+                    <th>Slot</th>
+                    <th>Level</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="slotTableBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label small text-muted">Pick slot</label>
-          <select class="form-select rounded-3" id="slotPicker"></select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label small text-muted">New status</label>
-          <select class="form-select rounded-3" id="newStatus">
-            <option value="available">Available</option>
-            <option value="booked">Booked</option>
-            <option value="taken">Taken</option>
-          </select>
-        </div>
-
-        <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" onclick="updateSlot()">Update status</button>
       </div>
     </div>
 
-    {{-- RIGHT: Slot list --}}
-    <div class="col-md-6">
-      <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
-        <h6 class="fw-bold mb-3">Slot list</h6>
-        <hr>
-        <table class="table table-hover align-middle">
-          <thead class="table-light">
-            <tr>
-              <th>Blok</th>
-              <th>Dinding</th>
-              <th>Slot</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="slotTableBody">
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-</div>
-
+    {{-- ═══════════════════════════════════════════════ --}}
     {{-- DONATIONS --}}
+    {{-- ═══════════════════════════════════════════════ --}}
     <div id="section-donations" style="display:none;">
       <h4 class="fw-bold mb-4">Donations</h4>
       <div class="row g-3">
+
+        {{-- Create Campaign --}}
         <div class="col-md-6">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <h6 class="fw-bold mb-3">Create campaign</h6>
             <hr>
-            <div class="mb-3">
-              <label class="form-label small text-muted">Campaign name</label>
-              <input type="text" class="form-control rounded-3" placeholder="e.g. Renovation Fund 2025">
-            </div>
-            <div class="mb-3">
-              <label class="form-label small text-muted">Target amount (Rp)</label>
-              <input type="number" class="form-control rounded-3" placeholder="10000000">
-            </div>
-            <div class="mb-3">
-         <label class="form-label small text-muted">Campaign image</label>
-            <div class="border rounded-3 p-4 text-center text-muted"
-            style="border-style: dashed !important; background: #f8fbff; cursor: pointer;"
-            onclick="document.getElementById('campaignImage').click()">
-            <span id="campaignImageLabel">Click to upload image</span>
-            <input type="file" id="campaignImage" hidden accept="image/*"
-             onchange="document.getElementById('campaignImageLabel').textContent = this.files[0].name">
-</div>
-            </div>
-            <button class="btn btn-warning rounded-pill px-4 fw-bold">Create campaign</button>
+            <form action="{{ route('donations.store') }}" method="POST">
+              @csrf
+              <div class="mb-3">
+                <label class="form-label small text-muted">Campaign name</label>
+                <input type="text" name="donation_name" class="form-control rounded-3" placeholder="e.g. Renovation Fund 2025" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-muted">Description</label>
+                <textarea name="donation_description" class="form-control rounded-3" rows="2" placeholder="Campaign description..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small text-muted">Target amount (Rp)</label>
+                <input type="number" name="donation_target" class="form-control rounded-3" placeholder="10000000" min="0" required>
+              </div>
+              <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Create campaign</button>
+            </form>
           </div>
         </div>
+
+        {{-- Active Campaigns + Update Progress --}}
         <div class="col-md-6">
           <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             <h6 class="fw-bold mb-3">Active campaigns</h6>
             <hr>
-            <p class="text-muted small text-center py-3">No active campaigns</p>
+
+            @forelse($donations as $donation)
+              @php
+                $pct = $donation->donation_target > 0
+                    ? min(100, round(($donation->donation_progress / $donation->donation_target) * 100))
+                    : 0;
+              @endphp
+              <div class="py-2 border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="fw-semibold">{{ $donation->donation_name }}</div>
+                  <form action="{{ route('donations.destroy', $donation->donation_id) }}" method="POST"
+                        onsubmit="return confirm('Hapus kampanye ini?')" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill py-0">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </form>
+                </div>
+                <div class="progress my-1" style="height:5px;">
+                  <div class="progress-bar bg-success" style="width:{{ $pct }}%;"></div>
+                </div>
+                <small class="text-muted">
+                  Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
+                  / Rp {{ number_format($donation->donation_target, 0, ',', '.') }}
+                  ({{ $pct }}%)
+                </small>
+              </div>
+            @empty
+              <p class="text-muted small text-center py-3">No active campaigns</p>
+            @endforelse
+
             <h6 class="fw-bold mb-3 mt-4">Update progress</h6>
             <hr>
-            <div class="mb-3">
-              <label class="form-label small text-muted">Select campaign</label>
-              <select class="form-select rounded-3">
-                <option>-- Select --</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label small text-muted">Current collected (Rp)</label>
-              <input type="number" class="form-control rounded-3" placeholder="5000000">
-            </div>
-            <button class="btn btn-warning rounded-pill px-4 fw-bold">Update progress</button>
+
+            @if($donations->isNotEmpty())
+              <form method="POST" id="updateDonationForm">
+                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                  <label class="form-label small text-muted">Select campaign</label>
+                  <select class="form-select rounded-3" id="donationSelector" onchange="updateDonationFormAction()">
+                    @foreach($donations as $donation)
+                      <option value="{{ $donation->donation_id }}" 
+                              data-route="{{ route('donations.update', $donation->donation_id) }}"
+                              data-progress="{{ $donation->donation_progress }}">
+                        {{ $donation->donation_name }} (Rp {{ number_format($donation->donation_progress, 0, ',', '.') }})
+                      </option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small text-muted">Current collected (Rp)</label>
+                  <input type="number" name="donation_progress" id="donationProgressInput" class="form-control rounded-3" placeholder="5000000" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Update progress</button>
+              </form>
+
+              <script>
+                function updateDonationFormAction() {
+                  const selector = document.getElementById('donationSelector');
+                  const selected = selector.options[selector.selectedIndex];
+                  const form = document.getElementById('updateDonationForm');
+                  const progressInput = document.getElementById('donationProgressInput');
+
+                  form.action = selected.getAttribute('data-route');
+                  progressInput.value = selected.getAttribute('data-progress');
+                }
+                // Init on load
+                document.addEventListener('DOMContentLoaded', function() {
+                  if (document.getElementById('donationSelector')) {
+                    updateDonationFormAction();
+                  }
+                });
+              </script>
+            @else
+              <p class="text-muted small text-center py-3">No campaigns to update</p>
+            @endif
           </div>
         </div>
       </div>
@@ -281,5 +505,20 @@
 
   </div>
 </div>
+
+{{-- Success flash message --}}
+@if(session('success'))
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil!',
+      text: '{{ session("success") }}',
+      timer: 2500,
+      showConfirmButton: false,
+    });
+  });
+</script>
+@endif
 
 @endsection

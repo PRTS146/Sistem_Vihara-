@@ -1,34 +1,48 @@
+// ── SECTION NAVIGATION ───────────────────────────
 function showSection(name) {
   ['overview','events','slots','donations'].forEach(function(s) {
     document.getElementById('section-' + s).style.display = 'none';
-    document.getElementById('link-' + s).classList.remove('active-link');
+    var link = document.getElementById('link-' + s);
+    if (link) link.classList.remove('active-link');
   });
   document.getElementById('section-' + name).style.display = 'block';
-  document.getElementById('link-' + name).classList.add('active-link');
+  var activeLink = document.getElementById('link-' + name);
+  if (activeLink) activeLink.classList.add('active-link');
 
   if (name === 'slots') {
-    renderTable();
+    fetchAndRenderSlots();
   }
 }
 
 showSection('overview');
 
-// ── SLOTS ─────────────────────────────────────────
+// ── CSRF TOKEN ───────────────────────────────────
+var csrfMeta = document.querySelector('meta[name="csrf-token"]');
+var csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
 
-var slots = [
-  { id: 1, blok: 'Blok A', dinding: 'Dinding 1', slot: '1.1', status: 'taken' },
-  { id: 2, blok: 'Blok A', dinding: 'Dinding 1', slot: '1.2', status: 'taken' },
-  { id: 3, blok: 'Blok A', dinding: 'Dinding 2', slot: '1.1', status: 'available' },
-  { id: 4, blok: 'Blok B', dinding: 'Dinding 1', slot: '1.1', status: 'booked' },
-  { id: 5, blok: 'Blok C', dinding: 'Dinding 2', slot: '2.1', status: 'available' },
-];
-var nextId = 6;
+// ── SLOTS (API-DRIVEN) ──────────────────────────
+var slots = [];
 
 var badgeStyle = {
-  available: 'background:#e8f8f0; color:#1e8449; border:1px solid #c3e6cb;',
-  booked:    'background:#fef9e7; color:#d68910; border:1px solid #ffeaa7;',
-  taken:     'background:#fde8e8; color:#c0392b; border:1px solid #f5c6cb;',
+  'Tersedia':       'background:#e8f8f0; color:#1e8449; border:1px solid #c3e6cb;',
+  'Booking':        'background:#fef9e7; color:#d68910; border:1px solid #ffeaa7;',
+  'Telah Diambil':  'background:#fde8e8; color:#c0392b; border:1px solid #f5c6cb;',
 };
+
+// Fetch all slots from API
+function fetchAndRenderSlots() {
+  fetch('/api/slots')
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      slots = data;
+      renderTable();
+    })
+    .catch(function(err) {
+      console.error('Failed to fetch slots:', err);
+      slots = [];
+      renderTable();
+    });
+}
 
 function renderTable() {
   var tbody = document.getElementById('slotTableBody');
@@ -36,21 +50,23 @@ function renderTable() {
   tbody.innerHTML = '';
 
   if (slots.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No slots yet</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">No slots yet</td></tr>';
     renderPicker();
     return;
   }
 
   slots.forEach(function(s) {
-    var style = badgeStyle[s.status] || '';
+    var style = badgeStyle[s.slot_status] || '';
+    var id = s.slot_id || s.id;
     var tr = document.createElement('tr');
-    tr.id = 'slot-row-' + s.id;
+    tr.id = 'slot-row-' + id;
     tr.innerHTML =
-      '<td>' + s.blok + '</td>' +
-      '<td>' + s.dinding + '</td>' +
-      '<td>' + s.slot + '</td>' +
-      '<td><span class="badge rounded-pill" style="' + style + '">' + s.status + '</span></td>' +
-      '<td><button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteSlot(' + s.id + ')">Del</button></td>';
+      '<td>Blok ' + (s.slot_blok || '-') + '</td>' +
+      '<td>Dinding ' + (s.slot_dinding || '-') + '</td>' +
+      '<td>' + s.slot_name + '</td>' +
+      '<td>' + (s.slot_level || '-') + '</td>' +
+      '<td><span class="badge rounded-pill" style="' + style + '">' + s.slot_status + '</span></td>' +
+      '<td><button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteSlot(' + id + ')">Del</button></td>';
     tbody.appendChild(tr);
   });
 
@@ -58,12 +74,13 @@ function renderTable() {
 }
 
 function renderPicker() {
-  var filter = document.getElementById('filterDinding').value;
+  var filterEl = document.getElementById('filterBlok');
   var picker = document.getElementById('slotPicker');
-  if (!picker) return;
+  if (!picker || !filterEl) return;
   picker.innerHTML = '';
 
-  var filtered = filter ? slots.filter(function(s) { return s.dinding === filter; }) : slots;
+  var filter = filterEl.value;
+  var filtered = filter ? slots.filter(function(s) { return s.slot_blok === filter; }) : slots;
 
   if (filtered.length === 0) {
     picker.innerHTML = '<option>No slots available</option>';
@@ -71,47 +88,115 @@ function renderPicker() {
   }
 
   filtered.forEach(function(s) {
+    var id = s.slot_id || s.id;
     var opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = s.blok + ' ' + s.dinding + ' - ' + s.slot + ' (' + s.status + ')';
+    opt.value = id;
+    opt.textContent = 'Blok ' + (s.slot_blok || '?') + ' Dinding ' + (s.slot_dinding || '?') + ' - ' + s.slot_name + ' (' + s.slot_status + ')';
     picker.appendChild(opt);
   });
 }
 
-function addSlot() {
-  var blok    = document.getElementById('addBlok').value;
-  var dinding = document.getElementById('addDinding').value;
-  var slotNum = document.getElementById('addSlotNumber').value.trim();
-  var status  = document.getElementById('addStatus').value;
+// ── CRUD OPERATIONS (via API) ────────────────────
 
-  if (!slotNum) {
-    alert('Please enter a slot number.');
+function addSlot() {
+  var blok     = document.getElementById('addBlok').value;
+  var dinding  = document.getElementById('addDinding').value;
+  var slotName = document.getElementById('addSlotName').value.trim();
+  var level    = document.getElementById('addLevel').value;
+  var status   = document.getElementById('addStatus').value;
+  var price    = document.getElementById('addPrice').value;
+
+  if (!slotName) {
+    alert('Please enter a slot name.');
     return;
   }
 
-  var id = nextId++;
-  slots.push({ id: id, blok: blok, dinding: dinding, slot: slotNum, status: status });
-  document.getElementById('addSlotNumber').value = '';
-  renderTable();
+  fetch('/api/slots', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken,
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      slot_blok: blok,
+      slot_dinding: dinding,
+      slot_name: slotName,
+      slot_level: level,
+      slot_status: status,
+      slot_price: parseFloat(price) || 0,
+    }),
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.slot) {
+      document.getElementById('addSlotName').value = '';
+      document.getElementById('addPrice').value = '';
+      fetchAndRenderSlots();
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({ icon: 'success', title: 'Berhasil!', text: data.message, timer: 2000, showConfirmButton: false });
+      }
+    } else if (data.errors) {
+      alert('Validation error: ' + JSON.stringify(data.errors));
+    }
+  })
+  .catch(function(err) {
+    console.error('Error adding slot:', err);
+    alert('Failed to add slot. Check console for details.');
+  });
 }
 
 function deleteSlot(id) {
-  slots = slots.filter(function(s) { return s.id !== id; });
-  renderTable();
+  if (!confirm('Hapus slot ini?')) return;
+
+  fetch('/api/slots/' + id, {
+    method: 'DELETE',
+    headers: {
+      'X-CSRF-TOKEN': csrfToken,
+      'Accept': 'application/json',
+    },
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    fetchAndRenderSlots();
+    if (typeof Swal !== 'undefined') {
+      Swal.fire({ icon: 'success', title: 'Dihapus!', text: data.message, timer: 2000, showConfirmButton: false });
+    }
+  })
+  .catch(function(err) {
+    console.error('Error deleting slot:', err);
+  });
 }
 
 function updateSlot() {
-  var id        = parseInt(document.getElementById('slotPicker').value);
+  var pickerEl = document.getElementById('slotPicker');
+  var id = parseInt(pickerEl.value);
   var newStatus = document.getElementById('newStatus').value;
-  var slot      = null;
 
-  for (var i = 0; i < slots.length; i++) {
-    if (slots[i].id === id) { slot = slots[i]; break; }
+  if (!id || isNaN(id)) {
+    alert('Please select a slot first.');
+    return;
   }
 
-  if (!slot) return;
-  slot.status = newStatus;
-  renderTable();
+  fetch('/api/slots/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken,
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({ slot_status: newStatus }),
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    fetchAndRenderSlots();
+    if (typeof Swal !== 'undefined') {
+      Swal.fire({ icon: 'success', title: 'Updated!', text: data.message, timer: 2000, showConfirmButton: false });
+    }
+  })
+  .catch(function(err) {
+    console.error('Error updating slot:', err);
+  });
 }
 
 function filterSlots() {

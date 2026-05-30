@@ -25,12 +25,19 @@ class EventController extends Controller
     {
         // honeypot, honeypot field hidden lewat css harus kosong dan kalau keisi berarti bot
         if ($request->filled('honeypot_trap')) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Berhasil mendaftar acara!']);
+            }
             return back()->with('success', 'Berhasil mendaftar acara!'); 
         }
 
         $event = Event::findOrFail($id);
 
         $event->increment('event_counter');
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Berhasil mendaftar acara!', 'counter' => $event->event_counter]);
+        }
 
         return back()->with('success', 'Berhasil mendaftar acara!');
     }

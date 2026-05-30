@@ -12,9 +12,11 @@ class ViharaController extends Controller
 {
     public function home()
     {
-        $events = Event::whereDate('event_date', '>=', Carbon::today())->orderBy('event_date', 'asc')->get();
+        $events = Event::whereDate('event_date', '>=', Carbon::today())
+            ->orderBy('event_date', 'asc')->get();
+        $donations = Donation::latest()->get();
 
-        return view('vihara.home', compact('events'));
+        return view('vihara.home', compact('events', 'donations'));
     }
 
     public function dashboard(){
