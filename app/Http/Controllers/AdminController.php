@@ -43,4 +43,14 @@ public function index()
     SlotAbu::findOrFail($request->slot_id)->update(['status' => $request->new_status]);
     return back()->with('success', 'Slot status updated.');
 }
+
+
+ public function monitoring()
+{
+    $events = collect();
+    $donations = collect();
+
+    return view('vihara.monitoring', compact('events', 'donations'));
+}
+
 }

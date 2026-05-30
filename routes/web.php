@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function () {
     
     // Halaman Utama Admin (Dashboard Monitoring)
     // Kita arahkan ke AdminController yang baru kita buat tadi
-    Route::get('/monitoring', [AdminController::class, 'index'])->name("monitoring");
+    Route::get('/monitoring', [AdminController::class, 'monitoring'])->name("monitoring");
     Route::get('/adminhome', [ViharaController::class, 'adminhome'])->name('adminhome');
     // routes/web.php
 
