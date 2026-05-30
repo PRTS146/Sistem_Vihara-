@@ -1,99 +1,119 @@
-/* ── Tab switching ── */
-function switchTab(name, btn) {
-  // Hide all panels
-  document.querySelectorAll('.tab-panel').forEach(p => {
-    p.classList.add('d-none');
+function showSection(name) {
+  ['overview','events','slots','donations'].forEach(function(s) {
+    document.getElementById('section-' + s).style.display = 'none';
+    document.getElementById('link-' + s).classList.remove('active-link');
+  });
+  document.getElementById('section-' + name).style.display = 'block';
+  document.getElementById('link-' + name).classList.add('active-link');
+
+  if (name === 'slots') {
+    renderTable();
+  }
+}
+
+showSection('overview');
+
+// ── SLOTS ─────────────────────────────────────────
+
+var slots = [
+  { id: 1, blok: 'Blok A', dinding: 'Dinding 1', slot: '1.1', status: 'taken' },
+  { id: 2, blok: 'Blok A', dinding: 'Dinding 1', slot: '1.2', status: 'taken' },
+  { id: 3, blok: 'Blok A', dinding: 'Dinding 2', slot: '1.1', status: 'available' },
+  { id: 4, blok: 'Blok B', dinding: 'Dinding 1', slot: '1.1', status: 'booked' },
+  { id: 5, blok: 'Blok C', dinding: 'Dinding 2', slot: '2.1', status: 'available' },
+];
+var nextId = 6;
+
+var badgeStyle = {
+  available: 'background:#e8f8f0; color:#1e8449; border:1px solid #c3e6cb;',
+  booked:    'background:#fef9e7; color:#d68910; border:1px solid #ffeaa7;',
+  taken:     'background:#fde8e8; color:#c0392b; border:1px solid #f5c6cb;',
+};
+
+function renderTable() {
+  var tbody = document.getElementById('slotTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  if (slots.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No slots yet</td></tr>';
+    renderPicker();
+    return;
+  }
+
+  slots.forEach(function(s) {
+    var style = badgeStyle[s.status] || '';
+    var tr = document.createElement('tr');
+    tr.id = 'slot-row-' + s.id;
+    tr.innerHTML =
+      '<td>' + s.blok + '</td>' +
+      '<td>' + s.dinding + '</td>' +
+      '<td>' + s.slot + '</td>' +
+      '<td><span class="badge rounded-pill" style="' + style + '">' + s.status + '</span></td>' +
+      '<td><button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteSlot(' + s.id + ')">Del</button></td>';
+    tbody.appendChild(tr);
   });
 
-  // Reset ALL nav buttons
-  document.querySelectorAll('.adm-nav-btn').forEach(b => {
-    b.classList.remove('text-warning', 'fw-semibold');
-    b.classList.add('text-secondary');
-    b.style.background = '';
-    b.style.border = '';
+  renderPicker();
+}
+
+function renderPicker() {
+  var filter = document.getElementById('filterDinding').value;
+  var picker = document.getElementById('slotPicker');
+  if (!picker) return;
+  picker.innerHTML = '';
+
+  var filtered = filter ? slots.filter(function(s) { return s.dinding === filter; }) : slots;
+
+  if (filtered.length === 0) {
+    picker.innerHTML = '<option>No slots available</option>';
+    return;
+  }
+
+  filtered.forEach(function(s) {
+    var opt = document.createElement('option');
+    opt.value = s.id;
+    opt.textContent = s.blok + ' ' + s.dinding + ' - ' + s.slot + ' (' + s.status + ')';
+    picker.appendChild(opt);
   });
-
-  // Show target panel
-  const panel = document.getElementById('panel-' + name);
-  if (panel) panel.classList.remove('d-none');
-
-  // Highlight active button
-  if (btn) {
-    btn.classList.remove('text-secondary');
-    btn.classList.add('text-warning', 'fw-semibold');
-    btn.style.background = 'rgba(255,193,7,.1)';
-    btn.style.border = '1px solid rgba(255,193,7,.2)';
-  }
 }
 
-/* ── Modal helpers ── */
-function openModal(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.classList.remove('d-none');
-    document.body.style.overflow = 'hidden';
+function addSlot() {
+  var blok    = document.getElementById('addBlok').value;
+  var dinding = document.getElementById('addDinding').value;
+  var slotNum = document.getElementById('addSlotNumber').value.trim();
+  var status  = document.getElementById('addStatus').value;
+
+  if (!slotNum) {
+    alert('Please enter a slot number.');
+    return;
   }
+
+  var id = nextId++;
+  slots.push({ id: id, blok: blok, dinding: dinding, slot: slotNum, status: status });
+  document.getElementById('addSlotNumber').value = '';
+  renderTable();
 }
 
-function closeModal(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.classList.add('d-none');
-    document.body.style.overflow = '';
-  }
+function deleteSlot(id) {
+  slots = slots.filter(function(s) { return s.id !== id; });
+  renderTable();
 }
 
-// Close on backdrop click
-document.addEventListener('click', function (e) {
-  if (e.target.classList.contains('modal-overlay')) {
-    closeModal(e.target.id);
+function updateSlot() {
+  var id        = parseInt(document.getElementById('slotPicker').value);
+  var newStatus = document.getElementById('newStatus').value;
+  var slot      = null;
+
+  for (var i = 0; i < slots.length; i++) {
+    if (slots[i].id === id) { slot = slots[i]; break; }
   }
-});
 
-// Close on Escape
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay:not(.d-none)').forEach(el => {
-      closeModal(el.id);
-    });
-  }
-});
-
-/* ── Registrants ── */
-function showRegistrants(eventId, eventName) {
-  document.getElementById('regTitle').textContent = '👥 Pendaftar: ' + eventName;
-  document.getElementById('regBody').innerHTML = '<p class="text-secondary text-center py-4">Memuat data...</p>';
-  openModal('modalRegistrants');
-
-  fetch('/monitoring/events/' + eventId + '/registrants')
-    .then(r => r.json())
-    .then(users => {
-      const body = document.getElementById('regBody');
-      if (!users.length) {
-        body.innerHTML = '<p class="text-secondary text-center py-4">Belum ada pendaftar.</p>';
-        return;
-      }
-      body.innerHTML = users.map(u => `
-        <div class="d-flex align-items-center gap-2 py-2 border-bottom border-secondary">
-          <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white flex-shrink-0"
-               style="width:34px;height:34px;background:linear-gradient(135deg,#b8861e,#6ea8fe);font-size:.78rem;">
-            ${u.name.charAt(0).toUpperCase()}
-          </div>
-          <div>
-            <div class="fw-bold small text-white">${u.name}</div>
-            <div class="text-secondary" style="font-size:.72rem;">${u.email}</div>
-          </div>
-        </div>`).join('');
-    })
-    .catch(() => {
-      document.getElementById('regBody').innerHTML =
-        '<p class="text-danger text-center py-4">Gagal memuat data.</p>';
-    });
+  if (!slot) return;
+  slot.status = newStatus;
+  renderTable();
 }
 
-/* ── Init on DOM ready ── */
-document.addEventListener('DOMContentLoaded', function () {
-  // Show overview by default, click the first nav button
-  const firstBtn = document.querySelector('.adm-nav-btn');
-  if (firstBtn) switchTab('overview', firstBtn);
-});
+function filterSlots() {
+  renderPicker();
+}

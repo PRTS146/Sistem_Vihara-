@@ -32,4 +32,15 @@ public function index()
             'donations'
         ));
     }
+
+    public function updateSlotStatus(Request $request)
+{
+    $request->validate([
+        'slot_id'    => 'required|exists:slot_abus,id',
+        'new_status' => 'required|string',
+    ]);
+
+    SlotAbu::findOrFail($request->slot_id)->update(['status' => $request->new_status]);
+    return back()->with('success', 'Slot status updated.');
+}
 }

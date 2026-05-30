@@ -37,4 +37,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/donations', [DonationController::class, 'store'])->name('donations.store');
     Route::put('/donations/{id}', [DonationController::class, 'update'])->name('donations.update');
     Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
+
+    Route::put('/admin/slots/status', [AdminController::class, 'updateSlotStatus'])->name('admin.slots.updateStatus');
 });
