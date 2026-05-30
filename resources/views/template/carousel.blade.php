@@ -13,7 +13,7 @@
 
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <img src="{{ asset('mainpage/slide1.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover; filter:brightness(60%);">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">Selamat Datang Di</p>
             <h1 class="display-4 fw-bold text-white">Vihara Maha Giri Buddha</h1>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="carousel-item">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover; filter:brightness(60%);">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">Kegiatan Terbaru</p>
             <h1 class="display-4 fw-bold text-white">Events</h1>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="carousel-item">
-          <img src="{{ asset('mainpage/slide2.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <img src="{{ asset('mainpage/slide2.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover; filter: brightness(60%);">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">Tempat Peristirahatan</p>
             <h1 class="display-4 fw-bold text-white">Rumah Abu</h1>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="carousel-item">
-          <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <img src="{{ asset('mainpage/placeholder.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover; filter: brightness(60%);">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">Apakah anda ingin</p>
             <h1 class="display-4 fw-bold text-white">Dana?</h1>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="carousel-item">
-          <img src="{{ asset('mainpage/slide3.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+          <img src="{{ asset('mainpage/slide3.jpg') }}" class="d-block w-100" style="height: 400px; object-fit: cover; filter:brightness(60%);">
           <div class="carousel-caption d-flex flex-column align-items-start text-start" style="top: 50%; transform: translateY(-50%); bottom: auto;">
             <p class="text-warning fw-bold text-uppercase">Momen Bersama</p>
             <h1 class="display-4 fw-bold text-white">Gallery</h1>
