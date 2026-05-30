@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id('event_id'); 
-            
+            $table->integer('admin_id')->unsigned()->nullable();
             $table->string('event_name');
             $table->text('event_description');
             
@@ -22,6 +22,12 @@ return new class extends Migration
             $table->integer('event_counter')->default(0); 
             
             $table->timestamps();
+
+            $table->foreign('admin_id')
+                  ->references('admin_id')
+                  ->on('admin')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
         });
     }
 

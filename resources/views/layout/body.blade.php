@@ -92,7 +92,7 @@
             if (!sessionStorage.getItem('welcomeShown')) {
                 Swal.fire({
                     title: '🙏 Namo Buddhaya!',
-                    text: 'Selamat Datang, {{ Auth::user()->name }}!',
+                    text: 'Selamat Datang, {{ Auth::user()->admin_name }}!',
                     icon: 'success',
                     timer: 3000,
                     showConfirmButton: false,

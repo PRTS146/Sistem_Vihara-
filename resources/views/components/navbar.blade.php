@@ -62,17 +62,16 @@
           <a class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark gap-2"
              href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="text-end d-none d-sm-block">
-              <div class="fw-bold small" style="line-height: 1.2;">{{ Auth::user()->name }}</div>
-              <div class="text-muted text-capitalize" style="font-size: 10px;">{{ Auth::user()->role }}</div>
+              <div class="fw-bold small" style="line-height: 1.2;">{{ Auth::user()->admin_name }}</div>
+              <div class="text-muted text-capitalize" style="font-size: 10px;">Admin</div>
             </div>
-            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=random"
+            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->admin_name) }}&background=random"
                  alt="Profile" class="rounded-circle" width="35" height="35">
           </a>
 
           <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
             <li class="px-3 py-2 border-bottom">
-              <div class="fw-bold">{{ Auth::user()->name }}</div>
-              <div class="small text-muted">{{ Auth::user()->email }}</div>
+              <div class="fw-bold">{{ Auth::user()->admin_name }}</div>
             </li>
             <li>
               <a class="dropdown-item mt-1 {{ request()->routeIs('profile') ? 'active fw-bold' : '' }}"
