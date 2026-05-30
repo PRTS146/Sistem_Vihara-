@@ -21,7 +21,7 @@ public function index()
 
         $slotTersedia = SlotAbu::where('slot_status', 'tersedia')->count();
         $slotDiambil = SlotAbu::where('slot_status', 'telah diambil')->count();
-        $totalSlot = SlotAbu::count();
+        $totalSlot = $slotTersedia + $slotDiambil;
 
         return view('template.monitoring', compact(
             'totalAcara',

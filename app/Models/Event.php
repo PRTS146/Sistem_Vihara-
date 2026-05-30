@@ -16,6 +16,9 @@ class Event extends Model
         'admin_id',
         'event_name',
         'event_date',
-        'event_description',
+        'event_time',
+        'event_status',
+        'event_counter',
+        'event_description'
     ];
 }

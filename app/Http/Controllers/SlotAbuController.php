@@ -18,7 +18,7 @@ class SlotAbuController extends Controller
         ]);
 
         SlotAbu::create([
-            'admin_id'    => auth()->admin_id, 
+            'admin_id' => Auth::user()->admin_id, 
             'slot_name'   => $request->slot_name,
             'slot_level'  => $request->slot_level,
             'slot_status' => $request->slot_status,
