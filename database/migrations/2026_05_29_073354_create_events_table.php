@@ -21,7 +21,8 @@ return new class extends Migration
 
             $table->integer('event_counter')->default(0); 
             
-            $table->timestamps();
+            $table->timestamp('event_created_at')->useCurrent();
+            $table->timestamp('event_update_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->foreign('admin_id')
                   ->references('admin_id')
