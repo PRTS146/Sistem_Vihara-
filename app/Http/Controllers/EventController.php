@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -53,6 +54,7 @@ class EventController extends Controller
         ]);
 
         Event::create([
+            'admin_id' => Auth::user()->admin_id,
             'event_name' => $request->event_name,
             'event_description' => $request->event_description,
             'event_date' => $request->event_date,
