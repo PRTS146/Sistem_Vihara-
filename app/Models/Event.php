@@ -21,4 +21,8 @@ class Event extends Model
         'event_counter',
         'event_description'
     ];
+
+    public function admin() {
+    return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }

@@ -28,4 +28,16 @@ class Admin extends Authenticatable
     {
         return $this->admin_password;
     }
+
+    public function events() {
+    return $this->hasMany(Event::class, 'admin_id');
+    }
+    
+    public function donations() {
+    return $this->hasMany(Donation::class, 'admin_id');
+    }
+
+    public function slotAbus() {
+    return $this->hasMany(SlotAbu::class, 'admin_id');
+    }
 }

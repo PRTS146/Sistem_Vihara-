@@ -19,4 +19,8 @@ class Donation extends Model
         'donation_target',
         'donation_progress',
     ];
+    
+    public function admin() {
+    return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }

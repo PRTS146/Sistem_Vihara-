@@ -19,4 +19,8 @@ class SlotAbu extends Model
         'slot_status',
         'slot_price',
     ];
+
+    public function admin() {
+    return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }
