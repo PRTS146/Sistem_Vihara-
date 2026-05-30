@@ -9,13 +9,17 @@ use App\Models\SlotAbu;
 
 class AdminController extends Controller
 {
-public function index()
+    public function adminhome()
     {
+        $events = Event::orderBy('event_date', 'desc')->get();
+        
+        return view('Vihara.adminhome', compact('events'));
+    }
 
-
+    public function index()
+    {
         $donations = Donation::latest()->get();
         
-
         $totalAcara = Event::count();
         $totalPeserta = Event::sum('event_counter');
 
@@ -34,23 +38,20 @@ public function index()
     }
 
     public function updateSlotStatus(Request $request)
-{
-    $request->validate([
-        'slot_id'    => 'required|exists:slot_abus,id',
-        'new_status' => 'required|string',
-    ]);
-
-    SlotAbu::findOrFail($request->slot_id)->update(['status' => $request->new_status]);
-    return back()->with('success', 'Slot status updated.');
-}
-
-
- public function monitoring()
-{
-    $events = collect();
-    $donations = collect();
-
-    return view('vihara.monitoring', compact('events', 'donations'));
-}
-
+    {
+        $request->validate([
+            'slot_id'    => 'required|exists:slot_abus,id',
+            'new_status' => 'required|string',
+            ]);
+            
+            SlotAbu::findOrFail($request->slot_id)->update(['slot_status' => $request->new_status]);
+            return back()->with('success', 'Slot status updated.');
+    }
+    
+    public function monitoring()
+    {
+        $events = collect();
+        $donations = collect();
+        return view('vihara.monitoring', compact('events', 'donations'));
+    }
 }

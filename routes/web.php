@@ -19,14 +19,12 @@ Route::post('/event/register/{id}', [EventController::class, 'registerEvent'])->
 // Digembok rapat oleh middleware 'auth'. 
 Route::middleware(['auth'])->group(function () {
     
-    // Halaman Utama Admin (Dashboard Monitoring)
-    // Kita arahkan ke AdminController yang baru kita buat tadi
+    // Halaman Utama Admin
     Route::get('/monitoring', [AdminController::class, 'monitoring'])->name("monitoring");
-    Route::get('/adminhome', [ViharaController::class, 'adminhome'])->name('adminhome');
-    // routes/web.php
+    Route::get('/adminhome', [AdminController::class, 'adminhome'])->name('adminhome');
 
-    // Jika masih ada halaman adminhome bawaan lama
     Route::get('/profile', [ViharaController::class, 'profile'])->name('profile');
+    
     //Rute slot abu
     Route::post('/slot/simpan', [SlotAbuController::class, 'store'])->name('slot.store');
     Route::put('/slot/update/{id}', [SlotAbuController::class, 'update'])->name('slot.update');
