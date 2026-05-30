@@ -17,8 +17,6 @@ class EventSeeder extends Seeder
             'event_time' => '09:00:00',
             'event_status' => 'Active',
             'event_counter' => 150,
-            'event_image' => null, // Bisa diisi path foto nanti dari dashboard admin
-            'show_in_carousel' => true,
         ]);
 
         Event::create([
@@ -29,8 +27,6 @@ class EventSeeder extends Seeder
             'event_time' => '19:00:00',
             'event_status' => 'Active',
             'event_counter' => 30,
-            'event_image' => null,
-            'show_in_carousel' => false,
         ]);
 
         Event::create([
@@ -41,8 +37,6 @@ class EventSeeder extends Seeder
             'event_time' => '08:00:00',
             'event_status' => 'Active',
             'event_counter' => 85,
-            'event_image' => null,
-            'show_in_carousel' => true,
         ]);
     }
 }
