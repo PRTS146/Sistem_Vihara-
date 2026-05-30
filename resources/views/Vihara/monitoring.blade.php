@@ -302,13 +302,6 @@
               <input type="text" class="form-control rounded-3" id="addSlotName" placeholder="e.g. A1.1">
             </div>
             <div class="mb-3">
-              <label class="form-label small text-muted">Level</label>
-              <select class="form-select rounded-3" id="addLevel">
-                <option value="Biasa">Biasa</option>
-                <option value="VIP">VIP</option>
-              </select>
-            </div>
-            <div class="mb-3">
               <label class="form-label small text-muted">Status</label>
               <select class="form-select rounded-3" id="addStatus">
                 <option value="Tersedia">Tersedia</option>
@@ -369,7 +362,6 @@
                     <th>Blok</th>
                     <th>Dinding</th>
                     <th>Slot</th>
-                    <th>Level</th>
                     <th>Status</th>
                     <th></th>
                   </tr>
