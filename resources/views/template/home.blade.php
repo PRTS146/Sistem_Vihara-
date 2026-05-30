@@ -8,15 +8,11 @@
 <link rel="stylesheet" href="{{ asset('css/accessibility.css') }}">
 <script src="{{ asset('js/register.js') }}"></script>
 <script src="{{ asset('js/gallery.js') }}"></script>
-<script src="{{ asset('js/carousel.js') }}"></script>
 <script src="{{ asset('js/donation.js') }}"></script>
 <script src="{{ asset('js/rumahabu.js') }}"></script>
 <script src="{{ asset('js/accessibility.js') }}"></script>
     @include('components.navbar')
     @include('popup.register')
     @include('popup.popupdonasi')
-
     @yield('content')
-    
-    
 @endsection
