@@ -10,10 +10,8 @@ use App\Models\Event;
 
 // RUTE PUBLIK (Landing Page)
 // Bisa diakses oleh siapa saja (Guest/Umat) tanpa perlu login
-Route::get('/', function () {
-    $events = Event::all();
-    return view('vihara.home', compact('events'));
-})->name('mainpage');
+// RUTE PUBLIK (Landing Page)
+Route::get('/', [ViharaController::class, 'home'])->name('mainpage');
 
 Route::post('/event/register/{id}', [EventController::class, 'registerEvent'])->name('event.register');
 

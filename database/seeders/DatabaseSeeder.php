@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AdminSeeder::class,
+            EventSeeder::class,
+            DonationSeeder::class,
+            SlotAbuSeeder::class,
         ]);
     }
 }
