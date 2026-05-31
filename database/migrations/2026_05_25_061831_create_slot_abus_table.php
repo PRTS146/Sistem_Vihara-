@@ -12,7 +12,7 @@ return new class extends Migration
             $table->increments('slot_id');
             $table->integer('admin_id')->unsigned(); // Tipe data wajib sama dengan admin_id di tabel admin
             $table->string('slot_name', 150);
-            $table->enum('slot_level', ['Biasa', 'VIP'])->default('Biasa');
+            // $table->enum('slot_level', ['Biasa', 'VIP'])->default('Biasa');
             $table->enum('slot_status', ['Tersedia', 'Telah Diambil'])->default('Tersedia');
             $table->decimal('slot_price', 15, 2);
             $table->timestamp('slot_created_at')->useCurrent();

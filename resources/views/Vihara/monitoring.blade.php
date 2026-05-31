@@ -363,7 +363,6 @@
                     <th>Dinding</th>
                     <th>Slot</th>
                     <th>Status</th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody id="slotTableBody">

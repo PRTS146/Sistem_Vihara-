@@ -17,7 +17,7 @@ class SlotAbu extends Model
         'slot_blok',
         'slot_dinding',
         'slot_name',
-        'slot_level',
+        // 'slot_level',
         'slot_status',
         'slot_price',
     ];

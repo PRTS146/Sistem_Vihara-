@@ -41,7 +41,7 @@ class ApiSlotController extends Controller
             'slot_blok'    => 'required|string|max:10',
             'slot_dinding' => 'required|string|max:10',
             'slot_name'    => 'required|string|max:150',
-            'slot_level'   => 'required|in:Biasa,VIP',
+            // 'slot_level'   => 'required|in:Biasa,VIP',
             'slot_status'  => 'required|in:Tersedia,Booking,Telah Diambil',
             'slot_price'   => 'required|numeric|min:0',
         ]);
@@ -51,7 +51,7 @@ class ApiSlotController extends Controller
             'slot_blok'    => $request->slot_blok,
             'slot_dinding' => $request->slot_dinding,
             'slot_name'    => $request->slot_name,
-            'slot_level'   => $request->slot_level,
+            // 'slot_level'   => $request->slot_level,
             'slot_status'  => $request->slot_status,
             'slot_price'   => $request->slot_price,
         ]);
@@ -70,11 +70,11 @@ class ApiSlotController extends Controller
         $request->validate([
             'slot_status' => 'sometimes|required|in:Tersedia,Booking,Telah Diambil',
             'slot_name'   => 'sometimes|required|string|max:150',
-            'slot_level'  => 'sometimes|required|in:Biasa,VIP',
+            // 'slot_level'  => 'sometimes|required|in:Biasa,VIP',
             'slot_price'  => 'sometimes|required|numeric|min:0',
         ]);
 
-        $slot->update($request->only(['slot_status', 'slot_name', 'slot_level', 'slot_price']));
+        $slot->update($request->only(['slot_status', 'slot_name', 'slot_price']));
 
         return response()->json(['message' => 'Slot berhasil diperbarui!', 'slot' => $slot]);
     }
