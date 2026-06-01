@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('slot_abu', function (Blueprint $table) {
             $table->increments('slot_id');
             $table->integer('admin_id')->unsigned(); // Tipe data wajib sama dengan admin_id di tabel admin
+            $table->string('slot_blok', 10)->default('A');
+            $table->string('slot_dinding', 10)->default('1');
             $table->string('slot_name', 150);
             // $table->enum('slot_level', ['Biasa', 'VIP'])->default('Biasa');
             $table->enum('slot_status', ['Tersedia', 'Telah Diambil'])->default('Tersedia');

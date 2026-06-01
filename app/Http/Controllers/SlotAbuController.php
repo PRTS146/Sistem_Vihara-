@@ -15,7 +15,7 @@ class SlotAbuController extends Controller
             'slot_dinding'=> 'required|string|max:10',
             'slot_name'   => 'required|string|max:150',
             // 'slot_level'  => 'required|in:Biasa,VIP',
-            'slot_status' => 'required|in:Tersedia,Booking,Telah Diambil',
+            'slot_status' => 'required|in:Tersedia,Telah Diambil',
             'slot_price'  => 'required|numeric|min:0',
         ]);
 
@@ -39,7 +39,7 @@ class SlotAbuController extends Controller
             'slot_dinding'=> 'sometimes|required|string|max:10',
             'slot_name'   => 'required|string|max:150',
             // 'slot_level'  => 'required|in:Biasa,VIP',
-            'slot_status' => 'required|in:Tersedia,Booking,Telah Diambil',
+            'slot_status' => 'required|in:Tersedia,Telah Diambil',
             'slot_price'  => 'required|numeric|min:0',
         ]);
 

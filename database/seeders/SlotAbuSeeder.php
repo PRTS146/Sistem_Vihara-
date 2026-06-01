@@ -12,7 +12,9 @@ class SlotAbuSeeder extends Seeder
         // Contoh Slot Tersedia
         SlotAbu::create([
             'admin_id' => 1,
-            'slot_name' => 'A-01 (Baris Matahari)',
+            'slot_name' => 'A-01',
+            'slot_blok' => 'Blok A',
+            'slot_dinding' => 'Dinding 1',
             // 'slot_level' => 'VIP', // <-- Diubah dari slot_level menjadi slot_type
             'slot_price' => 25000000,
             // 'slot_description' => 'Slot abu posisi strategis di blok VIP baris matahari.', // <-- Ditambahkan sesuai tabel
@@ -21,7 +23,9 @@ class SlotAbuSeeder extends Seeder
 
         SlotAbu::create([
             'admin_id' => 1,
-            'slot_name' => 'A-02 (Baris Matahari)',
+            'slot_name' => 'A-02',
+            'slot_blok' => 'Blok A',
+            'slot_dinding' => 'Dinding 1',
             // 'slot_level' => 'VIP', 
             'slot_price' => 25000000,
             // 'slot_description' => 'Slot abu posisi strategis di blok VIP baris matahari.', 
@@ -31,7 +35,9 @@ class SlotAbuSeeder extends Seeder
         // Contoh Slot Telah Diambil
         SlotAbu::create([
             'admin_id' => 1,
-            'slot_name' => 'B-15 (Baris Teratai)',
+            'slot_name' => 'B-15',
+            'slot_blok' => 'Blok B',
+            'slot_dinding' => 'Dinding 1',
             // 'slot_level' => 'Biasa',
             'slot_price' => 10000000,
             // 'slot_description' => 'Slot abu standar di baris teratai.', 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use App\Models\Donation;
 use Carbon\Carbon;
+use App\Models\SlotAbu;
 
 class ViharaController extends Controller
 {
@@ -24,7 +25,8 @@ class ViharaController extends Controller
     }
 
     public function abu(){
-        return view('vihara.rmhabu');
+        $slots = SlotAbu::all();
+        return view('vihara.rumahabu', compact('slots'));
     }
 
      public function login(){
