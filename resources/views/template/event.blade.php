@@ -40,7 +40,7 @@
                               <span class="badge {{ $event->event_status === 'Active' ? 'bg-success' : 'bg-secondary' }} rounded-pill">
                                 {{ $event->event_status }}
                               </span>
-                              <span class="text-muted small">{{ $event->event_counter }} peserta</span>
+                              <span class="text-muted small" id="counter-event-{{ $event->event_id }}">{{ $event->event_counter }} peserta</span>
                             </div>
                             <div class="mt-auto">
                               @if($event->event_status === 'Active')

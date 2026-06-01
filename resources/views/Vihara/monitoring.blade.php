@@ -487,5 +487,3 @@
 {{-- Panggil File JS --}}
 <script src="{{ asset('js/monitoring.js') }}"></script>
 @endsection
-
-table-light
