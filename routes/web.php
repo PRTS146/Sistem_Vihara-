@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SlotAbuController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ApiSlotController;
 use App\Models\Event;
 
 // RUTE PUBLIK (Landing Page)
@@ -14,6 +15,8 @@ use App\Models\Event;
 Route::get('/', [ViharaController::class, 'home'])->name('mainpage');
 
 Route::post('/event/register/{id}', [EventController::class, 'registerEvent'])->name('event.register');
+
+Route::get('/api/slots', [ApiSlotController::class, 'index']);
 
 // AREA KHUSUS ADMIN (Wajib Login)
 // Digembok rapat oleh middleware 'auth'. 
@@ -39,4 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
 
     Route::put('/admin/slots/status', [AdminController::class, 'updateSlotStatus'])->name('admin.slots.updateStatus');
+    Route::post('/api/slots', [ApiSlotController::class, 'store']);
+    Route::put('/api/slots/{id}', [ApiSlotController::class, 'update']);
+    Route::delete('/api/slots/{id}', [ApiSlotController::class, 'destroy']);
 });

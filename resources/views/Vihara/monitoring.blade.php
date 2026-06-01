@@ -308,7 +308,6 @@
               <label class="form-label small text-muted">Status</label>
               <select class="form-select rounded-3" id="addStatus">
                 <option value="Tersedia">Tersedia</option>
-                <option value="Booking">Booking</option>
                 <option value="Telah Diambil">Telah Diambil</option>
               </select>
             </div>
@@ -329,9 +328,6 @@
                 <option value="">All</option>
                 <option value="A">Blok A</option>
                 <option value="B">Blok B</option>
-                <option value="C">Blok C</option>
-                <option value="D">Blok D</option>
-                <option value="E">Blok E</option>
               </select>
             </div>
 
@@ -366,6 +362,7 @@
                     <th>Dinding</th>
                     <th>Slot</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody id="slotTableBody">
@@ -490,3 +487,5 @@
 {{-- Panggil File JS --}}
 <script src="{{ asset('js/monitoring.js') }}"></script>
 @endsection
+
+table-light

@@ -17,21 +17,41 @@ function showSection(name) {
 showSection('overview');
 
 // ── CSRF TOKEN ───────────────────────────────────
-var csrfMeta = document.querySelector('meta[name="csrf-token"]');
-var csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
+// var csrfMeta = document.querySelector('meta[name="csrf-token"]');
+// var csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
+
+function getCsrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    return meta ? meta.getAttribute('content') : '';
+}
 
 // ── SLOTS (API-DRIVEN) ──────────────────────────
 var slots = [];
 
 var badgeStyle = {
   'Tersedia':       'background:#e8f8f0; color:#1e8449; border:1px solid #c3e6cb;',
-  'Booking':        'background:#fef9e7; color:#d68910; border:1px solid #ffeaa7;',
   'Telah Diambil':  'background:#fde8e8; color:#c0392b; border:1px solid #f5c6cb;',
 };
 
 // Fetch all slots from API
+// function fetchAndRenderSlots() {
+//   fetch('/api/slots')
+//     .then(function(res) { return res.json(); })
+//     .then(function(data) {
+//       slots = data;
+//       renderTable();
+//     })
+//     .catch(function(err) {
+//       console.error('Failed to fetch slots:', err);
+//       slots = [];
+//       renderTable();
+//     });
+// }
+
 function fetchAndRenderSlots() {
-  fetch('/api/slots')
+  fetch('/api/slots', {
+      credentials: 'same-origin'
+  })
     .then(function(res) { return res.json(); })
     .then(function(data) {
       slots = data;
@@ -64,7 +84,7 @@ function renderTable() {
       '<td>Blok ' + (s.slot_blok || '-') + '</td>' +
       '<td>Dinding ' + (s.slot_dinding || '-') + '</td>' +
       '<td>' + s.slot_name + '</td>' +
-      '<td>' + (s.slot_level || '-') + '</td>' +
+      // '<td>' + (s.slot_level || '-') + '</td>' +
       '<td><span class="badge rounded-pill" style="' + style + '">' + s.slot_status + '</span></td>' +
       '<td><button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteSlot(' + id + ')">Del</button></td>';
     tbody.appendChild(tr);
@@ -102,7 +122,7 @@ function addSlot() {
   var blok     = document.getElementById('addBlok').value;
   var dinding  = document.getElementById('addDinding').value;
   var slotName = document.getElementById('addSlotName').value.trim();
-  var level    = document.getElementById('addLevel').value;
+  // var level    = document.getElementById('addLevel').value;
   var status   = document.getElementById('addStatus').value;
   var price    = document.getElementById('addPrice').value;
 
@@ -113,21 +133,25 @@ function addSlot() {
 
   fetch('/api/slots', {
     method: 'POST',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken,
+      'X-CSRF-TOKEN': getCsrfToken(),
       'Accept': 'application/json',
-    },
+    },  
     body: JSON.stringify({
       slot_blok: blok,
       slot_dinding: dinding,
       slot_name: slotName,
-      slot_level: level,
+      // slot_level: level,
       slot_status: status,
       slot_price: parseFloat(price) || 0,
     }),
   })
-  .then(function(res) { return res.json(); })
+  .then(function(res) {
+    if(!res.ok) throw res;
+    return res.json();
+  })
   .then(function(data) {
     if (data.slot) {
       document.getElementById('addSlotName').value = '';
@@ -151,10 +175,12 @@ function deleteSlot(id) {
 
   fetch('/api/slots/' + id, {
     method: 'DELETE',
+    credentials: 'same-origin',
     headers: {
-      'X-CSRF-TOKEN': csrfToken,
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': getCsrfToken(),
       'Accept': 'application/json',
-    },
+    },  
   })
   .then(function(res) { return res.json(); })
   .then(function(data) {
@@ -180,11 +206,12 @@ function updateSlot() {
 
   fetch('/api/slots/' + id, {
     method: 'PUT',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken,
+      'X-CSRF-TOKEN': getCsrfToken(),
       'Accept': 'application/json',
-    },
+    },  
     body: JSON.stringify({ slot_status: newStatus }),
   })
   .then(function(res) { return res.json(); })
