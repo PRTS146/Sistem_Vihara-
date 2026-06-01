@@ -16,27 +16,6 @@ class AdminController extends Controller
         return view('Vihara.adminhome', compact('events'));
     }
 
-    public function index()
-    {
-        $donations = Donation::latest()->get();
-        
-        $totalAcara = Event::count();
-        $totalPeserta = Event::sum('event_counter');
-
-        $slotTersedia = SlotAbu::where('slot_status', 'tersedia')->count();
-        $slotDiambil = SlotAbu::where('slot_status', 'telah diambil')->count();
-        $totalSlot = $slotTersedia + $slotDiambil;
-
-        return view('template.monitoring', compact(
-            'totalAcara',
-            'totalPeserta',
-            'slotTersedia',
-            'slotDiambil',
-            'totalSlot',
-            'donations'
-        ));
-    }
-
     public function updateSlotStatus(Request $request)
     {
         $request->validate([
@@ -50,21 +29,28 @@ class AdminController extends Controller
     
     public function monitoring()
     {
-        $events = Event::orderBy('event_date', 'desc')->get();
+        $events = Event::orderBy('event_date', 'asc')->get();
         $donations = Donation::latest()->get();
         $slots = SlotAbu::all();
 
         $totalDonationCampaigns = $donations->count();
         $totalEvents = $events->count();
         $totalParticipants = Event::sum('event_counter');
-        $slotsAvailable = SlotAbu::where('slot_status', 'Tersedia')->count();
-        $slotsTaken = SlotAbu::where('slot_status', 'Telah Diambil')->count();
+
+        $slotsAvailable = SlotAbu::where('slot_status', 'tersedia')->count();
+        $slotsTaken = SlotAbu::where('slot_status', 'telah diambil')->count();
         $totalSlots = $slots->count();
 
         return view('vihara.monitoring', compact(
-            'events', 'donations', 'slots',
-            'totalDonationCampaigns', 'totalEvents', 'totalParticipants',
-            'slotsAvailable', 'slotsTaken', 'totalSlots'
+            'events', 
+            'donations', 
+            'slots',
+            'totalDonationCampaigns', 
+            'totalEvents', 
+            'totalParticipants',
+            'slotsAvailable', 
+            'slotsTaken', 
+            'totalSlots'
         ));
     }
 }
