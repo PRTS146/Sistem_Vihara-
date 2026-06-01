@@ -202,3 +202,41 @@ function updateSlot() {
 function filterSlots() {
   renderPicker();
 }
+
+
+/* public/js/monitoring.js */
+
+function updateDonationFormAction() {
+    const selector = document.getElementById('donationSelector');
+    if (!selector) return;
+    
+    const selected = selector.options[selector.selectedIndex];
+    const form = document.getElementById('updateDonationForm');
+    const progressInput = document.getElementById('donationProgressInput');
+
+    if (form && selected) {
+        form.action = selected.getAttribute('data-route');
+        progressInput.value = selected.getAttribute('data-progress');
+    }
+}
+
+// Inisialisasi pada saat dokumen selesai dimuat (DOM loaded)
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Inisialisasi opsi update form donasi
+    if (document.getElementById('donationSelector')) {
+        updateDonationFormAction();
+    }
+
+    // Trigger SweetAlert untuk pesan flash session dari Laravel
+    const flashMessageEl = document.getElementById('flash-message-success');
+    if (flashMessageEl) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: flashMessageEl.dataset.message,
+            timer: 2500,
+            showConfirmButton: false,
+        });
+    }
+});

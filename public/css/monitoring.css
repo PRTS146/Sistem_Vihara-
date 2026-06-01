@@ -243,3 +243,58 @@ body { font-family: system-ui, -apple-system, sans-serif; }
     color: #D4A017;
     font-weight: 700;
   }
+
+  /* public/css/monitoring.css */
+
+.monitoring-container {
+    background-color: #e0f7f7;
+    min-height: 100vh;
+}
+
+.monitoring-sidebar {
+    width: 260px;
+    min-height: 100vh;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.06);
+}
+
+.monitoring-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+}
+
+.monitoring-card {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.stat-value-blue {
+    font-size: 2rem;
+    color: #4a90d9;
+}
+
+.stat-value-green {
+    font-size: 2rem;
+    color: #28a745;
+}
+
+.stat-value-yellow {
+    font-size: 2rem;
+    color: #D4A017;
+}
+
+.progress-thin {
+    height: 5px;
+}
+
+.table-container-md {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.table-container-lg {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.section-hidden {
+    display: none;
+}

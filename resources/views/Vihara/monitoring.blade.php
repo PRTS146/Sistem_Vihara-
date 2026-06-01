@@ -1,13 +1,16 @@
 @extends('template.monitoring')
 
 @section('contentmon')
-<div style="background-color: #e0f7f7; min-height: 100vh;" class="d-flex">
+{{-- Panggil File CSS --}}
+<link rel="stylesheet" href="{{ asset('css/monitoring.css') }}">
+
+<div class="monitoring-container d-flex">
 
   {{-- SIDEBAR --}}
-  <div class="bg-white d-flex flex-column p-3" style="width: 260px; min-height: 100vh; box-shadow: 4px 0 20px rgba(0,0,0,0.06);">
+  <div class="bg-white d-flex flex-column p-3 monitoring-sidebar">
     
     <div class="mb-4 px-2 pt-2">
-      <div class="fw-bold text-uppercase text-warning" style="font-size: 0.75rem; letter-spacing: 0.1em;">Monitoring Room</div>
+      <div class="fw-bold text-uppercase text-warning monitoring-title">Monitoring Room</div>
       <div class="text-muted small">Admin Dashboard</div>
     </div>
 
@@ -29,30 +32,30 @@
       <h4 class="fw-bold mb-4">Overview</h4>
       <div class="row g-3 mb-4">
         <div class="col-md-3">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <div class="text-muted small mb-1">Donation campaigns</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #4a90d9;">{{ $totalDonationCampaigns }}</div>
+            <div class="fw-bold mb-1 stat-value-blue">{{ $totalDonationCampaigns }}</div>
             <div class="text-muted small">active campaigns</div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <div class="text-muted small mb-1">Events held</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #4a90d9;">{{ $totalEvents }}</div>
+            <div class="fw-bold mb-1 stat-value-blue">{{ $totalEvents }}</div>
             <div class="text-muted small">total events</div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <div class="text-muted small mb-1">Total peserta</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #28a745;">{{ $totalParticipants }}</div>
+            <div class="fw-bold mb-1 stat-value-green">{{ $totalParticipants }}</div>
             <div class="text-muted small">registered participants</div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <div class="text-muted small mb-1">Slots available</div>
-            <div class="fw-bold mb-1" style="font-size: 2rem; color: #D4A017;">{{ $slotsAvailable }}</div>
+            <div class="fw-bold mb-1 stat-value-yellow">{{ $slotsAvailable }}</div>
             <div class="text-muted small">of {{ $totalSlots }} total slots</div>
           </div>
         </div>
@@ -61,7 +64,7 @@
       <div class="row g-3">
         {{-- Recent Events --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h6 class="fw-bold mb-0">Recent events</h6>
               <a href="#" onclick="showSection('events')" class="text-warning text-decoration-none small fw-bold">Add event</a>
@@ -88,7 +91,7 @@
 
         {{-- Active Donation Campaigns --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">Active donation campaigns</h6>
             <hr>
             @forelse($donations->take(5) as $donation)
@@ -99,8 +102,8 @@
               @endphp
               <div class="py-2 border-bottom">
                 <div class="fw-semibold">{{ $donation->donation_name }}</div>
-                <div class="progress my-1" style="height:5px;">
-                  <div class="progress-bar bg-success" style="width:{{ $pct }}%;"></div>
+                <div class="progress my-1 progress-thin">
+                  <div class="progress-bar bg-success"></div>
                 </div>
                 <small class="text-muted">
                   Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
@@ -119,12 +122,12 @@
     {{-- ═══════════════════════════════════════════════ --}}
     {{-- EVENTS --}}
     {{-- ═══════════════════════════════════════════════ --}}
-    <div id="section-events" style="display:none;">
+    <div id="section-events" class="section-hidden">
       <h4 class="fw-bold mb-4">Events</h4>
       <div class="row g-3">
         {{-- Create New Event Form --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">Create new event</h6>
             <hr>
             <form action="{{ route('events.store') }}" method="POST">
@@ -162,10 +165,10 @@
 
         {{-- All Events Table --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">All events</h6>
             <hr>
-            <div style="max-height: 500px; overflow-y: auto;">
+            <div class="table-container-md">
               <table class="table table-hover">
                 <thead class="table-light">
                   <tr>
@@ -269,13 +272,13 @@
     {{-- ═══════════════════════════════════════════════ --}}
     {{-- SLOTS --}}
     {{-- ═══════════════════════════════════════════════ --}}
-    <div id="section-slots" style="display:none;">
+    <div id="section-slots" class="section-hidden">
       <h4 class="fw-bold mb-4">Rumah Abu Slots</h4>
       <div class="row g-3">
 
         {{-- LEFT: Add + Update --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">Add new slot</h6>
             <hr>
 
@@ -352,10 +355,10 @@
 
         {{-- RIGHT: Slot list --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">Slot list</h6>
             <hr>
-            <div style="max-height: 600px; overflow-y: auto;">
+            <div class="table-container-lg">
               <table class="table table-hover align-middle">
                 <thead class="table-light">
                   <tr>
@@ -378,13 +381,13 @@
     {{-- ═══════════════════════════════════════════════ --}}
     {{-- DONATIONS --}}
     {{-- ═══════════════════════════════════════════════ --}}
-    <div id="section-donations" style="display:none;">
+    <div id="section-donations" class="section-hidden">
       <h4 class="fw-bold mb-4">Donations</h4>
       <div class="row g-3">
 
         {{-- Create Campaign --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">Create campaign</h6>
             <hr>
             <form action="{{ route('donations.store') }}" method="POST">
@@ -408,7 +411,7 @@
 
         {{-- Active Campaigns + Update Progress --}}
         <div class="col-md-6">
-          <div class="bg-white rounded-4 p-4" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="bg-white rounded-4 p-4 monitoring-card">
             <h6 class="fw-bold mb-3">Active campaigns</h6>
             <hr>
 
@@ -430,8 +433,8 @@
                     </button>
                   </form>
                 </div>
-                <div class="progress my-1" style="height:5px;">
-                  <div class="progress-bar bg-success" style="width:{{ $pct }}%;"></div>
+                <div class="progress my-1 progress-thin">
+                  <div class="progress-bar bg-success"></div>
                 </div>
                 <small class="text-muted">
                   Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
@@ -468,24 +471,6 @@
                 </div>
                 <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold">Update progress</button>
               </form>
-
-              <script>
-                function updateDonationFormAction() {
-                  const selector = document.getElementById('donationSelector');
-                  const selected = selector.options[selector.selectedIndex];
-                  const form = document.getElementById('updateDonationForm');
-                  const progressInput = document.getElementById('donationProgressInput');
-
-                  form.action = selected.getAttribute('data-route');
-                  progressInput.value = selected.getAttribute('data-progress');
-                }
-                // Init on load
-                document.addEventListener('DOMContentLoaded', function() {
-                  if (document.getElementById('donationSelector')) {
-                    updateDonationFormAction();
-                  }
-                });
-              </script>
             @else
               <p class="text-muted small text-center py-3">No campaigns to update</p>
             @endif
@@ -497,19 +482,11 @@
   </div>
 </div>
 
-{{-- Success flash message --}}
+{{-- Success flash message trigger (ditangkap oleh file monitoring.js) --}}
 @if(session('success'))
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    Swal.fire({
-      icon: 'success',
-      title: 'Berhasil!',
-      text: '{{ session("success") }}',
-      timer: 2500,
-      showConfirmButton: false,
-    });
-  });
-</script>
+<div id="flash-message-success" data-message="{{ session('success') }}" style="display: none;"></div>
 @endif
 
+{{-- Panggil File JS --}}
+<script src="{{ asset('js/monitoring.js') }}"></script>
 @endsection
