@@ -340,7 +340,6 @@
               <label class="form-label small text-muted">New status</label>
               <select class="form-select rounded-3" id="newStatus">
                 <option value="Tersedia">Tersedia</option>
-                <option value="Booking">Booking</option>
                 <option value="Telah Diambil">Telah Diambil</option>
               </select>
             </div>

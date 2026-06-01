@@ -23,4 +23,13 @@ class Donation extends Model
     public function admin() {
     return $this->belongsTo(Admin::class, 'admin_id');
     }
+
+    public function getPercentageAttribute()
+    {
+        if ($this->donation_target > 0) {
+            return ($this->donation_progress / $this->donation_target) * 100;
+        }
+        
+        return 0;
+    }
 }

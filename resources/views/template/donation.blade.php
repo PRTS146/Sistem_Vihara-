@@ -13,7 +13,7 @@
           <p class="small text-muted mb-4">Setiap donasi, sekecil apapun, sangat berharga. Semoga kebaikan Anda membawa berkah. 🙏</p>
           <div class="text-center mt-2">
             <button type="button" class="btn btn-warning rounded-pill px-5 py-2 fw-bold shadow-sm"
-                    data-bs-toggle="modal" data-bs-target="#donateModal">Mulai Berdonasi</button>
+                    data-bs-toggle="modal" data-bs-target="#donateModal" data-campaign="Dana Public Vihara">Mulai Berdonasi</button>
           </div>
         </div>
       </div>
@@ -40,6 +40,7 @@
             <div class="col-md-6 col-lg-4">
               <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
                    role="button" data-bs-toggle="modal" data-bs-target="#donateModal"
+                   data-campaign="{{ $donation->donation_name }}"
                    style="cursor:pointer; transition:transform 0.2s;"
                    onmouseover="this.style.transform='translateY(-5px)'"
                    onmouseout="this.style.transform='translateY(0)'">
@@ -49,7 +50,7 @@
                   <p class="text-muted small mb-4">{{ Str::limit($donation->donation_description, 80) }}</p>
                   <div class="mt-auto">
                     <div class="progress mb-2 bg-secondary bg-opacity-25" style="height:6px;border-radius:10px;">
-                      <div class="progress-bar bg-success" style="width:{{ $percentage }}%;"></div>
+                      <div class="progress-bar bg-success" style="width: {{ $donation->percentage }}%;"></div>
                     </div>
                     <div class="fw-bold fs-6 text-dark">
                       Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
