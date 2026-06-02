@@ -8,4 +8,7 @@
     @include('template.donation')
     @include('template.gallery')
     @include('template.footer')
+
+    @include('popup.popupdonasi')
+    @include('popup.popuprumahabu')
 @endsection

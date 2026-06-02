@@ -17,10 +17,18 @@ class ApiSlotController extends Controller
         $query = SlotAbu::query();
 
         if ($request->filled('blok')) {
-            $query->where('slot_blok', $request->blok);
+            $blok = $request->blok;
+            $query->where(function($q) use ($blok) {
+                $q->where('slot_blok', $blok)
+                  ->orWhere('slot_blok', 'Blok ' . $blok);
+            });
         }
         if ($request->filled('dinding')) {
-            $query->where('slot_dinding', $request->dinding);
+            $dinding = $request->dinding;
+            $query->where(function($q) use ($dinding) {
+                $q->where('slot_dinding', $dinding)
+                  ->orWhere('slot_dinding', 'Dinding ' . $dinding);
+            });
         }
 
         $slots = $query->orderBy('slot_blok')

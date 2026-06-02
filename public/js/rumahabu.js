@@ -2,11 +2,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Define Data
 const blocks = ['A', 'B', 'C', 'D', 'E']; 
-let currentBlockIndex = 0; // Starts at 'A'
-let currentDinding = '1';  // Starts at 'Dinding 1'
-let slotsData = [];        // Will be populated from API
+let currentBlockIndex = 0;
+let currentDinding = '1';
+let slotsData = [];
 
-// Get DOM Elements
 const grid = document.getElementById('slotsContainer');
 const prevBtn = document.getElementById('prevBlockBtn');
 const nextBtn = document.getElementById('nextBlockBtn');
@@ -14,14 +13,11 @@ const headerLabel = document.getElementById('currentBlockLabel');
 const sidebarLabel = document.getElementById('sidebarBlockLabel');
 const dindingBtns = document.querySelectorAll('.dinding-btn');
 
-// Status-to-color mapping
 const statusColors = {
-    'Tersedia':       { bg: '#28a745', text: '#fff' },       // green
-    'Booking':        { bg: '#ffc107', text: '#333' },       // yellow
-    'Telah Diambil':  { bg: '#dc3545', text: '#fff' },       // red
+    'Tersedia':       { bg: '#28a745', text: '#fff' },
+    'Telah Diambil':  { bg: '#dc3545', text: '#fff' },
 };
 
-// Fetch slots from internal API
 function fetchSlots() {
     const blok = blocks[currentBlockIndex];
     fetch(`/api/slots?blok=${blok}&dinding=${currentDinding}`)
@@ -37,12 +33,10 @@ function fetchSlots() {
         });
 }
 
-// Function to build the grid
 function renderSlots() {
     grid.innerHTML = '';
     let currentPrefix = blocks[currentBlockIndex];
     
-    // Update Text Labels
     headerLabel.innerText = `- Blok ${currentPrefix}`;
     sidebarLabel.innerText = `Blok ${currentPrefix}`;
 
@@ -60,18 +54,41 @@ function renderSlots() {
             btn.style.border = 'none';
             
             btn.innerText = slot.slot_name;
-            btn.title = `${slot.slot_name} - ${slot.slot_status} (${slot.slot_level})`;
+
+            btn.title = `${slot.slot_name} - ${slot.slot_status}`;
             
+            if (slot.slot_status === 'Tersedia') {
+                btn.style.cursor = 'pointer';
+                btn.classList.add('slot-hover-effect');
+                
+                btn.addEventListener('click', () => {
+                    document.getElementById('selectedSlotName').innerText = `Slot ${slot.slot_name}`;
+
+                    const noWaAdmin = "6281234567890";
+                    const pesan = `Halo Admin, saya telah melakukan transfer untuk pemesanan Rumah Abu: *Slot ${slot.slot_name}*. Berikut saya lampirkan bukti pembayarannya. Mohon info kode klaimnya.`;
+                    
+                    document.getElementById('waAdminBtn').href = `https://wa.me/${noWaAdmin}?text=${encodeURIComponent(pesan)}`;
+
+                    let modalElement = document.getElementById('rumahAbuModal');
+                    let modalAbu = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                    modalAbu.show();
+                });
+            } else {
+
+                btn.style.cursor = 'not-allowed';
+                btn.addEventListener('click', () => {
+                    alert(`Maaf, slot ${slot.slot_name} saat ini berstatus: ${slot.slot_status}`);
+                });
+            }
+
             grid.appendChild(btn);
         });
     }
 
-    // Toggle Previous/Next Button States
     prevBtn.disabled = (currentBlockIndex === 0);
     nextBtn.disabled = (currentBlockIndex === blocks.length - 1);
 }
 
-// --- Event Listeners for BLOCK Navigation ---
 prevBtn.addEventListener('click', () => {
     if (currentBlockIndex > 0) {
     currentBlockIndex--;
@@ -86,30 +103,24 @@ nextBtn.addEventListener('click', () => {
     }
 });
 
-// --- Event Listeners for DINDING (Sidebar) Selection ---
 dindingBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-    // Remove 'active' class from all buttons
     dindingBtns.forEach(b => {
         b.classList.remove('active');
         b.classList.remove('bg-success');
         b.classList.remove('border-success');
     });
-    
-    // Add 'active' class to clicked button
+
     e.target.classList.add('active');
     e.target.classList.add('bg-success');
     e.target.classList.add('border-success');
 
-    // Update state and fetch new data
     currentDinding = e.target.getAttribute('data-dinding');
     fetchSlots();
     });
 });
 
-// Load initial state from API
 fetchSlots();
 
-// Ensure the first button starts with the custom green active state
 dindingBtns[0].classList.add('bg-success', 'border-success');
 });

@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function updateSlotStatus(Request $request)
     {
         $request->validate([
-            'slot_id'    => 'required|exists:slot_abus,id',
+            'slot_id'    => 'required|exists:slot_abus,slot_id',
             'new_status' => 'required|string',
             ]);
             
@@ -37,8 +37,8 @@ class AdminController extends Controller
         $totalEvents = $events->count();
         $totalParticipants = Event::sum('event_counter');
 
-        $slotsAvailable = SlotAbu::where('slot_status', 'tersedia')->count();
-        $slotsTaken = SlotAbu::where('slot_status', 'telah diambil')->count();
+        $slotsAvailable = SlotAbu::where('slot_status', 'Tersedia')->count();
+        $slotsTaken = SlotAbu::where('slot_status', 'Telah Diambil')->count();
         $totalSlots = $slots->count();
 
         return view('vihara.monitoring', compact(

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SlotAbu;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class SlotAbuController extends Controller
 {
@@ -49,6 +50,14 @@ class SlotAbuController extends Controller
             'slot_blok', 'slot_dinding', 'slot_name', 
             'slot_status', 'slot_price'
         ]));
+
+        if ($request->slot_status === 'Telah Diambil') {
+            $dataToUpdate['claim_code'] = $slot->claim_code ?: strtoupper(Str::random(6));
+        } else {
+            $dataToUpdate['claim_code'] = null;
+        }
+
+        $slot->update($dataToUpdate);
 
         return redirect()->back()->with('success', 'Data Rumah Abu berhasil diperbarui!');
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('slot_name', 150);
             // $table->enum('slot_level', ['Biasa', 'VIP'])->default('Biasa');
             $table->enum('slot_status', ['Tersedia', 'Telah Diambil'])->default('Tersedia');
+            $table->string('claim_code', 10)->nullable();
             $table->decimal('slot_price', 15, 2);
             $table->timestamp('slot_created_at')->useCurrent();
             $table->timestamp('slot_update_at')->useCurrent()->useCurrentOnUpdate();

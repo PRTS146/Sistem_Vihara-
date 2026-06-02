@@ -18,6 +18,8 @@ Route::post('/event/register/{id}', [EventController::class, 'registerEvent'])->
 
 Route::get('/api/slots', [ApiSlotController::class, 'index']);
 
+Route::get('/rumah-abu', [ViharaController::class, 'abu'])->name('rumahabu');
+
 // AREA KHUSUS ADMIN (Wajib Login)
 // Digembok rapat oleh middleware 'auth'. 
 Route::middleware(['auth'])->group(function () {
