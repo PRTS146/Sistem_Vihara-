@@ -68,12 +68,6 @@
             <li class="px-3 py-2 border-bottom">
               <div class="fw-bold">{{ Auth::user()->admin_name }}</div>
             </li>
-            <li>
-              <a class="dropdown-item mt-1 {{ request()->routeIs('profile') ? 'active fw-bold' : '' }}"
-                 href="{{ route('profile') }}">
-                <i class="bi bi-person-gear me-2"></i>My Profile
-              </a>
-            </li>
             <li><hr class="dropdown-divider"></li>
             <li>
               <form method="POST" action="{{ route('logout') }}"
