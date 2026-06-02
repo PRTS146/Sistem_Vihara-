@@ -70,7 +70,7 @@ function renderTable() {
   tbody.innerHTML = '';
 
   if (slots.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">No slots yet</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-3">No slots yet</td></tr>';
     renderPicker();
     return;
   }
@@ -78,6 +78,19 @@ function renderTable() {
   slots.forEach(function(s) {
     var style = badgeStyle[s.slot_status] || '';
     var id = s.slot_id || s.id;
+    var claimCodeHtml = '<span class="text-muted">-</span>';
+    if (s.slot_status === 'Telah Diambil' && s.claim_code) {
+      claimCodeHtml = `
+          <div class="d-flex align-items-center gap-2">
+              <span class="fw-bold text-success">${s.claim_code}</span>
+              <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2"
+                      title="Copy ke Clipboard"
+                      onclick="navigator.clipboard.writeText('${s.claim_code}'); this.textContent='✓ Copied'; setTimeout(() => this.textContent='Copy', 2000);">
+                  Copy
+              </button>
+          </div>
+      `;
+    }
     var tr = document.createElement('tr');
     tr.id = 'slot-row-' + id;
     tr.innerHTML =
@@ -86,6 +99,7 @@ function renderTable() {
       '<td>' + s.slot_name + '</td>' +
       // '<td>' + (s.slot_level || '-') + '</td>' +
       '<td><span class="badge rounded-pill" style="' + style + '">' + s.slot_status + '</span></td>' +
+      '<td>' + claimCodeHtml + '</td>' +
       '<td><button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteSlot(' + id + ')">Del</button></td>';
     tbody.appendChild(tr);
   });

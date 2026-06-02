@@ -361,6 +361,7 @@
                     <th>Dinding</th>
                     <th>Slot</th>
                     <th>Status</th>
+                    <th>Slot Klaim</th>
                     <th>Action</th>
                   </tr>
                 </thead>
