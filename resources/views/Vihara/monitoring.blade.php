@@ -103,7 +103,7 @@
               <div class="py-2 border-bottom">
                 <div class="fw-semibold">{{ $donation->donation_name }}</div>
                 <div class="progress my-1 progress-thin">
-                  <div class="progress-bar bg-success"></div>
+                  <div class="progress-bar bg-success" style="width: {{ $donation->percentage }}%;"></div>
                 </div>
                 <small class="text-muted">
                   Rp {{ number_format($donation->donation_progress, 0, ',', '.') }}
