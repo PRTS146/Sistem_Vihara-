@@ -1,43 +1,75 @@
 /* ── DYSLEXIA MODE ── */
-body.dyslexia-mode * {
-  font-family: 'Arial', sans-serif !important;
-  letter-spacing: 0.1em !important;
-  word-spacing: 0.2em !important;
+/* Menggunakan font yang terbukti lebih mudah dibaca untuk disleksia (asimetris/sans-serif bulat) */
+body.dyslexia-mode {
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.3em !important;
   line-height: 1.8 !important;
 }
 
-body.dyslexia-mode p,
-body.dyslexia-mode li,
-body.dyslexia-mode td {
-  font-size: 1.05rem !important;
+/* 
+  Hanya menargetkan elemen teks spesifik. 
+  MENGHINDARI penggunaan selektor `*` atau tag `<i>` agar ikon (Bootstrap/FontAwesome) tidak rusak!
+*/
+body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode h3,
+body.dyslexia-mode h4, body.dyslexia-mode h5, body.dyslexia-mode h6,
+body.dyslexia-mode p, body.dyslexia-mode a, body.dyslexia-mode li,
+body.dyslexia-mode td, body.dyslexia-mode span, body.dyslexia-mode div {
+  font-family: 'Comic Sans MS', 'Trebuchet MS', Verdana, sans-serif !important;
 }
 
-/* ── COLORBLIND MODE ── */
+
+/* ── COLORBLIND MODE (Okabe-Ito / High Contrast Palette) ── */
+/* Tema ini menggunakan palet yang sangat ramah untuk penderita buta warna (Deuteranopia & Protanopia) */
+
+/* 1. Merubah warna Danger (Merah) menjadi Oranye Kemerahan (Vermilion) */
+body.colorblind-mode .btn-danger,
+body.colorblind-mode .bg-danger,
+body.colorblind-mode .text-bg-danger {
+  background-color: #D55E00 !important;
+  color: #ffffff !important;
+  border-color: #D55E00 !important;
+}
+body.colorblind-mode .text-danger { color: #D55E00 !important; }
+
+/* 2. Merubah warna Success (Hijau) menjadi Biru Kehijauan (Teal) */
+body.colorblind-mode .btn-success,
+body.colorblind-mode .bg-success,
+body.colorblind-mode .text-bg-success {
+  background-color: #009E73 !important;
+  color: #ffffff !important;
+  border-color: #009E73 !important;
+}
+body.colorblind-mode .text-success { color: #009E73 !important; }
+
+/* 3. Merubah warna Warning (Kuning terang) menjadi Kuning Emas/Orange meredam */
 body.colorblind-mode .btn-warning,
 body.colorblind-mode .bg-warning,
-body.colorblind-mode .card-header.bg-warning {
-  background-color: #0057B8 !important;
-  color: #ffffff !important;
-  border-color: #0057B8 !important;
+body.colorblind-mode .card-header.bg-warning,
+body.colorblind-mode .badge.bg-warning,
+body.colorblind-mode .text-bg-warning {
+  background-color: #F0E442 !important;
+  color: #000000 !important;
+  border-color: #F0E442 !important;
 }
+body.colorblind-mode .text-warning { color: #E69F00 !important; }
 
-body.colorblind-mode .text-warning {
-  color: #0057B8 !important;
+/* 4. Merubah warna Primary (Biru standar) menjadi Biru Terang (Sky Blue) */
+body.colorblind-mode .btn-primary,
+body.colorblind-mode .bg-primary,
+body.colorblind-mode .text-bg-primary {
+  background-color: #56B4E9 !important;
+  color: #000000 !important;
+  border-color: #56B4E9 !important;
 }
+body.colorblind-mode .text-primary { color: #56B4E9 !important; }
 
-body.colorblind-mode .badge.bg-warning {
-  background-color: #0057B8 !important;
-  color: #ffffff !important;
-}
-
-body.colorblind-mode a {
+/* 5. Garis bawah otomatis pada link teks untuk memperjelas bahwa itu bisa diklik,
+      tapi BUKAN tombol atau nav-link agar desain navbar tidak rusak */
+body.colorblind-mode a:not(.btn):not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
   text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
 }
 
-/* ── LARGE TEXT MODE ── */
-body.large-text-mode * {
-  font-size: 1.15em !important;
-}
 
 /* ── TOOLBAR ── */
 #a11y-toolbar {

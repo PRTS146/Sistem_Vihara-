@@ -22,11 +22,6 @@
             👁️ Colorblind Mode
           </button>
         </li>
-        <li>
-          <button class="dropdown-item" id="btn-largetext" onclick="toggleLargeText()">
-            🔠 Large Text
-          </button>
-        </li>
       </ul>
     </div>
 

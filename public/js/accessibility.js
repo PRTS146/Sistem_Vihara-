@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Cek status dari LocalStorage saat halaman dimuat
   if (localStorage.getItem('dyslexia') === 'on')   document.body.classList.add('dyslexia-mode');
   if (localStorage.getItem('colorblind') === 'on') document.body.classList.add('colorblind-mode');
-  if (localStorage.getItem('largetext') === 'on')  document.body.classList.add('large-text-mode');
+  
   updateA11y();
 });
 
@@ -17,14 +18,15 @@ function toggleColorblind() {
   updateA11y();
 }
 
-function toggleLargeText() {
-  document.body.classList.toggle('large-text-mode');
-  localStorage.setItem('largetext', document.body.classList.contains('large-text-mode') ? 'on' : 'off');
-  updateA11y();
-}
-
 function updateA11y() {
-  document.getElementById('btn-dyslexia').classList.toggle('active', document.body.classList.contains('dyslexia-mode'));
-  document.getElementById('btn-colorblind').classList.toggle('active', document.body.classList.contains('colorblind-mode'));
-  document.getElementById('btn-largetext').classList.toggle('active', document.body.classList.contains('large-text-mode'));
+  const btnDyslexia = document.getElementById('btn-dyslexia');
+  const btnColorblind = document.getElementById('btn-colorblind');
+
+  // Menggunakan pengecekan elemen agar tidak error jika tombol tidak ditemukan di halaman tertentu
+  if (btnDyslexia) {
+    btnDyslexia.classList.toggle('active', document.body.classList.contains('dyslexia-mode'));
+  }
+  if (btnColorblind) {
+    btnColorblind.classList.toggle('active', document.body.classList.contains('colorblind-mode'));
+  }
 }

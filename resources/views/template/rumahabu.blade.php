@@ -24,10 +24,6 @@
                 <span class="small fw-bold" style="font-size:11px;">Tidak Tersedia</span>
               </div>
               <div class="d-flex align-items-center gap-1">
-                <span class="rounded-circle bg-warning" style="width:12px;height:12px;"></span>
-                <span class="small fw-bold" style="font-size:11px;">Booking</span>
-              </div>
-              <div class="d-flex align-items-center gap-1">
                 <span class="rounded-circle bg-success" style="width:12px;height:12px;"></span>
                 <span class="small fw-bold" style="font-size:11px;">Tersedia</span>
               </div>
