@@ -5,7 +5,8 @@
     {{-- Brand --}}
     <a class="navbar-brand fw-bold" href="{{ route('mainpage') }}">VIHARA MAHA GIRI BUDDHA</a>
 
-    {{-- Accessibility dropdown beside brand --}}
+    {{-- Accessibility dropdown beside brand (Disembunyikan di halaman monitoring) --}}
+    @if(!request()->routeIs('monitoring'))
     <div class="dropdown me-3">
       <button class="btn btn-sm btn-outline-secondary rounded-pill dropdown-toggle"
               type="button" data-bs-toggle="dropdown">
@@ -24,6 +25,7 @@
         </li>
       </ul>
     </div>
+    @endif
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>

@@ -1,8 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  const registered = new Set();
   const joinModal = document.getElementById('joinModal');
 
+  // --- FUNGSI BARU: Mengecek LocalStorage saat halaman pertama kali dimuat (atau di-refresh) ---
+  const checkRegisteredEventsOnLoad = () => {
+    // Ambil semua tombol daftar yang ada di halaman
+    const registerButtons = document.querySelectorAll('a[data-bs-target="#joinModal"]');
+    
+    registerButtons.forEach(btn => {
+      const eventId = btn.getAttribute('data-id');
+      // Jika event_id ini ada di localStorage (sudah pernah daftar sebelumnya)
+      if (localStorage.getItem('registered_event_' + eventId) === 'true') {
+        // Matikan tombolnya secara visual dan fungsional
+        btn.textContent = 'Terdaftar';
+        btn.classList.remove('btn-warning');
+        btn.classList.add('btn-secondary');
+        btn.style.opacity = '0.7';
+        btn.style.pointerEvents = 'none'; // Mencegah bisa diklik paksa
+        btn.removeAttribute('data-bs-target'); // Menghapus fungsi pop-up
+        btn.removeAttribute('data-bs-toggle');
+      }
+    });
+  };
+
+  // Langsung jalankan pengecekan saat halaman terbuka
+  checkRegisteredEventsOnLoad();
+
+  // Jika tidak ada modal (bukan di halaman home), hentikan script
   if (!joinModal) return;
 
   const csrfToken = document.querySelector('meta[name="csrf-token"]');
@@ -14,10 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const date  = btn.getAttribute('data-date');
     const route = btn.getAttribute('data-route');
 
-    const isRegistered = registered.has(id);
+    // Cek memori browser apakah pengguna sudah mendaftar
+    const isRegistered = localStorage.getItem('registered_event_' + id) === 'true';
 
+    // Jika sudah pernah daftar, tolak pop-up agar tidak muncul
     if (isRegistered) {
-      e.preventDefault();
+      e.preventDefault(); 
       Swal.fire({ 
         icon: 'info', 
         title: 'Sudah Terdaftar', 
@@ -49,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(res => res.json())
         .then(data => {
-          registered.add(id);
+          // --- BAGIAN BARU: Simpan status terdaftar ke memori permanen browser ---
+          localStorage.setItem('registered_event_' + id, 'true');
           
           bootstrap.Modal.getInstance(joinModal).hide();
           
@@ -61,11 +88,16 @@ document.addEventListener('DOMContentLoaded', function () {
             showConfirmButton: false 
           });
 
+          // Update UI Tombol secara instan
           btn.textContent = 'Terdaftar';
           btn.classList.remove('btn-warning');
           btn.classList.add('btn-secondary');
           btn.style.opacity = '0.7';
+          btn.style.pointerEvents = 'none';
+          btn.removeAttribute('data-bs-target');
+          btn.removeAttribute('data-bs-toggle');
 
+          // Update Counter / Jumlah Peserta di layar
           const counterEl = document.getElementById(`counter-event-${id}`);
           if (counterEl && data.counter) {
             counterEl.textContent = `${data.counter} peserta`;
