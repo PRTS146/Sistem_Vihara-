@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 col-md-6 mb-4">
-        <img src="{{ asset('mainpage/logo.png') }}" alt="Vihara Maha Giri Buddha" class="mb-3" style="height:70px;">
+        <img src="{{ asset('mainpage/logo.png') }}" alt="Vihara Maha Giri Buddha" class="mb-3" style="height:100px;">
         <p class="text-light">Vihara Maha Giri Buddha<br>Tempat ibadah dan pusat kegiatan spiritual umat Buddha di Tanjung Pinang.</p>
       </div>
       <div class="col-lg-4 col-md-6 mb-4">
@@ -26,10 +26,10 @@
     <hr class="my-4 border-secondary">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <small class="text-muted">&copy; {{ date('Y') }} Vihara Maha Giri Buddha - All Rights Reserved</small>
+        <small>&copy; {{ date('Y') }} Vihara Maha Giri Buddha - All Rights Reserved</small>
       </div>
       <div class="col-md-6 text-md-end">
-        <small class="text-muted">Created with ❤️ for the Buddhist Community</small>
+        <small>Created with ❤️ for the Buddhist Community</small>
       </div>
     </div>
   </div>
